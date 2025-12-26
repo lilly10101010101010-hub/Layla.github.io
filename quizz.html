@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap Quiz | Strategic Planning Assessment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+Pro:wght@400;600;700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-dark: #0d1b2a;
+            --primary-light: #2d4a7c;
+            --secondary: #2d9cdb;
+            --secondary-dark: #1e6fa8;
+            --accent: #e63946;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --gray-dark: #475569;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius: 8px;
+            --radius-lg: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            padding: 1.2rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Source Serif Pro', serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--primary);
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: var(--secondary);
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--gray-light);
+            background: white;
+            color: var(--gray-dark);
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .lang-btn:hover {
+            background: var(--gray-light);
+            color: var(--primary);
+        }
+
+        .lang-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .welcome-title {
+            font-family: 'Source Serif Pro', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+        }
+
+        .welcome-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .welcome-card {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--gray-light);
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: #fdfdfd;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(45, 156, 219, 0.1);
+        }
+
+        .start-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .start-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Quiz Screen */
+        .quiz-screen {
+            display: none;
+            padding: 3rem 0;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .quiz-info {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .info-box {
+            background-color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            min-width: 140px;
+            border: 1px solid var(--gray-light);
+        }
+
+        .info-box .label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-box .value {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .timer-box {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .timer-box .label, .timer-box .value {
+            color: white;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 3rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: var(--gray-light);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--secondary-dark));
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Card */
+        .question-card {
+            background-color: white;
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
+            border: 1px solid var(--gray-light);
+        }
+
+        .question-number {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 6px 16px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 2.2rem;
+            line-height: 1.5;
+            color: var(--primary);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-btn {
+            padding: 18px 20px;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--radius);
+            background-color: white;
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option-btn:hover {
+            border-color: var(--secondary);
+            background-color: rgba(45, 156, 219, 0.03);
+            transform: translateY(-2px);
+        }
+
+        .option-btn.selected {
+            border-color: var(--secondary);
+            background-color: rgba(45, 156, 219, 0.08);
+            box-shadow: 0 4px 12px rgba(45, 156, 219, 0.1);
+        }
+
+        .option-letter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            background-color: var(--gray-light);
+            color: var(--dark);
+            font-weight: 700;
+            flex-shrink: 0;
+            font-size: 0.95rem;
+        }
+
+        .option-btn.selected .option-letter {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2.5rem;
+        }
+
+        .nav-btn {
+            padding: 14px 30px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn.prev {
+            background-color: white;
+            color: var(--primary);
+            border: 1px solid var(--gray-light);
+        }
+
+        .nav-btn.prev:hover {
+            background-color: var(--gray-light);
+            border-color: var(--gray);
+        }
+
+        .nav-btn.next {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .nav-btn.next:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-btn.submit {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .nav-btn.submit:hover {
+            background-color: var(--secondary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Results Screen */
+        .results-screen {
+            display: none;
+            padding: 3rem 0;
+        }
+
+        .results-card {
+            background-color: white;
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
+            border: 1px solid var(--gray-light);
+        }
+
+        .results-title {
+            font-family: 'Source Serif Pro', serif;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .score-display {
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin: 2rem 0;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .score-message {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            color: var(--gray-dark);
+            text-align: center;
+            font-weight: 500;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .results-details {
+            text-align: left;
+            margin-top: 3rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .results-details h3 {
+            margin-bottom: 1.8rem;
+            color: var(--primary);
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .incorrect-question {
+            background-color: rgba(230, 57, 70, 0.03);
+            border-left: 3px solid var(--accent);
+            padding: 1.5rem;
+            margin-bottom: 1.2rem;
+            border-radius: var(--radius);
+        }
+
+        .incorrect-question p {
+            margin-bottom: 0.8rem;
+        }
+
+        .correct-answer {
+            color: var(--success);
+            font-weight: 600;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .results-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .action-btn {
+            padding: 14px 30px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .action-btn.restart {
+            background-color: white;
+            color: var(--primary);
+            border: 1px solid var(--gray-light);
+        }
+
+        .action-btn.restart:hover {
+            background-color: var(--gray-light);
+            border-color: var(--gray);
+        }
+
+        .action-btn.download {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .action-btn.download:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Professor Message */
+        .professor-message {
+            background: white;
+            border: 2px solid var(--secondary);
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+            margin-top: 2rem;
+            display: none;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thank-you-text {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .animated-heart {
+            color: var(--accent);
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            5% { transform: scale(1.2); }
+            10% { transform: scale(1); }
+            15% { transform: scale(1.2); }
+            20% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gratitude-message {
+            font-size: 1.1rem;
+            color: var(--gray-dark);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .signature {
+            font-family: 'Source Serif Pro', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-top: 1.5rem;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        /* Timer Animation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .timer-warning {
+            animation: pulse 1s infinite;
+            color: var(--accent) !important;
+        }
+
+        /* Footer */
+        footer {
+            background-color: white;
+            padding: 2.5rem 0;
+            margin-top: 4rem;
+            text-align: center;
+            color: var(--gray);
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-content p {
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 2.2rem;
+            }
+            
+            .question-text {
+                font-size: 1.2rem;
+            }
+            
+            .results-card {
+                padding: 2rem;
+            }
+            
+            .score-display {
+                font-size: 3.5rem;
+            }
+            
+            .quiz-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .info-box {
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .results-actions {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                width: 100%;
+            }
+            
+            .thank-you-text {
+                font-size: 1.8rem;
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-road"></i>
+                    <span class="logo-text">Roadmap Quiz</span>
+                </div>
+                <div class="language-selector">
+                    <button class="lang-btn active" data-lang="en">
+                        <i class="fas fa-flag-usa"></i>
+                        English
+                    </button>
+                    <button class="lang-btn" data-lang="fr">
+                        <i class="fas fa-flag"></i>
+                        Français
+                    </button>
+                    <button class="lang-btn" data-lang="ar">
+                        <i class="fas fa-flag"></i>
+                        العربية
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Welcome Screen -->
+    <section class="welcome-screen" id="welcomeScreen">
+        <div class="container">
+            <h1 class="welcome-title" data-en="Roadmap Quiz" data-fr="Quiz Feuille de Route" data-ar="اختبار خطة العمل">Roadmap Quiz</h1>
+            <p class="welcome-subtitle" data-en="Test your strategic planning knowledge with this comprehensive roadmap assessment. Complete all 15 questions to evaluate your understanding of effective roadmap development." data-fr="Testez vos connaissances en planification stratégique avec cette évaluation complète de feuille de route. Répondez aux 15 questions pour évaluer votre compréhension du développement efficace de feuilles de route." data-ar="اختبر معرفتك في التخطيط الاستراتيجي مع هذا التقييم الشامل لخطط العمل. أجب على جميع الأسئلة الـ 15 لتقييم فهمك لتطوير خطط العمل الفعالة.">Test your strategic planning knowledge with this comprehensive roadmap assessment. Complete all 15 questions to evaluate your understanding of effective roadmap development.</p>
+            
+            <div class="welcome-card">
+                <div class="form-group">
+                    <label for="userName" data-en="Enter Your Name" data-fr="Entrez Votre Nom" data-ar="أدخل اسمك">Enter Your Name</label>
+                    <input type="text" id="userName" placeholder="John Smith" data-en-placeholder="John Smith" data-fr-placeholder="Jean Dupont" data-ar-placeholder="محمد أحمد">
+                </div>
+                
+                <button class="start-btn" id="startBtn" data-en="Begin Quiz" data-fr="Commencer le Quiz" data-ar="بدء الاختبار">Begin Quiz</button>
+            </div>
+            
+            <div style="max-width: 600px; margin-top: 2rem;">
+                <p style="font-size: 0.95rem; color: var(--gray);" data-en="• 15 strategic questions • 30-minute time limit • Professional evaluation • Detailed feedback" data-fr="• 15 questions stratégiques • Limite de temps de 30 minutes • Évaluation professionnelle • Retour détaillé" data-ar="• 15 سؤالاً استراتيجياً • مهلة زمنية 30 دقيقة • تقييم احترافي • ملاحظات مفصلة">• 15 strategic questions • 30-minute time limit • Professional evaluation • Detailed feedback</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Screen -->
+    <section class="quiz-screen" id="quizScreen">
+        <div class="container">
+            <div class="quiz-header">
+                <div class="quiz-info">
+                    <div class="info-box">
+                        <div class="label" data-en="Participant" data-fr="Participant" data-ar="المشارك">Participant</div>
+                        <div class="value" id="playerNameDisplay">-</div>
+                    </div>
+                    <div class="info-box">
+                        <div class="label" data-en="Question" data-fr="Question" data-ar="السؤال">Question</div>
+                        <div class="value" id="questionCounter">1/15</div>
+                    </div>
+                    <div class="info-box timer-box">
+                        <div class="label" data-en="Time Remaining" data-fr="Temps Restant" data-ar="الوقت المتبقي">Time Remaining</div>
+                        <div class="value" id="timerDisplay">30:00</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span data-en="Quiz Progress" data-fr="Progression du Quiz" data-ar="تقدم الاختبار">Quiz Progress</span>
+                    <span id="progressPercentage">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+            
+            <div class="question-card fade-in" id="questionCard">
+                <div class="question-number" id="questionNumber">Question 1</div>
+                <h2 class="question-text" id="questionText">Question text will appear here</h2>
+                
+                <div class="options-grid" id="optionsGrid">
+                    <!-- Options will be generated here -->
+                </div>
+                
+                <div class="quiz-controls">
+                    <button class="nav-btn prev" id="prevBtn" data-en="Previous" data-fr="Précédent" data-ar="السابق">Previous</button>
+                    <button class="nav-btn next" id="nextBtn" data-en="Next" data-fr="Suivant" data-ar="التالي">Next</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Screen -->
+    <section class="results-screen" id="resultsScreen">
+        <div class="container">
+            <div class="results-card fade-in">
+                <h2 class="results-title" data-en="Quiz Results" data-fr="Résultats du Quiz" data-ar="نتائج الاختبار">Quiz Results</h2>
+                <div class="score-display" id="finalScore">0/15</div>
+                <p class="score-message" id="scoreMessage">Your performance analysis will appear here</p>
+                
+                <div class="results-details" id="resultsDetails">
+                    <h3 data-en="Performance Analysis" data-fr="Analyse de Performance" data-ar="تحليل الأداء">Performance Analysis</h3>
+                    <!-- Incorrect questions will be displayed here -->
+                </div>
+                
+                <div class="results-actions">
+                    <button class="action-btn restart" id="restartBtn" data-en="Retake Quiz" data-fr="Refaire le Quiz" data-ar="إعادة الاختبار">Retake Quiz</button>
+                    <button class="action-btn download" id="downloadBtn" data-en="Download Results" data-fr="Télécharger Résultats" data-ar="تحميل النتائج">Download Results</button>
+                </div>
+            </div>
+            
+            <!-- Professor Message (only for Sherif) -->
+            <div class="professor-message" id="professorMessage">
+                <div class="thank-you-text">
+                    <span data-en="Thank You!" data-fr="Merci !" data-ar="شكرًا!">Thank You!</span>
+                    <i class="fas fa-heart animated-heart"></i>
+                </div>
+                
+                <p class="gratitude-message" data-en="Professor Sherif, thank you for your guidance and support throughout this course. Your teaching has been invaluable in developing this assessment." data-fr="Professeur Sherif, merci pour votre orientation et soutien tout au long de ce cours. Votre enseignement a été inestimable dans le développement de cette évaluation." data-ar="البروفيسور شريف، شكرًا لك على توجيهك ودعمك خلال هذه الدورة. كان تدريسك لا يقدر بثمن في تطوير هذا التقييم.">Professor Sherif, thank you for your guidance and support throughout this course. Your teaching has been invaluable in developing this assessment.</p>
+                
+                <p class="signature" data-en="With sincere appreciation," data-fr="Avec une sincère appréciation," data-ar="مع التقدير الصادق،">With sincere appreciation,</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p data-en="Roadmap Quiz | Strategic Planning Assessment" data-fr="Quiz Feuille de Route | Évaluation de Planification Stratégique" data-ar="اختبار خطة العمل | تقييم التخطيط الاستراتيجي">Roadmap Quiz | Strategic Planning Assessment</p>
+                <p data-en="Academic Project | © 2023" data-fr="Projet Académique | © 2023" data-ar="مشروع أكاديمي | © 2023">Academic Project | © 2023</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language management
+        let currentLang = 'en';
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const textElements = document.querySelectorAll('[data-en]');
+        
+        // Update all text elements based on selected language
+        function updateLanguage(lang) {
+            currentLang = lang;
+            
+            // Update button states
+            langButtons.forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Update all text elements
+            textElements.forEach(element => {
+                const text = element.getAttribute(`data-${lang}`);
+                if (text) {
+                    if (element.hasAttribute('data-en-placeholder')) {
+                        element.placeholder = element.getAttribute(`data-${lang}-placeholder`);
+                    } else {
+                        element.textContent = text;
+                    }
+                }
+            });
+            
+            // Update question data if quiz has started
+            if (currentQuestion > 0) {
+                displayQuestion(currentQuestion - 1);
+            }
+            
+            // Update results if shown
+            if (resultsShown) {
+                updateResultsDisplay();
+            }
+        }
+        
+        // Language button click events
+        langButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const lang = button.getAttribute('data-lang');
+                updateLanguage(lang);
+            });
+        });
+        
+        // Quiz data in all three languages
+        const quizData = {
+            en: [
+                {
+                    question: "The primary purpose of a strategic roadmap is to communicate vision and direction rather than detailed task assignments.",
+                    options: ["True", "False"],
+                    correct: 0,
+                    explanation: "True. Roadmaps are strategic communication tools that align stakeholders around vision and direction, while detailed task assignments occur at the project management level."
+                },
+                {
+                    question: "Which of the following is considered a best practice when creating a strategic roadmap?",
+                    options: ["Including every possible feature request", "Setting rigid deadlines for all deliverables", "Focusing on outcomes rather than outputs", "Avoiding stakeholder feedback during development"],
+                    correct: 2,
+                    explanation: "Focusing on outcomes rather than outputs. Effective roadmaps emphasize the results and value delivered rather than just listing features or outputs."
+                },
+                {
+                    question: "A roadmap should be treated as a fixed contract that cannot be modified once published.",
+                    options: ["True", "False"],
+                    correct: 1,
+                    explanation: "False. Strategic roadmaps should be living documents that evolve based on market changes, new information, and shifting priorities."
+                },
+                {
+                    question: "Which framework is most commonly associated with outcome-focused roadmap planning?",
+                    options: ["Waterfall methodology", "Objectives and Key Results (OKRs)", "Critical Path Method", "Gantt chart scheduling"],
+                    correct: 1,
+                    explanation: "Objectives and Key Results (OKRs). This framework helps connect roadmap initiatives to measurable outcomes and strategic objectives."
+                },
+                {
+                    question: "The primary audience for an executive-level roadmap is typically:",
+                    options: ["Development teams", "Marketing departments", "C-level executives and board members", "End users"],
+                    correct: 2,
+                    explanation: "C-level executives and board members. Executive roadmaps focus on high-level strategy, business impact, and resource allocation rather than implementation details."
+                },
+                {
+                    question: "When prioritizing initiatives for a roadmap, the RICE scoring model evaluates:",
+                    options: ["Revenue, Impact, Cost, Effort", "Reach, Impact, Confidence, Effort", "Risk, Investment, Cost, Expectation", "Resources, Integration, Complexity, Expense"],
+                    correct: 1,
+                    explanation: "Reach, Impact, Confidence, Effort. The RICE framework helps product teams prioritize features based on these four factors."
+                },
+                {
+                    question: "A theme-based roadmap organizes initiatives around strategic objectives rather than specific features.",
+                    options: ["True", "False"],
+                    correct: 0,
+                    explanation: "True. Theme-based roadmaps group work by strategic themes or goals, which provides flexibility in how those goals are achieved."
+                },
+                {
+                    question: "Which of these is NOT a recommended practice for effective roadmap communication?",
+                    options: ["Tailoring detail level to the audience", "Using consistent visualization methods", "Including confidential financial projections", "Providing context for prioritization decisions"],
+                    correct: 2,
+                    explanation: "Including confidential financial projections. While financial context is important, sensitive details should be shared selectively based on audience."
+                },
+                {
+                    question: "The 'now, next, later' framework in roadmap presentation refers to:",
+                    options: ["Budget allocation phases", "Temporal categorization of initiatives", "Team resource planning", "Risk assessment timelines"],
+                    correct: 1,
+                    explanation: "Temporal categorization of initiatives. This framework organizes roadmap items into current work, near-term priorities, and future possibilities."
+                },
+                {
+                    question: "Roadmaps should only be created for product development initiatives.",
+                    options: ["True", "False"],
+                    correct: 1,
+                    explanation: "False. Roadmaps can be created for various strategic initiatives including technology adoption, organizational change, marketing campaigns, and research programs."
+                },
+                {
+                    question: "Which element is CRITICAL for maintaining roadmap credibility over time?",
+                    options: ["Frequent updates reflecting actual progress", "Avoiding any changes to published timelines", "Minimizing stakeholder communication", "Focusing exclusively on technical details"],
+                    correct: 0,
+                    explanation: "Frequent updates reflecting actual progress. Regular updates that honestly reflect progress and changes maintain stakeholder trust and roadmap relevance."
+                },
+                {
+                    question: "In agile organizations, roadmaps typically focus on:",
+                    options: ["Fixed quarterly deliverables", "Detailed year-long plans", "Outcomes and approximate timeframes", "Individual sprint commitments"],
+                    correct: 2,
+                    explanation: "Outcomes and approximate timeframes. Agile roadmaps emphasize flexibility while providing directional guidance on what will be achieved."
+                },
+                {
+                    question: "The concept of 'roadmap hygiene' refers to:",
+                    options: ["Technical documentation standards", "Regular review and updating processes", "Visual design consistency", "Stakeholder meeting protocols"],
+                    correct: 1,
+                    explanation: "Regular review and updating processes. Maintaining roadmap accuracy through scheduled reviews and updates is essential for its ongoing usefulness."
+                },
+                {
+                    question: "Which metric is LEAST appropriate for measuring roadmap success?",
+                    options: ["Strategic objective achievement rate", "Stakeholder alignment scores", "Percentage of features delivered on exact date", "Team understanding of priorities"],
+                    correct: 2,
+                    explanation: "Percentage of features delivered on exact date. Roadmap success should be measured by strategic outcomes rather than rigid adherence to initial dates."
+                },
+                {
+                    question: "A balanced roadmap should consider:",
+                    options: ["Only customer requests", "Only technical debt reduction", "Only competitive responses", "Multiple strategic perspectives and constraints"],
+                    correct: 3,
+                    explanation: "Multiple strategic perspectives and constraints. Effective roadmaps balance customer needs, business objectives, technical requirements, and market opportunities."
+                }
+            ],
+            fr: [
+                {
+                    question: "L'objectif principal d'une feuille de route stratégique est de communiquer la vision et la direction plutôt que des affectations de tâches détaillées.",
+                    options: ["Vrai", "Faux"],
+                    correct: 0,
+                    explanation: "Vrai. Les feuilles de route sont des outils de communication stratégique qui alignent les parties prenantes autour de la vision et de la direction, tandis que les affectations de tâches détaillées se produisent au niveau de la gestion de projet."
+                },
+                {
+                    question: "Laquelle des pratiques suivantes est considérée comme une meilleure pratique lors de la création d'une feuille de route stratégique?",
+                    options: ["Inclure toutes les demandes de fonctionnalités possibles", "Fixer des délais rigides pour toutes les livraisons", "Se concentrer sur les résultats plutôt que sur les livrables", "Éviter les retours des parties prenantes pendant le développement"],
+                    correct: 2,
+                    explanation: "Se concentrer sur les résultats plutôt que sur les livrables. Les feuilles de route efficaces mettent l'accent sur les résultats et la valeur fournie plutôt que de simplement lister les fonctionnalités ou les livrables."
+                },
+                {
+                    question: "Une feuille de route doit être traitée comme un contrat fixe qui ne peut être modifié une fois publiée.",
+                    options: ["Vrai", "Faux"],
+                    correct: 1,
+                    explanation: "Faux. Les feuilles de route stratégiques doivent être des documents vivants qui évoluent en fonction des changements du marché, des nouvelles informations et des priorités changeantes."
+                },
+                {
+                    question: "Quel cadre est le plus couramment associé à la planification de feuille de route axée sur les résultats?",
+                    options: ["Méthodologie en cascade", "Objectifs et Résultats Clés (OKR)", "Méthode du chemin critique", "Planification par diagramme de Gantt"],
+                    correct: 1,
+                    explanation: "Objectifs et Résultats Clés (OKR). Ce cadre aide à connecter les initiatives de la feuille de route à des résultats mesurables et à des objectifs stratégiques."
+                },
+                {
+                    question: "Le public principal d'une feuille de route de niveau exécutif est généralement:",
+                    options: ["Équipes de développement", "Départements marketing", "Cadres supérieurs et membres du conseil d'administration", "Utilisateurs finaux"],
+                    correct: 2,
+                    explanation: "Cadres supérieurs et membres du conseil d'administration. Les feuilles de route exécutives se concentrent sur la stratégie de haut niveau, l'impact commercial et l'allocation des ressources plutôt que sur les détails de mise en œuvre."
+                },
+                {
+                    question: "Lors de la priorisation des initiatives pour une feuille de route, le modèle de notation RICE évalue:",
+                    options: ["Revenu, Impact, Coût, Effort", "Portée, Impact, Confiance, Effort", "Risque, Investissement, Coût, Attente", "Ressources, Intégration, Complexité, Dépense"],
+                    correct: 1,
+                    explanation: "Portée, Impact, Confiance, Effort. Le cadre RICE aide les équipes produit à prioriser les fonctionnalités en fonction de ces quatre facteurs."
+                },
+                {
+                    question: "Une feuille de route basée sur des thèmes organise les initiatives autour d'objectifs stratégiques plutôt que de fonctionnalités spécifiques.",
+                    options: ["Vrai", "Faux"],
+                    correct: 0,
+                    explanation: "Vrai. Les feuilles de route basées sur des thèmes regroupent le travail par thèmes ou objectifs stratégiques, ce qui offre une flexibilité dans la manière dont ces objectifs sont atteints."
+                },
+                {
+                    question: "Laquelle de ces pratiques n'est PAS recommandée pour une communication efficace de la feuille de route?",
+                    options: ["Adapter le niveau de détail au public", "Utiliser des méthodes de visualisation cohérentes", "Inclure des projections financières confidentielles", "Fournir un contexte pour les décisions de priorisation"],
+                    correct: 2,
+                    explanation: "Inclure des projections financières confidentielles. Bien que le contexte financier soit important, les détails sensibles doivent être partagés sélectivement en fonction du public."
+                },
+                {
+                    question: "Le cadre 'maintenant, ensuite, plus tard' dans la présentation de la feuille de route fait référence à:",
+                    options: ["Phases d'allocation budgétaire", "Catégorisation temporelle des initiatives", "Planification des ressources de l'équipe", "Chronologies d'évaluation des risques"],
+                    correct: 1,
+                    explanation: "Catégorisation temporelle des initiatives. Ce cadre organise les éléments de la feuille de route en travail actuel, priorités à court terme et possibilités futures."
+                },
+                {
+                    question: "Les feuilles de route ne doivent être créées que pour les initiatives de développement de produits.",
+                    options: ["Vrai", "Faux"],
+                    correct: 1,
+                    explanation: "Faux. Les feuilles de route peuvent être créées pour diverses initiatives stratégiques, y compris l'adoption de technologies, le changement organisationnel, les campagnes marketing et les programmes de recherche."
+                },
+                {
+                    question: "Quel élément est CRITIQUE pour maintenir la crédibilité de la feuille de route dans le temps?",
+                    options: ["Mises à jour fréquentes reflétant les progrès réels", "Éviter tout changement aux délais publiés", "Minimiser la communication avec les parties prenantes", "Se concentrer exclusivement sur les détails techniques"],
+                    correct: 0,
+                    explanation: "Mises à jour fréquentes reflétant les progrès réels. Des mises à jour régulières qui reflètent honnêtement les progrès et les changements maintiennent la confiance des parties prenantes et la pertinence de la feuille de route."
+                },
+                {
+                    question: "Dans les organisations agiles, les feuilles de route se concentrent généralement sur:",
+                    options: ["Livrables trimestriels fixes", "Plans détaillés sur un an", "Résultats et délais approximatifs", "Engagements de sprint individuels"],
+                    correct: 2,
+                    explanation: "Résultats et délais approximatifs. Les feuilles de route agiles mettent l'accent sur la flexibilité tout en fournissant des orientations directionnelles sur ce qui sera réalisé."
+                },
+                {
+                    question: "Le concept d'«hygiène de la feuille de route» fait référence à:",
+                    options: ["Normes de documentation technique", "Processus réguliers de révision et de mise à jour", "Cohérence de la conception visuelle", "Protocoles de réunion des parties prenantes"],
+                    correct: 1,
+                    explanation: "Processus réguliers de révision et de mise à jour. Maintenir l'exactitude de la feuille de route grâce à des révisions et des mises à jour programmées est essentiel pour son utilité continue."
+                },
+                {
+                    question: "Quelle métrique est la MOINS appropriée pour mesurer le succès d'une feuille de route?",
+                    options: ["Taux de réalisation des objectifs stratégiques", "Scores d'alignement des parties prenantes", "Pourcentage de fonctionnalités livrées à la date exacte", "Compréhension des priorités par l'équipe"],
+                    correct: 2,
+                    explanation: "Pourcentage de fonctionnalités livrées à la date exacte. Le succès de la feuille de route doit être mesuré par des résultats stratégiques plutôt que par une adhésion rigide aux dates initiales."
+                },
+                {
+                    question: "Une feuille de route équilibrée devrait prendre en compte:",
+                    options: ["Seulement les demandes des clients", "Seulement la réduction de la dette technique", "Seulement les réponses concurrentielles", "Multiples perspectives et contraintes stratégiques"],
+                    correct: 3,
+                    explanation: "Multiples perspectives et contraintes stratégiques. Les feuilles de route efficaces équilibrent les besoins des clients, les objectifs commerciaux, les exigences techniques et les opportunités du marché."
+                }
+            ],
+            ar: [
+                {
+                    question: "الغرض الأساسي من خطة العمل الاستراتيجية هو توصيل الرؤية والاتجاه بدلاً من تعيين المهام التفصيلية.",
+                    options: ["صحيح", "خطأ"],
+                    correct: 0,
+                    explanation: "صحيح. تعد خطط العمل أدوات اتصال استراتيجية تتماشى مع أصحاب المصلحة حول الرؤية والاتجاه، بينما تحدث تعيينات المهام التفصيلية على مستوى إدارة المشروع."
+                },
+                {
+                    question: "أي مما يلي يعتبر أفضل ممارسة عند إنشاء خطة عمل استراتيجية؟",
+                    options: ["تضمين كل طلب ميزة ممكن", "تحديد مواعيد نهائية صارمة لجميع المخرجات", "التركيز على النتائج بدلاً من المخرجات", "تجنب ملاحظات أصحاب المصلحة أثناء التطوير"],
+                    correct: 2,
+                    explanation: "التركيز على النتائج بدلاً من المخرجات. تؤكد خطط العمل الفعالة على النتائج والقيمة المقدمة بدلاً من مجرد سرد الميزات أو المخرجات."
+                },
+                {
+                    question: "يجب معاملة خطة العمل كعقد ثابت لا يمكن تعديله بمجرد نشره.",
+                    options: ["صحيح", "خطأ"],
+                    correct: 1,
+                    explanation: "خطأ. يجب أن تكون خطط العمل الاستراتيجية وثائق حية تتطور بناءً على تغيرات السوق والمعلومات الجديدة والأولويات المتغيرة."
+                },
+                {
+                    question: "أي إطار عمل يرتبط بشكل شائع بتخطيط خطة العمل المرتكزة على النتائج؟",
+                    options: ["منهجية الشلال", "الأهداف والنتائج الرئيسية (OKR)", "طريقة المسار الحرج", "جدولة مخطط جانت"],
+                    correct: 1,
+                    explanation: "الأهداف والنتائج الرئيسية (OKR). يساعد هذا الإطار في ربط مبادرات خطة العمل بالنتائج القابلة للقياس والأهداف الاستراتيجية."
+                },
+                {
+                    question: "الجمهور الأساسي لخطة عمل على المستوى التنفيذي هو عادة:",
+                    options: ["فرق التطوير", "أقسام التسويق", "المدراء التنفيذيين وأعضاء مجلس الإدارة", "المستخدمون النهائيون"],
+                    correct: 2,
+                    explanation: "المدراء التنفيذيين وأعضاء مجلس الإدارة. تركز خطط العمل التنفيذية على الاستراتيجية عالية المستوى والتأثير التجاري وتخصيص الموارد بدلاً من تفاصيل التنفيذ."
+                },
+                {
+                    question: "عند تحديد أولويات المبادرات لخطة عمل، يقيم نموذج تسجيل RICE:",
+                    options: ["الإيرادات، التأثير، التكلفة، الجهد", "الوصول، التأثير، الثقة، الجهد", "المخاطر، الاستثمار، التكلفة، التوقع", "الموارد، التكامل، التعقيد، النفقات"],
+                    correct: 1,
+                    explanation: "الوصول، التأثير، الثقة، الجهد. يساعد إطار عمل RICE فرق المنتج في تحديد أولويات الميزات بناءً على هذه العوامل الأربعة."
+                },
+                {
+                    question: "تنظم خطة العمل القائمة على الموضوعات المبادرات حول الأهداف الاستراتيجية بدلاً من الميزات المحددة.",
+                    options: ["صحيح", "خطأ"],
+                    correct: 0,
+                    explanation: "صحيح. تجمع خطط العمل القائمة على الموضوعات العمل حسب الموضوعات أو الأهداف الاستراتيجية، مما يوفر مرونة في كيفية تحقيق هذه الأهداف."
+                },
+                {
+                    question: "أي مما يلي ليس ممارسة موصى بها للاتصال الفعال بخطة العمل؟",
+                    options: ["تخصيص مستوى التفاصيل للجمهور", "استخدام طرق عرض مرئية متسقة", "تضمين التوقعات المالية السرية", "توفير السياق لقرارات تحديد الأولوية"],
+                    correct: 2,
+                    explanation: "تضمين التوقعات المالية السرية. على الرغم من أهمية السياق المالي، يجب مشاركة التفاصيل الحساسة بشكل انتقائي بناءً على الجمهور."
+                },
+                {
+                    question: "يشير إطار العمل 'الآن، التالي، لاحقًا' في عرض خطة العمل إلى:",
+                    options: ["مراحل تخصيص الميزانية", "التصنيف الزمني للمبادرات", "تخطيط موارد الفريق", "الجداول الزمنية لتقييم المخاطر"],
+                    correct: 1,
+                    explanation: "التصنيف الزمني للمبادرات. ينظم هذا الإطار عناصر خطة العمل إلى العمل الحالي، والأولويات قصيرة المدى، والإمكانيات المستقبلية."
+                },
+                {
+                    question: "يجب إنشاء خطط العمل فقط لمبادرات تطوير المنتجات.",
+                    options: ["صحيح", "خطأ"],
+                    correct: 1,
+                    explanation: "خطأ. يمكن إنشاء خطط العمل لمبادرات استراتيجية متنوعة بما في ذلك اعتماد التكنولوجيا، والتغيير التنظيمي، والحملات التسويقية، وبرامج البحث."
+                },
+                {
+                    question: "ما هو العنصر الحاسم للحفاظ على مصداقية خطة العمل بمرور الوقت؟",
+                    options: ["التحديثات المتكررة التي تعكس التقدم الفعلي", "تجنب أي تغييرات في الجداول الزمنية المنشورة", "تقليل التواصل مع أصحاب المصلحة", "التركيز حصريًا على التفاصيل التقنية"],
+                    correct: 0,
+                    explanation: "التحديثات المتكررة التي تعكس التقدم الفعلي. تحافظ التحديثات المنتظمة التي تعكس بصدق التقدم والتغييرات على ثقة أصحاب المصلحة وملاءمة خطة العمل."
+                },
+                {
+                    question: "في المنظمات الرشيقة، تركز خطط العمل عادةً على:",
+                    options: ["المخرجات الربعية الثابتة", "الخطط التفصيلية لمدة عام", "النتائج والإطارات الزمنية التقريبية", "التزامات السباق الفردية"],
+                    correct: 2,
+                    explanation: "النتائج والإطارات الزمنية التقريبية. تؤكد خطط العمل الرشيقة على المرونة مع تقديم توجيهات اتجاهية حول ما سيتم تحقيقه."
+                },
+                {
+                    question: "يشير مفهوم 'نظافة خطة العمل' إلى:",
+                    options: ["معايير التوثيق الفني", "عمليات المراجعة والتحديث المنتظمة", "اتساق التصميم المرئي", "بروتوكولات اجتماع أصحاب المصلحة"],
+                    correct: 1,
+                    explanation: "عمليات المراجعة والتحديث المنتظمة. الحفاظ على دقة خطة العمل من خلال المراجعات والتحديثات المجدولة أمر ضروري لفائدتها المستمرة."
+                },
+                {
+                    question: "أي مقياس هو الأقل ملاءمة لقياس نجاح خطة العمل؟",
+                    options: ["معدل تحقيق الهدف الاستراتيجي", "درجات محاذاة أصحاب المصلحة", "نسبة الميزات المسلمة في التاريخ المحدد بالضبط", "فهم الفريق للأولويات"],
+                    correct: 2,
+                    explanation: "نسبة الميزات المسلمة في التاريخ المحدد بالضبط. يجب قياس نجاح خطة العمل بالنتائج الاستراتيجية بدلاً من الالتزام الصارم بالتواريخ الأولية."
+                },
+                {
+                    question: "يجب أن تأخذ خطة العمل المتوازنة في الاعتبار:",
+                    options: ["طلبات العملاء فقط", "تخفيض الدين الفني فقط", "الاستجابات التنافسية فقط", "وجهات نظر وقيود استراتيجية متعددة"],
+                    correct: 3,
+                    explanation: "وجهات نظر وقيود استراتيجية متعددة. توازن خطط العمل الفعالة بين احتياجات العملاء والأهداف التجارية والمتطلبات الفنية وفرص السوق."
+                }
+            ]
+        };
+
+        // Quiz state variables
+        let currentQuestion = 0;
+        let userAnswers = new Array(15).fill(null);
+        let userName = "";
+        let resultsShown = false;
+        let timerInterval;
+        let timeRemaining = 30 * 60; // 30 minutes in seconds
+        
+        // DOM elements
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const quizScreen = document.getElementById('quizScreen');
+        const resultsScreen = document.getElementById('resultsScreen');
+        const startBtn = document.getElementById('startBtn');
+        const userNameInput = document.getElementById('userName');
+        const playerNameDisplay = document.getElementById('playerNameDisplay');
+        const questionCounter = document.getElementById('questionCounter');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const progressFill = document.getElementById('progressFill');
+        const progressPercentage = document.getElementById('progressPercentage');
+        const questionNumber = document.getElementById('questionNumber');
+        const questionText = document.getElementById('questionText');
+        const optionsGrid = document.getElementById('optionsGrid');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const finalScore = document.getElementById('finalScore');
+        const scoreMessage = document.getElementById('scoreMessage');
+        const resultsDetails = document.getElementById('resultsDetails');
+        const restartBtn = document.getElementById('restartBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const professorMessage = document.getElementById('professorMessage');
+        
+        // Start quiz
+        startBtn.addEventListener('click', () => {
+            userName = userNameInput.value.trim();
+            
+            if (!userName) {
+                let alertMessage = "Please enter your name before starting the quiz.";
+                if (currentLang === 'fr') {
+                    alertMessage = "Veuillez entrer votre nom avant de commencer le quiz.";
+                } else if (currentLang === 'ar') {
+                    alertMessage = "يرجى إدخال اسمك قبل بدء الاختبار.";
+                }
+                alert(alertMessage);
+                return;
+            }
+            
+            playerNameDisplay.textContent = userName;
+            welcomeScreen.style.display = 'none';
+            quizScreen.style.display = 'block';
+            
+            // Initialize quiz
+            currentQuestion = 1;
+            displayQuestion(0);
+            updateNavigation();
+            updateProgress();
+            
+            // Start timer
+            startTimer();
+        });
+        
+        // Timer functions
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerDisplay();
+                
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    // Auto-submit when time runs out
+                    if (quizScreen.style.display !== 'none') {
+                        submitQuiz();
+                    }
+                }
+                
+                // Add warning when 5 minutes remain
+                if (timeRemaining === 5 * 60) {
+                    timerDisplay.classList.add('timer-warning');
+                }
+            }, 1000);
+        }
+        
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Display question
+        function displayQuestion(index) {
+            const questions = quizData[currentLang];
+            const question = questions[index];
+            
+            // Update question counter
+            questionCounter.textContent = `${index + 1}/15`;
+            
+            // Update question number
+            let questionNumberText = `Question ${index + 1}`;
+            if (currentLang === 'fr') {
+                questionNumberText = `Question ${index + 1}`;
+            } else if (currentLang === 'ar') {
+                questionNumberText = `سؤال ${index + 1}`;
+            }
+            questionNumber.textContent = questionNumberText;
+            
+            // Update question text
+            questionText.textContent = question.question;
+            
+            // Clear options grid
+            optionsGrid.innerHTML = '';
+            
+            // Create option buttons
+            const letters = ['A', 'B', 'C', 'D'];
+            question.options.forEach((option, i) => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                if (userAnswers[index] === i) {
+                    button.classList.add('selected');
+                }
+                
+                button.innerHTML = `
+                    <div class="option-letter">${letters[i]}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                
+                button.addEventListener('click', () => {
+                    // Remove selected class from all options
+                    document.querySelectorAll('.option-btn').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked option
+                    button.classList.add('selected');
+                    
+                    // Save answer
+                    userAnswers[index] = i;
+                });
+                
+                optionsGrid.appendChild(button);
+            });
+            
+            // Update navigation buttons
+            updateNavigation();
+        }
+        
+        // Update navigation buttons
+        function updateNavigation() {
+            // Previous button
+            if (currentQuestion === 1) {
+                prevBtn.style.visibility = 'hidden';
+            } else {
+                prevBtn.style.visibility = 'visible';
+            }
+            
+            // Next/Submit button
+            if (currentQuestion === 15) {
+                let submitText = "Submit Quiz";
+                if (currentLang === 'fr') {
+                    submitText = "Soumettre le Quiz";
+                } else if (currentLang === 'ar') {
+                    submitText = "تقديم الاختبار";
+                }
+                
+                nextBtn.textContent = submitText;
+                nextBtn.className = 'nav-btn submit';
+                nextBtn.id = 'submitBtn';
+                
+                // Remove previous event listener and add submit listener
+                nextBtn.replaceWith(nextBtn.cloneNode(true));
+                const newNextBtn = document.getElementById('submitBtn');
+                newNextBtn.addEventListener('click', submitQuiz);
+            } else {
+                let nextText = "Next";
+                if (currentLang === 'fr') {
+                    nextText = "Suivant";
+                } else if (currentLang === 'ar') {
+                    nextText = "التالي";
+                }
+                
+                nextBtn.textContent = nextText;
+                nextBtn.className = 'nav-btn next';
+                nextBtn.id = 'nextBtn';
+                
+                // Remove previous event listener and add next listener
+                nextBtn.replaceWith(nextBtn.cloneNode(true));
+                const newNextBtn = document.getElementById('nextBtn');
+                newNextBtn.addEventListener('click', nextQuestion);
+            }
+            
+            // Re-attach event listener for prev button
+            prevBtn.replaceWith(prevBtn.cloneNode(true));
+            const newPrevBtn = document.getElementById('prevBtn');
+            newPrevBtn.addEventListener('click', prevQuestion);
+        }
+        
+        // Next question
+        function nextQuestion() {
+            if (currentQuestion < 15) {
+                currentQuestion++;
+                displayQuestion(currentQuestion - 1);
+                updateProgress();
+            }
+        }
+        
+        // Previous question
+        function prevQuestion() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                displayQuestion(currentQuestion - 1);
+                updateProgress();
+            }
+        }
+        
+        // Update progress bar
+        function updateProgress() {
+            const progressPercentageValue = (currentQuestion / 15) * 100;
+            progressFill.style.width = `${progressPercentageValue}%`;
+            progressPercentage.textContent = `${Math.round(progressPercentageValue)}%`;
+        }
+        
+        // Submit quiz
+        function submitQuiz() {
+            clearInterval(timerInterval);
+            
+            // Check if all questions are answered
+            const unanswered = userAnswers.filter(answer => answer === null).length;
+            
+            if (unanswered > 0) {
+                let confirmMessage = `You have ${unanswered} unanswered question(s). Submit anyway?`;
+                if (currentLang === 'fr') {
+                    confirmMessage = `Vous avez ${unanswered} question(s) sans réponse. Soumettre quand même ?`;
+                } else if (currentLang === 'ar') {
+                    confirmMessage = `لديك ${unanswered} سؤال(أسئلة) لم تتم الإجابة عليه. التقديم على أي حال؟`;
+                }
+                
+                if (confirm(confirmMessage)) {
+                    showResults();
+                }
+            } else {
+                showResults();
+            }
+        }
+        
+        // Show results
+        function showResults() {
+            quizScreen.style.display = 'none';
+            resultsScreen.style.display = 'block';
+            
+            // Calculate final score
+            const questions = quizData[currentLang];
+            let score = 0;
+            let incorrectQuestions = [];
+            
+            for (let i = 0; i < 15; i++) {
+                if (userAnswers[i] === questions[i].correct) {
+                    score++;
+                } else {
+                    incorrectQuestions.push(i);
+                }
+            }
+            
+            // Display final score
+            finalScore.textContent = `${score}/15`;
+            
+            // Display score message
+            let message = "";
+            if (currentLang === 'en') {
+                if (score === 15) {
+                    message = "Exceptional performance! You demonstrate comprehensive mastery of strategic roadmap principles.";
+                } else if (score >= 12) {
+                    message = "Strong performance. You have a solid understanding of strategic roadmap development.";
+                } else if (score >= 9) {
+                    message = "Good performance. You understand the core concepts of strategic planning.";
+                } else if (score >= 7) {
+                    message = "Satisfactory performance. Review the strategic planning concepts for improvement.";
+                } else {
+                    message = "Further study recommended. Review strategic roadmap principles and retake the quiz.";
+                }
+            } else if (currentLang === 'fr') {
+                if (score === 15) {
+                    message = "Performance exceptionnelle ! Vous démontrez une maîtrise complète des principes de la feuille de route stratégique.";
+                } else if (score >= 12) {
+                    message = "Performance solide. Vous avez une bonne compréhension du développement de feuilles de route stratégiques.";
+                } else if (score >= 9) {
+                    message = "Bonne performance. Vous comprenez les concepts clés de la planification stratégique.";
+                } else if (score >= 7) {
+                    message = "Performance satisfaisante. Revoyez les concepts de planification stratégique pour vous améliorer.";
+                } else {
+                    message = "Étude supplémentaire recommandée. Revoyez les principes de la feuille de route stratégique et reprenez le quiz.";
+                }
+            } else if (currentLang === 'ar') {
+                if (score === 15) {
+                    message = "أداء استثنائي! تظهر إتقانًا شاملاً لمبادئ خطة العمل الاستراتيجية.";
+                } else if (score >= 12) {
+                    message = "أداء قوي. لديك فهم قوي لتطوير خطط العمل الاستراتيجية.";
+                } else if (score >= 9) {
+                    message = "أداء جيد. تفهم المفاهيم الأساسية للتخطيط الاستراتيجي.";
+                } else if (score >= 7) {
+                    message = "أداء مرضٍ. راجع مفاهيم التخطيط الاستراتيجي للتحسين.";
+                } else {
+                    message = "يوصى بمزيد من الدراسة. راجع مبادئ خطة العمل الاستراتيجية وأعد الاختبار.";
+                }
+            }
+            
+            scoreMessage.textContent = message;
+            
+            // Show confetti if score >= 7
+            if (score >= 7) {
+                triggerConfetti();
+            }
+            
+            // Display incorrect questions with explanations
+            resultsDetails.innerHTML = '';
+            
+            if (incorrectQuestions.length > 0) {
+                let detailsTitle = document.createElement('h3');
+                detailsTitle.textContent = currentLang === 'en' ? 'Performance Analysis' : 
+                                          currentLang === 'fr' ? 'Analyse de Performance' : 
+                                          'تحليل الأداء';
+                resultsDetails.appendChild(detailsTitle);
+                
+                incorrectQuestions.forEach(index => {
+                    const question = questions[index];
+                    const incorrectDiv = document.createElement('div');
+                    incorrectDiv.className = 'incorrect-question';
+                    
+                    const questionElem = document.createElement('p');
+                    questionElem.innerHTML = `<strong>${currentLang === 'ar' ? 'سؤال' : 'Question'} ${index + 1}:</strong> ${question.question}`;
+                    incorrectDiv.appendChild(questionElem);
+                    
+                    const explanationElem = document.createElement('p');
+                    explanationElem.className = 'correct-answer';
+                    explanationElem.innerHTML = `<strong>${currentLang === 'en' ? 'Correct Answer:' : 
+                                                  currentLang === 'fr' ? 'Réponse Correcte:' : 
+                                                  'الإجابة الصحيحة:'}</strong> ${question.options[question.correct]}`;
+                    incorrectDiv.appendChild(explanationElem);
+                    
+                    const reasonElem = document.createElement('p');
+                    reasonElem.style.fontSize = '0.95rem';
+                    reasonElem.style.color = 'var(--gray)';
+                    reasonElem.style.marginTop = '0.5rem';
+                    reasonElem.textContent = question.explanation;
+                    incorrectDiv.appendChild(reasonElem);
+                    
+                    resultsDetails.appendChild(incorrectDiv);
+                });
+            } else {
+                let allCorrectMessage = document.createElement('p');
+                allCorrectMessage.textContent = currentLang === 'en' ? 
+                    'Congratulations! You answered all questions correctly. Your understanding of strategic roadmap principles is comprehensive.' :
+                    currentLang === 'fr' ? 
+                    'Félicitations ! Vous avez répondu correctement à toutes les questions. Votre compréhension des principes de la feuille de route stratégique est complète.' :
+                    'تهانينا! لقد أجبت على جميع الأسئلة بشكل صحيح. فهمك لمبادئ خطة العمل الاستراتيجية شامل.';
+                allCorrectMessage.style.color = 'var(--success)';
+                allCorrectMessage.style.fontWeight = '600';
+                resultsDetails.appendChild(allCorrectMessage);
+            }
+            
+            // Show professor message if user is Sherif (case-insensitive)
+            if (userName.toLowerCase() === 'sherif') {
+                professorMessage.style.display = 'block';
+            }
+            
+            resultsShown = true;
+        }
+        
+        // Restart quiz
+        restartBtn.addEventListener('click', () => {
+            // Reset quiz state
+            currentQuestion = 0;
+            userAnswers = new Array(15).fill(null);
+            resultsShown = false;
+            timeRemaining = 30 * 60;
+            
+            // Clear timer
+            clearInterval(timerInterval);
+            timerDisplay.classList.remove('timer-warning');
+            
+            // Show welcome screen
+            resultsScreen.style.display = 'none';
+            welcomeScreen.style.display = 'block';
+            
+            // Reset form
+            userNameInput.value = userName;
+            
+            // Hide professor message
+            professorMessage.style.display = 'none';
+        });
+        
+        // Download results
+        downloadBtn.addEventListener('click', () => {
+            const questions = quizData[currentLang];
+            let score = 0;
+            
+            for (let i = 0; i < 15; i++) {
+                if (userAnswers[i] === questions[i].correct) {
+                    score++;
+                }
+            }
+            
+            let resultsText = `${currentLang === 'en' ? 'Roadmap Quiz - Assessment Results' : 
+                              currentLang === 'fr' ? 'Quiz Feuille de Route - Résultats de l\'Évaluation' : 
+                              'اختبار خطة العمل - نتائج التقييم'}\n`;
+            resultsText += `===============================\n\n`;
+            resultsText += `${currentLang === 'en' ? 'Participant' : 
+                           currentLang === 'fr' ? 'Participant' : 
+                           'المشارك'}: ${userName}\n`;
+            resultsText += `${currentLang === 'en' ? 'Date' : 
+                           currentLang === 'fr' ? 'Date' : 
+                           'التاريخ'}: ${new Date().toLocaleDateString()}\n`;
+            resultsText += `${currentLang === 'en' ? 'Time' : 
+                           currentLang === 'fr' ? 'Heure' : 
+                           'الوقت'}: ${new Date().toLocaleTimeString()}\n`;
+            resultsText += `${currentLang === 'en' ? 'Score' : 
+                           currentLang === 'fr' ? 'Score' : 
+                           'النتيجة'}: ${score}/15 (${Math.round((score/15)*100)}%)\n\n`;
+            
+            resultsText += `${currentLang === 'en' ? 'Performance Summary:' : 
+                           currentLang === 'fr' ? 'Résumé de Performance:' : 
+                           'ملخص الأداء:'}\n`;
+            
+            if (score === 15) {
+                resultsText += currentLang === 'en' ? 
+                    'Exceptional performance demonstrating comprehensive mastery.\n' :
+                    currentLang === 'fr' ?
+                    'Performance exceptionnelle démontrant une maîtrise complète.\n' :
+                    'أداء استثنائي يظهر إتقاناً شاملاً.\n';
+            } else if (score >= 12) {
+                resultsText += currentLang === 'en' ? 
+                    'Strong performance showing solid understanding.\n' :
+                    currentLang === 'fr' ?
+                    'Performance solide montrant une bonne compréhension.\n' :
+                    'أداء قوي يظهر فهماً راسخاً.\n';
+            } else if (score >= 9) {
+                resultsText += currentLang === 'en' ? 
+                    'Good performance with core concept understanding.\n' :
+                    currentLang === 'fr' ?
+                    'Bonne performance avec compréhension des concepts clés.\n' :
+                    'أداء جيد مع فهم للمفاهيم الأساسية.\n';
+            } else if (score >= 7) {
+                resultsText += currentLang === 'en' ? 
+                    'Satisfactory performance with room for improvement.\n' :
+                    currentLang === 'fr' ?
+                    'Performance satisfaisante avec possibilité d\'amélioration.\n' :
+                    'أداء مرضٍ مع مجال للتحسين.\n';
+            } else {
+                resultsText += currentLang === 'en' ? 
+                    'Further study of strategic roadmap principles recommended.\n' :
+                    currentLang === 'fr' ?
+                    'Étude supplémentaire des principes de feuille de route stratégique recommandée.\n' :
+                    'يوصى بمزيد من الدراسة لمبادئ خطة العمل الاستراتيجية.\n';
+            }
+            
+            resultsText += `\n${currentLang === 'en' ? 'Detailed Results:' : 
+                           currentLang === 'fr' ? 'Résultats Détaillés:' : 
+                           'النتائج التفصيلية:'}\n`;
+            resultsText += `----------------\n\n`;
+            
+            for (let i = 0; i < 15; i++) {
+                const question = questions[i];
+                resultsText += `${i + 1}. ${question.question}\n`;
+                resultsText += `   ${currentLang === 'en' ? 'Your Answer:' : 
+                               currentLang === 'fr' ? 'Votre Réponse:' : 
+                               'إجابتك:'} ${userAnswers[i] !== null ? question.options[userAnswers[i]] : 
+                               currentLang === 'en' ? 'Not answered' : 
+                               currentLang === 'fr' ? 'Non répondue' : 
+                               'لم تتم الإجابة'}\n`;
+                resultsText += `   ${currentLang === 'en' ? 'Correct Answer:' : 
+                               currentLang === 'fr' ? 'Réponse Correcte:' : 
+                               'الإجابة الصحيحة:'} ${question.options[question.correct]}\n`;
+                resultsText += `   ${currentLang === 'en' ? 'Explanation:' : 
+                               currentLang === 'fr' ? 'Explication:' : 
+                               'الشرح:'} ${question.explanation}\n\n`;
+            }
+            
+            const blob = new Blob([resultsText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const fileName = currentLang === 'en' ? 'roadmap-quiz-results' :
+                            currentLang === 'fr' ? 'resultats-quiz-feuille-de-route' :
+                            'نتائج-اختبار-خطة-العمل';
+            a.download = `${fileName}-${userName.replace(/\s+/g, '-')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+        
+        // Confetti function
+        function triggerConfetti() {
+            // Main burst
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.6 }
+            });
+            
+            // Side bursts
+            setTimeout(() => {
+                confetti({
+                    particleCount: 80,
+                    angle: 60,
+                    spread: 80,
+                    origin: { x: 0 }
+                });
+                
+                confetti({
+                    particleCount: 80,
+                    angle: 120,
+                    spread: 80,
+                    origin: { x: 1 }
+                });
+            }, 250);
+        }
+        
+        // Initialize with English
+        updateLanguage('en');
+    </script>
+</body>
+</html>
