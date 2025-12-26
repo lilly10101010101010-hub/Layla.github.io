@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap Mastery Quiz | Strategic Planning Assessment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --primary-dark: #5b21b6;
+            --secondary: #10b981;
+            --secondary-dark: #059669;
+            --accent: #f59e0b;
+            --accent-dark: #d97706;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --error: #ef4444;
+            --success: #10b981;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius: 12px;
+            --radius-lg: 20px;
+        }
+
+        /* Dark mode colors */
+        .dark-mode {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --light: #1e293b;
+            --dark: #f8fafc;
+            --gray: #94a3b8;
+            --gray-light: #334155;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            transition: var(--transition);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Language Selector */
+        header {
+            background-color: var(--light);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border-radius: 50px;
+            border: 2px solid var(--gray-light);
+            background: transparent;
+            color: var(--dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .lang-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .welcome-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin-bottom: 3rem;
+        }
+
+        .welcome-form {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Quiz Screen */
+        .quiz-screen {
+            display: none;
+            padding: 3rem 0;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--gray-light);
+        }
+
+        .quiz-info {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .info-box {
+            background-color: var(--gray-light);
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            font-weight: 600;
+        }
+
+        .info-box .label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: var(--gray-light);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Card */
+        .question-card {
+            background-color: white;
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
+        }
+
+        .question-number {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-btn {
+            padding: 18px 20px;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--radius);
+            background-color: white;
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .option-btn.selected {
+            border-color: var(--primary);
+            background-color: rgba(124, 58, 237, 0.05);
+        }
+
+        .option-letter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--gray-light);
+            color: var(--dark);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .option-btn.selected .option-letter {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .nav-btn {
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+        }
+
+        .nav-btn.prev {
+            background-color: var(--gray-light);
+            color: var(--dark);
+        }
+
+        .nav-btn.prev:hover {
+            background-color: var(--gray);
+            color: white;
+        }
+
+        .nav-btn.next {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .nav-btn.next:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-btn.submit {
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+            color: white;
+        }
+
+        .nav-btn.submit:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Results Screen */
+        .results-screen {
+            display: none;
+            padding: 3rem 0;
+        }
+
+        .results-card {
+            background-color: white;
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .score-display {
+            font-size: 5rem;
+            font-weight: 700;
+            margin: 2rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .score-message {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--gray);
+        }
+
+        .results-details {
+            text-align: left;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--gray-light);
+        }
+
+        .results-details h3 {
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .incorrect-question {
+            background-color: rgba(239, 68, 68, 0.05);
+            border-left: 4px solid var(--error);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: var(--radius);
+        }
+
+        .correct-answer {
+            color: var(--success);
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .results-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+        }
+
+        .action-btn.restart {
+            background-color: var(--gray-light);
+            color: var(--dark);
+        }
+
+        .action-btn.restart:hover {
+            background-color: var(--gray);
+            color: white;
+        }
+
+        .action-btn.download {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .action-btn.download:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Professor Message */
+        .professor-message {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem;
+            border-radius: var(--radius-lg);
+            margin-top: 3rem;
+            text-align: center;
+            display: none;
+        }
+
+        .professor-message h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .professor-message p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .signature {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            margin-top: 2rem;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--gray-light);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            color: var(--gray);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 2.2rem;
+            }
+            
+            .question-text {
+                font-size: 1.3rem;
+            }
+            
+            .results-card {
+                padding: 2rem;
+            }
+            
+            .score-display {
+                font-size: 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Language Selector -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-road"></i>
+                    <span class="logo-text">Roadmap Master</span>
+                </div>
+                <div class="language-selector">
+                    <button class="lang-btn active" data-lang="en">English</button>
+                    <button class="lang-btn" data-lang="fr">Français</button>
+                    <button class="lang-btn" data-lang="ar">العربية</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Welcome Screen -->
+    <section class="welcome-screen" id="welcomeScreen">
+        <div class="container">
+            <h1 class="welcome-title" data-en="Roadmap Mastery Quiz" data-fr="Quiz de Maîtrise de la Feuille de Route" data-ar="اختبار إتقان خطة العمل">Roadmap Mastery Quiz</h1>
+            <p class="welcome-subtitle" data-en="Test your knowledge of strategic planning and roadmap development with this interactive assessment. Perfect for students and professionals alike." data-fr="Testez vos connaissances en planification stratégique et développement de feuilles de route avec cette évaluation interactive. Parfait pour les étudiants et les professionnels." data-ar="اختبر معرفتك في التخطيط الاستراتيجي وتطوير خطط العمل مع هذا التقييم التفاعلي. مثالي للطلاب والمحترفين على حد سواء.">Test your knowledge of strategic planning and roadmap development with this interactive assessment. Perfect for students and professionals alike.</p>
+            
+            <div class="welcome-form">
+                <div class="form-group">
+                    <label for="userName" data-en="Enter Your Name" data-fr="Entrez Votre Nom" data-ar="أدخل اسمك">Enter Your Name</label>
+                    <input type="text" id="userName" placeholder="Your name" data-en-placeholder="Your name" data-fr-placeholder="Votre nom" data-ar-placeholder="اسمك">
+                </div>
+                
+                <button class="start-btn" id="startBtn" data-en="Start Quiz" data-fr="Commencer le Quiz" data-ar="ابدأ الاختبار">Start Quiz</button>
+            </div>
+            
+            <p class="welcome-subtitle" style="font-size: 1rem; max-width: 600px;" data-en="15 questions • True/False & Multiple Choice • Instant Feedback • Detailed Results" data-fr="15 questions • Vrai/Faux & Choix Multiples • Retour Instantané • Résultats Détaillés" data-ar="15 سؤال • صح/خطأ ومتعدد الخيارات • ملاحظات فورية • نتائج مفصلة">15 questions • True/False & Multiple Choice • Instant Feedback • Detailed Results</p>
+        </div>
+    </section>
+
+    <!-- Quiz Screen -->
+    <section class="quiz-screen" id="quizScreen">
+        <div class="container">
+            <div class="quiz-header">
+                <div class="quiz-info">
+                    <div class="info-box">
+                        <div class="label" data-en="Player" data-fr="Joueur" data-ar="اللاعب">Player</div>
+                        <div id="playerNameDisplay">User</div>
+                    </div>
+                    <div class="info-box">
+                        <div class="label" data-en="Question" data-fr="Question" data-ar="السؤال">Question</div>
+                        <div id="questionCounter">1/15</div>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <div class="label" data-en="Score" data-fr="Score" data-ar="النتيجة">Score</div>
+                    <div id="currentScore">0</div>
+                </div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <div class="question-card fade-in" id="questionCard">
+                <div class="question-number" id="questionNumber">Question 1</div>
+                <h2 class="question-text" id="questionText">Question text will appear here</h2>
+                
+                <div class="options-grid" id="optionsGrid">
+                    <!-- Options will be generated here -->
+                </div>
+                
+                <div class="quiz-controls">
+                    <button class="nav-btn prev" id="prevBtn" data-en="Previous" data-fr="Précédent" data-ar="السابق">Previous</button>
+                    <button class="nav-btn next" id="nextBtn" data-en="Next" data-fr="Suivant" data-ar="التالي">Next</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Screen -->
+    <section class="results-screen" id="resultsScreen">
+        <div class="container">
+            <div class="results-card fade-in">
+                <h2 class="results-title" data-en="Quiz Results" data-fr="Résultats du Quiz" data-ar="نتائج الاختبار">Quiz Results</h2>
+                <div class="score-display" id="finalScore">0/15</div>
+                <p class="score-message" id="scoreMessage">Message will appear here</p>
+                
+                <div class="results-details" id="resultsDetails">
+                    <h3 data-en="Review Your Answers" data-fr="Revoir Vos Réponses" data-ar="مراجعة إجاباتك">Review Your Answers</h3>
+                    <!-- Incorrect questions will be displayed here -->
+                </div>
+                
+                <div class="results-actions">
+                    <button class="action-btn restart" id="restartBtn" data-en="Restart Quiz" data-fr="Recommencer le Quiz" data-ar="إعادة الاختبار">Restart Quiz</button>
+                    <button class="action-btn download" id="downloadBtn" data-en="Download Results" data-fr="Télécharger les Résultats" data-ar="تحميل النتائج">Download Results</button>
+                </div>
+            </div>
+            
+            <!-- Professor Message (only for Sherif) -->
+            <div class="professor-message" id="professorMessage">
+                <h2 data-en="A Special Thank You" data-fr="Un Remerciement Spécial" data-ar="شكر خاص">A Special Thank You</h2>
+                <p data-en="Professor Sherif, thank you for your invaluable guidance, dedication to teaching, and for inspiring us to think critically about strategic planning. Your expertise has been instrumental in developing this assessment, and your mentorship continues to shape future professionals in our field." data-fr="Professeur Sherif, merci pour vos conseils inestimables, votre dévouement à l'enseignement et pour nous avoir inspirés à penser de manière critique à la planification stratégique. Votre expertise a été déterminante dans le développement de cette évaluation, et votre mentorat continue de façonner les futurs professionnels de notre domaine." data-ar="البروفيسور شريف، شكرًا لك على توجيهك القيم، تفانيك في التدريس، وإلهامنا للتفكير النقدي في التخطيط الاستراتيجي. كانت خبرتك أساسية في تطوير هذا التقييم، وما زال إرشادك يشكل محترفي المستقبل في مجالنا.">Professor Sherif, thank you for your invaluable guidance, dedication to teaching, and for inspiring us to think critically about strategic planning. Your expertise has been instrumental in developing this assessment, and your mentorship continues to shape future professionals in our field.</p>
+                <p data-en="This interactive quiz was created as a demonstration of the concepts you've taught us, applying roadmap development principles in a practical, engaging format." data-fr="Ce quiz interactif a été créé comme une démonstration des concepts que vous nous avez enseignés, appliquant les principes de développement de feuilles de route dans un format pratique et engageant." data-ar="تم إنشاء هذا الاختبار التفاعلي كعرض للمفاهيم التي علمتنا إياها، بتطبيق مبادئ تطوير خطط العمل في شكل عملي وجذاب.">This interactive quiz was created as a demonstration of the concepts you've taught us, applying roadmap development principles in a practical, engaging format.</p>
+                <p class="signature" data-en="With gratitude, Your Student" data-fr="Avec gratitude, Votre Étudiant" data-ar="مع الامتنان، طالبك">With gratitude, Your Student</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p id="footerText" data-en="Roadmap Mastery Quiz © 2023 | Created for Educational Purposes" data-fr="Quiz de Maîtrise de la Feuille de Route © 2023 | Créé à des fins éducatives" data-ar="اختبار إتقان خطة العمل © 2023 | تم إنشاؤه لأغراض تعليمية">Roadmap Mastery Quiz © 2023 | Created for Educational Purposes</p>
+        </div>
+    </footer>
+
+    <script>
+        // Language management
+        let currentLang = 'en';
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const textElements = document.querySelectorAll('[data-en]');
+        
+        // Update all text elements based on selected language
+        function updateLanguage(lang) {
+            currentLang = lang;
+            
+            // Update button states
+            langButtons.forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Update all text elements
+            textElements.forEach(element => {
+                const text = element.getAttribute(`data-${lang}`);
+                if (text) {
+                    if (element.hasAttribute('data-en-placeholder')) {
+                        element.placeholder = element.getAttribute(`data-${lang}-placeholder`);
+                    } else {
+                        element.textContent = text;
+                    }
+                }
+            });
+            
+            // Update question data if quiz has started
+            if (currentQuestion > 0) {
+                displayQuestion(currentQuestion - 1);
+            }
+            
+            // Update results if shown
+            if (resultsShown) {
+                updateResultsDisplay();
+            }
+        }
+        
+        // Language button click events
+        langButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const lang = button.getAttribute('data-lang');
+                updateLanguage(lang);
+            });
+        });
+        
+        // Quiz data - 15 questions about roadmap creation
+        const quizData = {
+            en: [
+                {
+                    question: "The first step in creating any roadmap is to define clear objectives and goals.",
+                    options: ["True", "False"],
+                    correct: 0,
+                    explanation: "True. Before creating a roadmap, you must first define what you want to achieve with clear, measurable objectives."
+                },
+                {
+                    question: "Which of these is NOT a key component of an effective roadmap?",
+                    options: ["Timeline", "Stakeholder buy-in", "Detailed budget calculations", "Key milestones"],
+                    correct: 2,
+                    explanation: "Detailed budget calculations. While budgeting is important, it's typically handled separately from the high-level roadmap which focuses on strategy, timeline, and milestones."
+                },
+                {
+                    question: "A roadmap should remain fixed and unchanged once finalized.",
+                    options: ["True", "False"],
+                    correct: 1,
+                    explanation: "False. Roadmaps should be flexible and adaptable to changing circumstances, market conditions, and new information."
+                },
+                {
+                    question: "Which visualization method is most effective for communicating roadmap progress to stakeholders?",
+                    options: ["Gantt charts", "Spreadsheets", "Kanban boards", "All of the above"],
+                    correct: 3,
+                    explanation: "All of the above. Different visualization methods work for different audiences and purposes in roadmap communication."
+                },
+                {
+                    question: "Roadmaps should only include tasks that will definitely be completed.",
+                    options: ["True", "False"],
+                    correct: 1,
+                    explanation: "False. Roadmaps often include aspirational goals and placeholder items that may change based on resources and priorities."
+                },
+                {
+                    question: "What is the primary purpose of a roadmap in strategic planning?",
+                    options: ["To assign individual tasks", "To track daily progress", "To communicate strategy and direction", "To calculate ROI"],
+                    correct: 2,
+                    explanation: "To communicate strategy and direction. Roadmaps are strategic communication tools that align teams and stakeholders around priorities and timelines."
+                },
+                {
+                    question: "Which stakeholder group should be consulted FIRST when creating a roadmap?",
+                    options: ["Executives", "End users", "Development team", "Marketing department"],
+                    correct: 1,
+                    explanation: "End users. Understanding user needs and pain points should inform roadmap priorities before considering internal stakeholders."
+                },
+                {
+                    question: "A good roadmap always includes specific dates for every deliverable.",
+                    options: ["True", "False"],
+                    correct: 1,
+                    explanation: "False. While timelines are important, good roadmaps often use timeframes (Q1, Q2) rather than specific dates to allow for flexibility."
+                },
+                {
+                    question: "What does OKR stand for in the context of roadmap planning?",
+                    options: ["Operational Key Results", "Objectives and Key Results", "Organizational Knowledge Resources", "Outcome Key Responsibilities"],
+                    correct: 1,
+                    explanation: "Objectives and Key Results. OKRs are a goal-setting framework used to define and track objectives and their outcomes."
+                },
+                {
+                    question: "Roadmaps are only useful for product development projects.",
+                    options: ["True", "False"],
+                    correct: 1,
+                    explanation: "False. Roadmaps can be used for any strategic initiative including marketing campaigns, organizational change, research projects, and more."
+                },
+                {
+                    question: "Which technique helps prioritize items on a roadmap?",
+                    options: ["RICE scoring", "SWOT analysis", "PEST analysis", "All of the above"],
+                    correct: 3,
+                    explanation: "All of the above. Various techniques including RICE (Reach, Impact, Confidence, Effort), SWOT, and others help prioritize roadmap items."
+                },
+                {
+                    question: "A roadmap should be detailed enough that no further planning is required.",
+                    options: ["True", "False"],
+                    correct: 1,
+                    explanation: "False. Roadmaps provide high-level direction; detailed planning happens at the project or sprint level."
+                },
+                {
+                    question: "What is the ideal timeframe for a typical strategic roadmap?",
+                    options: ["1-3 months", "6-12 months", "2-3 years", "It varies by industry and goals"],
+                    correct: 3,
+                    explanation: "It varies by industry and goals. Technology roadmaps might be 6-12 months while construction or pharmaceutical roadmaps might span several years."
+                },
+                {
+                    question: "Which of these is a common roadmap pitfall to avoid?",
+                    options: ["Overloading with too many initiatives", "Lacking stakeholder alignment", "Being too rigid", "All of the above"],
+                    correct: 3,
+                    explanation: "All of the above. Successful roadmaps avoid overloading, ensure stakeholder alignment, and maintain appropriate flexibility."
+                },
+                {
+                    question: "Roadmap reviews should occur at least:",
+                    options: ["Daily", "Weekly", "Monthly", "Quarterly"],
+                    correct: 3,
+                    explanation: "Quarterly. Most organizations review and adjust their roadmaps quarterly to respond to changing conditions while maintaining strategic focus."
+                }
+            ],
+            fr: [
+                {
+                    question: "La première étape de la création d'une feuille de route est de définir des objectifs clairs.",
+                    options: ["Vrai", "Faux"],
+                    correct: 0,
+                    explanation: "Vrai. Avant de créer une feuille de route, vous devez d'abord définir ce que vous voulez réaliser avec des objectifs clairs et mesurables."
+                },
+                {
+                    question: "Lequel de ces éléments n'est PAS un composant clé d'une feuille de route efficace?",
+                    options: ["Calendrier", "Adhésion des parties prenantes", "Calculs budgétaires détaillés", "Jalons clés"],
+                    correct: 2,
+                    explanation: "Calculs budgétaires détaillés. Bien que la budgétisation soit importante, elle est généralement traitée séparément de la feuille de route de haut niveau qui se concentre sur la stratégie, le calendrier et les jalons."
+                },
+                {
+                    question: "Une feuille de route doit rester fixe et inchangée une fois finalisée.",
+                    options: ["Vrai", "Faux"],
+                    correct: 1,
+                    explanation: "Faux. Les feuilles de route doivent être flexibles et adaptables aux circonstances changeantes, aux conditions du marché et aux nouvelles informations."
+                },
+                {
+                    question: "Quelle méthode de visualisation est la plus efficace pour communiquer les progrès de la feuille de route aux parties prenantes?",
+                    options: ["Diagrammes de Gantt", "Feuilles de calcul", "Tableaux Kanban", "Toutes ces réponses"],
+                    correct: 3,
+                    explanation: "Toutes ces réponses. Différentes méthodes de visualisation fonctionnent pour différents publics et objectifs dans la communication de la feuille de route."
+                },
+                {
+                    question: "Les feuilles de route ne doivent inclure que les tâches qui seront définitivement terminées.",
+                    options: ["Vrai", "Faux"],
+                    correct: 1,
+                    explanation: "Faux. Les feuilles de route incluent souvent des objectifs ambitieux et des éléments réservés qui peuvent changer en fonction des ressources et des priorités."
+                },
+                {
+                    question: "Quel est l'objectif principal d'une feuille de route dans la planification stratégique?",
+                    options: ["Assigner des tâches individuelles", "Suivre les progrès quotidiens", "Communiquer la stratégie et la direction", "Calculer le ROI"],
+                    correct: 2,
+                    explanation: "Communiquer la stratégie et la direction. Les feuilles de route sont des outils de communication stratégique qui alignent les équipes et les parties prenantes sur les priorités et les calendriers."
+                },
+                {
+                    question: "Quel groupe de parties prenantes doit être consulté EN PREMIER lors de la création d'une feuille de route?",
+                    options: ["Dirigeants", "Utilisateurs finaux", "Équipe de développement", "Service marketing"],
+                    correct: 1,
+                    explanation: "Utilisateurs finaux. Comprendre les besoins et les points sensibles des utilisateurs doit éclairer les priorités de la feuille de route avant de prendre en compte les parties prenantes internes."
+                },
+                {
+                    question: "Une bonne feuille de route comprend toujours des dates spécifiques pour chaque livrable.",
+                    options: ["Vrai", "Faux"],
+                    correct: 1,
+                    explanation: "Faux. Bien que les calendriers soient importants, les bonnes feuilles de route utilisent souvent des délais (T1, T2) plutôt que des dates spécifiques pour permettre une certaine flexibilité."
+                },
+                {
+                    question: "Que signifie OKR dans le contexte de la planification de feuille de route?",
+                    options: ["Résultats Clés Opérationnels", "Objectifs et Résultats Clés", "Ressources de Connaissance Organisationnelle", "Responsabilités Clés des Résultats"],
+                    correct: 1,
+                    explanation: "Objectifs et Résultats Clés. Les OKR sont un cadre de fixation d'objectifs utilisé pour définir et suivre les objectifs et leurs résultats."
+                },
+                {
+                    question: "Les feuilles de route ne sont utiles que pour les projets de développement de produits.",
+                    options: ["Vrai", "Faux"],
+                    correct: 1,
+                    explanation: "Faux. Les feuilles de route peuvent être utilisées pour toute initiative stratégique, y compris les campagnes marketing, les changements organisationnels, les projets de recherche, etc."
+                },
+                {
+                    question: "Quelle technique aide à prioriser les éléments sur une feuille de route?",
+                    options: ["Score RICE", "Analyse SWOT", "Analyse PEST", "Toutes ces réponses"],
+                    correct: 3,
+                    explanation: "Toutes ces réponses. Diverses techniques, notamment RICE (Portée, Impact, Confiance, Effort), SWOT et d'autres, aident à prioriser les éléments de la feuille de route."
+                },
+                {
+                    question: "Une feuille de route doit être suffisamment détaillée pour qu'aucune planification supplémentaire ne soit nécessaire.",
+                    options: ["Vrai", "Faux"],
+                    correct: 1,
+                    explanation: "Faux. Les feuilles de route fournissent une orientation de haut niveau; la planification détaillée se fait au niveau du projet ou du sprint."
+                },
+                {
+                    question: "Quel est le délai idéal pour une feuille de route stratégique typique?",
+                    options: ["1-3 mois", "6-12 mois", "2-3 ans", "Cela varie selon l'industrie et les objectifs"],
+                    correct: 3,
+                    explanation: "Cela varie selon l'industrie et les objectifs. Les feuilles de route technologiques pourraient être de 6 à 12 mois, tandis que les feuilles de route de construction ou pharmaceutiques pourraient s'étendre sur plusieurs années."
+                },
+                {
+                    question: "Lequel de ces éléments est un piège courant à éviter dans une feuille de route?",
+                    options: ["Surcharger avec trop d'initiatives", "Manquer d'alignement des parties prenantes", "Être trop rigide", "Toutes ces réponses"],
+                    correct: 3,
+                    explanation: "Toutes ces réponses. Les feuilles de route réussies évitent la surcharge, assurent l'alignement des parties prenantes et maintiennent une flexibilité appropriée."
+                },
+                {
+                    question: "Les revues de feuille de route devraient avoir lieu au moins:",
+                    options: ["Quotidiennement", "Hebdomadairement", "Mensuellement", "Trimestriellement"],
+                    correct: 3,
+                    explanation: "Trimestriellement. La plupart des organisations examinent et ajustent leurs feuilles de route trimestriellement pour répondre aux conditions changeantes tout en maintenant l'accent stratégique."
+                }
+            ],
+            ar: [
+                {
+                    question: "الخطوة الأولى في إنشاء أي خطة عمل هي تحديد أهداف وغايات واضحة.",
+                    options: ["صحيح", "خطأ"],
+                    correct: 0,
+                    explanation: "صحيح. قبل إنشاء خطة عمل، يجب أولاً تحديد ما تريد تحقيقه بأهداف واضحة وقابلة للقياس."
+                },
+                {
+                    question: "أي مما يلي ليس عنصرًا أساسيًا في خطة عمل فعالة؟",
+                    options: ["الجدول الزمني", "موافقة أصحاب المصلحة", "حسابات الميزانية التفصيلية", "المحطات الرئيسية"],
+                    correct: 2,
+                    explanation: "حسابات الميزانية التفصيلية. على الرغم من أهمية وضع الميزانية، إلا أنها عادة ما تتم معالجتها بشكل منفصل عن خطة العمل عالية المستوى التي تركز على الاستراتيجية والجدول الزمني والمحطات الرئيسية."
+                },
+                {
+                    question: "يجب أن تبقى خطة العمل ثابتة دون تغيير بمجرد الانتهاء منها.",
+                    options: ["صحيح", "خطأ"],
+                    correct: 1,
+                    explanation: "خطأ. يجب أن تكون خطط العمل مرنة وقابلة للتكيف مع الظروف المتغيرة وظروف السوق والمعلومات الجديدة."
+                },
+                {
+                    question: "أي طريقة عرض مرئية هي الأكثر فعالية لتوصيل تقدم خطة العمل لأصحاب المصلحة؟",
+                    options: ["مخططات جانت", "جداول البيانات", "لوحات كانبان", "كل ما سبق"],
+                    correct: 3,
+                    explanation: "كل ما سبق. تعمل طرق العرض المرئي المختلفة مع جماهير وأغراض مختلفة في توصيل خطة العمل."
+                },
+                {
+                    question: "يجب أن تتضمن خطط العمل فقط المهام التي سيتم إكمالها بالتأكيد.",
+                    options: ["صحيح", "خطأ"],
+                    correct: 1,
+                    explanation: "خطأ. غالبًا ما تتضمن خطط العمل أهدافًا طموحة وعناصر مؤقتة قد تتغير بناءً على الموارد والأولويات."
+                },
+                {
+                    question: "ما هو الغرض الأساسي من خطة العمل في التخطيط الاستراتيجي؟",
+                    options: ["تعيين المهام الفردية", "تتبع التقدم اليومي", "توصيل الاستراتيجية والاتجاه", "حساب العائد على الاستثمار"],
+                    correct: 2,
+                    explanation: "توصيل الاستراتيجية والاتجاه. تعد خطط العمل أدوات اتصال استراتيجية تتماشى مع الفرق وأصحاب المصلحة حول الأولويات والجداول الزمنية."
+                },
+                {
+                    question: "أي مجموعة من أصحاب المصلحة يجب استشارتها أولاً عند إنشاء خطة عمل؟",
+                    options: ["المدراء التنفيذيون", "المستخدمون النهائيون", "فريق التطوير", "قسم التسويق"],
+                    correct: 1,
+                    explanation: "المستخدمون النهائيون. يجب أن يوجه فهم احتياجات المستخدمين ونقاط الضعف أولويات خطة العمل قبل النظر في أصحاب المصلحة الداخليين."
+                },
+                {
+                    question: "تتضمن خطة العمل الجيدة دائمًا تواريخ محددة لكل عنصر قابل للتسليم.",
+                    options: ["صحيح", "خطأ"],
+                    correct: 1,
+                    explanation: "خطأ. على الرغم من أهمية الجداول الزمنية، إلا أن خطط العمل الجيدة غالبًا ما تستخدم أطرًا زمنية (الربع الأول، الربع الثاني) بدلاً من التواريخ المحددة للسماح بالمرونة."
+                },
+                {
+                    question: "ماذا تعني OKR في سياق تخطيط خطة العمل؟",
+                    options: ["النتائج الرئيسية التشغيلية", "الأهداف والنتائج الرئيسية", "موارد المعرفة التنظيمية", "مسؤوليات النتائج الرئيسية"],
+                    correct: 1,
+                    explanation: "الأهداف والنتائج الرئيسية. تعد OKR إطار عمل لوضع الأهداف يستخدم لتحديد وتتبع الأهداف ونتائجها."
+                },
+                {
+                    question: "خطط العمل مفيدة فقط لمشاريع تطوير المنتجات.",
+                    options: ["صحيح", "خطأ"],
+                    correct: 1,
+                    explanation: "خطأ. يمكن استخدام خطط العمل لأي مبادرة استراتيجية بما في ذلك الحملات التسويقية والتغيير التنظيمي ومشاريع البحث والمزيد."
+                },
+                {
+                    question: "أي تقنية تساعد في تحديد أولويات العناصر في خطة العمل؟",
+                    options: ["تسجيل RICE", "تحليل SWOT", "تحليل PEST", "كل ما سبق"],
+                    correct: 3,
+                    explanation: "كل ما سبق. تساعد التقنيات المختلفة بما في ذلك RICE (الوصول، التأثير، الثقة، الجهد)، وSWOT وغيرها في تحديد أولويات عناصر خطة العمل."
+                },
+                {
+                    question: "يجب أن تكون خطة العمل مفصلة بما يكفي بحيث لا تكون هناك حاجة إلى مزيد من التخطيط.",
+                    options: ["صحيح", "خطأ"],
+                    correct: 1,
+                    explanation: "خطأ. توفر خطط العمل اتجاهًا عالي المستوى؛ يحدث التخطيط التفصيلي على مستوى المشروع أو السباق."
+                },
+                {
+                    question: "ما هو الإطار الزمني المثالي لخطة عمل استراتيجية نموذجية؟",
+                    options: ["1-3 أشهر", "6-12 شهرًا", "2-3 سنوات", "يختلف حسب الصناعة والأهداف"],
+                    correct: 3,
+                    explanation: "يختلف حسب الصناعة والأهداف. قد تكون خطط العمل التكنولوجية من 6 إلى 12 شهرًا بينما قد تمتد خطط عمل البناء أو الأدوية على عدة سنوات."
+                },
+                {
+                    question: "أي مما يلي هو خطأ شائع يجب تجنبه في خطة العمل؟",
+                    options: ["الإفراط في تحميلها بالعديد من المبادرات", "عدم مواءمة أصحاب المصلحة", "كونها شديدة الصرامة", "كل ما سبق"],
+                    correct: 3,
+                    explanation: "كل ما سبق. تتجنب خطط العمل الناجحة التحميل الزائد، وتضمن مواءمة أصحاب المصلحة، وتحافظ على المرونة المناسبة."
+                },
+                {
+                    question: "يجب أن تحدث مراجعات خطة العمل على الأقل:",
+                    options: ["يوميًا", "أسبوعيًا", "شهريًا", "ربع سنويًا"],
+                    correct: 3,
+                    explanation: "ربع سنويًا. تفحص معظم المؤسسات وتعدل خطط عملها كل ثلاثة أشهر للاستجابة للظروف المتغيرة مع الحفاظ على التركيز الاستراتيجي."
+                }
+            ]
+        };
+        
+        // Quiz state variables
+        let currentQuestion = 0;
+        let userAnswers = new Array(15).fill(null);
+        let userName = "";
+        let resultsShown = false;
+        
+        // DOM elements
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const quizScreen = document.getElementById('quizScreen');
+        const resultsScreen = document.getElementById('resultsScreen');
+        const startBtn = document.getElementById('startBtn');
+        const userNameInput = document.getElementById('userName');
+        const playerNameDisplay = document.getElementById('playerNameDisplay');
+        const questionCounter = document.getElementById('questionCounter');
+        const currentScoreElement = document.getElementById('currentScore');
+        const progressFill = document.getElementById('progressFill');
+        const questionNumber = document.getElementById('questionNumber');
+        const questionText = document.getElementById('questionText');
+        const optionsGrid = document.getElementById('optionsGrid');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const finalScore = document.getElementById('finalScore');
+        const scoreMessage = document.getElementById('scoreMessage');
+        const resultsDetails = document.getElementById('resultsDetails');
+        const restartBtn = document.getElementById('restartBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const professorMessage = document.getElementById('professorMessage');
+        
+        // Start quiz
+        startBtn.addEventListener('click', () => {
+            userName = userNameInput.value.trim();
+            
+            if (!userName) {
+                if (currentLang === 'en') {
+                    alert("Please enter your name before starting the quiz.");
+                } else if (currentLang === 'fr') {
+                    alert("Veuillez entrer votre nom avant de commencer le quiz.");
+                } else {
+                    alert("يرجى إدخال اسمك قبل بدء الاختبار.");
+                }
+                return;
+            }
+            
+            playerNameDisplay.textContent = userName;
+            welcomeScreen.style.display = 'none';
+            quizScreen.style.display = 'block';
+            
+            // Initialize quiz
+            currentQuestion = 1;
+            displayQuestion(0);
+            updateNavigation();
+            updateProgress();
+        });
+        
+        // Display question
+        function displayQuestion(index) {
+            const questions = quizData[currentLang];
+            const question = questions[index];
+            
+            // Update question counter
+            questionCounter.textContent = `${index + 1}/15`;
+            
+            // Update question number
+            if (currentLang === 'en') {
+                questionNumber.textContent = `Question ${index + 1}`;
+            } else if (currentLang === 'fr') {
+                questionNumber.textContent = `Question ${index + 1}`;
+            } else {
+                questionNumber.textContent = `سؤال ${index + 1}`;
+            }
+            
+            // Update question text
+            questionText.textContent = question.question;
+            
+            // Clear options grid
+            optionsGrid.innerHTML = '';
+            
+            // Create option buttons
+            const letters = ['A', 'B', 'C', 'D'];
+            question.options.forEach((option, i) => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                if (userAnswers[index] === i) {
+                    button.classList.add('selected');
+                }
+                
+                button.innerHTML = `
+                    <div class="option-letter">${letters[i]}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                
+                button.addEventListener('click', () => {
+                    // Remove selected class from all options
+                    document.querySelectorAll('.option-btn').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked option
+                    button.classList.add('selected');
+                    
+                    // Save answer
+                    userAnswers[index] = i;
+                    
+                    // Calculate and update current score
+                    updateCurrentScore();
+                });
+                
+                optionsGrid.appendChild(button);
+            });
+            
+            // Update navigation buttons
+            updateNavigation();
+        }
+        
+        // Update navigation buttons
+        function updateNavigation() {
+            // Previous button
+            if (currentQuestion === 1) {
+                prevBtn.style.visibility = 'hidden';
+            } else {
+                prevBtn.style.visibility = 'visible';
+            }
+            
+            // Next/Submit button
+            if (currentQuestion === 15) {
+                if (currentLang === 'en') {
+                    nextBtn.textContent = 'Submit Quiz';
+                } else if (currentLang === 'fr') {
+                    nextBtn.textContent = 'Soumettre le Quiz';
+                } else {
+                    nextBtn.textContent = 'تقديم الاختبار';
+                }
+                nextBtn.className = 'nav-btn submit';
+                nextBtn.id = 'submitBtn';
+                
+                // Remove previous event listener and add submit listener
+                nextBtn.replaceWith(nextBtn.cloneNode(true));
+                const newNextBtn = document.getElementById('submitBtn');
+                newNextBtn.addEventListener('click', submitQuiz);
+            } else {
+                if (currentLang === 'en') {
+                    nextBtn.textContent = 'Next';
+                } else if (currentLang === 'fr') {
+                    nextBtn.textContent = 'Suivant';
+                } else {
+                    nextBtn.textContent = 'التالي';
+                }
+                nextBtn.className = 'nav-btn next';
+                nextBtn.id = 'nextBtn';
+                
+                // Remove previous event listener and add next listener
+                nextBtn.replaceWith(nextBtn.cloneNode(true));
+                const newNextBtn = document.getElementById('nextBtn');
+                newNextBtn.addEventListener('click', nextQuestion);
+            }
+            
+            // Re-attach event listener for prev button
+            prevBtn.replaceWith(prevBtn.cloneNode(true));
+            const newPrevBtn = document.getElementById('prevBtn');
+            newPrevBtn.addEventListener('click', prevQuestion);
+        }
+        
+        // Next question
+        function nextQuestion() {
+            if (currentQuestion < 15) {
+                currentQuestion++;
+                displayQuestion(currentQuestion - 1);
+                updateProgress();
+            }
+        }
+        
+        // Previous question
+        function prevQuestion() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                displayQuestion(currentQuestion - 1);
+                updateProgress();
+            }
+        }
+        
+        // Update progress bar
+        function updateProgress() {
+            const progressPercentage = (currentQuestion / 15) * 100;
+            progressFill.style.width = `${progressPercentage}%`;
+        }
+        
+        // Calculate current score
+        function updateCurrentScore() {
+            let score = 0;
+            const questions = quizData[currentLang];
+            
+            for (let i = 0; i < 15; i++) {
+                if (userAnswers[i] !== null && userAnswers[i] === questions[i].correct) {
+                    score++;
+                }
+            }
+            
+            currentScoreElement.textContent = score;
+        }
+        
+        // Submit quiz
+        function submitQuiz() {
+            // Check if all questions are answered
+            const unanswered = userAnswers.filter(answer => answer === null).length;
+            
+            if (unanswered > 0) {
+                if (currentLang === 'en') {
+                    if (confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) {
+                        showResults();
+                    }
+                } else if (currentLang === 'fr') {
+                    if (confirm(`Vous avez ${unanswered} question(s) sans réponse. Soumettre quand même ?`)) {
+                        showResults();
+                    }
+                } else {
+                    if (confirm(`لديك ${unanswered} سؤال(أسئلة) لم تتم الإجابة عليه. التقديم على أي حال؟`)) {
+                        showResults();
+                    }
+                }
+            } else {
+                showResults();
+            }
+        }
+        
+        // Show results
+        function showResults() {
+            quizScreen.style.display = 'none';
+            resultsScreen.style.display = 'block';
+            
+            // Calculate final score
+            const questions = quizData[currentLang];
+            let score = 0;
+            let incorrectQuestions = [];
+            
+            for (let i = 0; i < 15; i++) {
+                if (userAnswers[i] === questions[i].correct) {
+                    score++;
+                } else {
+                    incorrectQuestions.push(i);
+                }
+            }
+            
+            // Display final score
+            finalScore.textContent = `${score}/15`;
+            
+            // Display score message
+            let message = "";
+            if (currentLang === 'en') {
+                if (score === 15) {
+                    message = "Perfect score! You're a roadmap expert!";
+                } else if (score >= 12) {
+                    message = "Excellent! You have strong roadmap knowledge.";
+                } else if (score >= 9) {
+                    message = "Good job! You understand the basics of roadmap planning.";
+                } else if (score >= 7) {
+                    message = "Fair. You have some knowledge but could review the concepts.";
+                } else {
+                    message = "Keep learning! Review roadmap principles and try again.";
+                }
+            } else if (currentLang === 'fr') {
+                if (score === 15) {
+                    message = "Score parfait ! Vous êtes un expert en feuilles de route !";
+                } else if (score >= 12) {
+                    message = "Excellent ! Vous avez de solides connaissances en feuilles de route.";
+                } else if (score >= 9) {
+                    message = "Bon travail ! Vous comprenez les bases de la planification de feuilles de route.";
+                } else if (score >= 7) {
+                    message = "Correct. Vous avez des connaissances mais pourriez réviser les concepts.";
+                } else {
+                    message = "Continuez à apprendre ! Revoyez les principes des feuilles de route et réessayez.";
+                }
+            } else {
+                if (score === 15) {
+                    message = "نتيجة مثالية! أنت خبير في خطط العمل!";
+                } else if (score >= 12) {
+                    message = "ممتاز! لديك معرفة قوية بخطط العمل.";
+                } else if (score >= 9) {
+                    message = "عمل جيد! تفهم أساسيات تخطيط خطة العمل.";
+                } else if (score >= 7) {
+                    message = "جيد. لديك بعض المعرفة لكن يمكنك مراجعة المفاهيم.";
+                } else {
+                    message = "استمر في التعلم! راجع مبادئ خطة العمل وحاول مرة أخرى.";
+                }
+            }
+            
+            scoreMessage.textContent = message;
+            
+            // Show confetti if score >= 7
+            if (score >= 7) {
+                triggerConfetti();
+            }
+            
+            // Display incorrect questions with explanations
+            resultsDetails.innerHTML = '';
+            
+            if (incorrectQuestions.length > 0) {
+                let detailsTitle = document.createElement('h3');
+                if (currentLang === 'en') {
+                    detailsTitle.textContent = 'Review Your Answers';
+                } else if (currentLang === 'fr') {
+                    detailsTitle.textContent = 'Revoir Vos Réponses';
+                } else {
+                    detailsTitle.textContent = 'مراجعة إجاباتك';
+                }
+                resultsDetails.appendChild(detailsTitle);
+                
+                incorrectQuestions.forEach(index => {
+                    const question = questions[index];
+                    const incorrectDiv = document.createElement('div');
+                    incorrectDiv.className = 'incorrect-question';
+                    
+                    const questionElem = document.createElement('p');
+                    questionElem.innerHTML = `<strong>${index + 1}. ${question.question}</strong>`;
+                    incorrectDiv.appendChild(questionElem);
+                    
+                    const explanationElem = document.createElement('p');
+                    explanationElem.className = 'correct-answer';
+                    explanationElem.textContent = question.explanation;
+                    incorrectDiv.appendChild(explanationElem);
+                    
+                    resultsDetails.appendChild(incorrectDiv);
+                });
+            } else {
+                let allCorrectMessage = document.createElement('p');
+                if (currentLang === 'en') {
+                    allCorrectMessage.textContent = 'Congratulations! You answered all questions correctly.';
+                } else if (currentLang === 'fr') {
+                    allCorrectMessage.textContent = 'Félicitations ! Vous avez répondu correctement à toutes les questions.';
+                } else {
+                    allCorrectMessage.textContent = 'تهانينا! لقد أجبت على جميع الأسئلة بشكل صحيح.';
+                }
+                resultsDetails.appendChild(allCorrectMessage);
+            }
+            
+            // Show professor message if applicable
+            if (userName.toLowerCase() === 'sherif' && currentLang === 'en') {
+                professorMessage.style.display = 'block';
+            }
+            
+            resultsShown = true;
+        }
+        
+        // Update results display when language changes
+        function updateResultsDisplay() {
+            if (!resultsShown) return;
+            
+            // Recalculate score with current language
+            const questions = quizData[currentLang];
+            let score = 0;
+            
+            for (let i = 0; i < 15; i++) {
+                if (userAnswers[i] === questions[i].correct) {
+                    score++;
+                }
+            }
+            
+            // Update score display
+            finalScore.textContent = `${score}/15`;
+            
+            // Update score message
+            let message = "";
+            if (currentLang === 'en') {
+                if (score === 15) {
+                    message = "Perfect score! You're a roadmap expert!";
+                } else if (score >= 12) {
+                    message = "Excellent! You have strong roadmap knowledge.";
+                } else if (score >= 9) {
+                    message = "Good job! You understand the basics of roadmap planning.";
+                } else if (score >= 7) {
+                    message = "Fair. You have some knowledge but could review the concepts.";
+                } else {
+                    message = "Keep learning! Review roadmap principles and try again.";
+                }
+            } else if (currentLang === 'fr') {
+                if (score === 15) {
+                    message = "Score parfait ! Vous êtes un expert en feuilles de route !";
+                } else if (score >= 12) {
+                    message = "Excellent ! Vous avez de solides connaissances en feuilles de route.";
+                } else if (score >= 9) {
+                    message = "Bon travail ! Vous comprenez les bases de la planification de feuilles de route.";
+                } else if (score >= 7) {
+                    message = "Correct. Vous avez des connaissances mais pourriez réviser les concepts.";
+                } else {
+                    message = "Continuez à apprendre ! Revoyez les principes des feuilles de route et réessayez.";
+                }
+            } else {
+                if (score === 15) {
+                    message = "نتيجة مثالية! أنت خبير في خطط العمل!";
+                } else if (score >= 12) {
+                    message = "ممتاز! لديك معرفة قوية بخطط العمل.";
+                } else if (score >= 9) {
+                    message = "عمل جيد! تفهم أساسيات تخطيط خطة العمل.";
+                } else if (score >= 7) {
+                    message = "جيد. لديك بعض المعرفة لكن يمكنك مراجعة المفاهيم.";
+                } else {
+                    message = "استمر في التعلم! راجع مبادئ خطة العمل وحاول مرة أخرى.";
+                }
+            }
+            
+            scoreMessage.textContent = message;
+            
+            // Update results details
+            resultsDetails.innerHTML = '';
+            
+            // Find incorrect questions in current language
+            let incorrectQuestions = [];
+            for (let i = 0; i < 15; i++) {
+                if (userAnswers[i] !== questions[i].correct) {
+                    incorrectQuestions.push(i);
+                }
+            }
+            
+            if (incorrectQuestions.length > 0) {
+                let detailsTitle = document.createElement('h3');
+                if (currentLang === 'en') {
+                    detailsTitle.textContent = 'Review Your Answers';
+                } else if (currentLang === 'fr') {
+                    detailsTitle.textContent = 'Revoir Vos Réponses';
+                } else {
+                    detailsTitle.textContent = 'مراجعة إجاباتك';
+                }
+                resultsDetails.appendChild(detailsTitle);
+                
+                incorrectQuestions.forEach(index => {
+                    const question = questions[index];
+                    const incorrectDiv = document.createElement('div');
+                    incorrectDiv.className = 'incorrect-question';
+                    
+                    const questionElem = document.createElement('p');
+                    questionElem.innerHTML = `<strong>${index + 1}. ${question.question}</strong>`;
+                    incorrectDiv.appendChild(questionElem);
+                    
+                    const explanationElem = document.createElement('p');
+                    explanationElem.className = 'correct-answer';
+                    explanationElem.textContent = question.explanation;
+                    incorrectDiv.appendChild(explanationElem);
+                    
+                    resultsDetails.appendChild(incorrectDiv);
+                });
+            } else {
+                let allCorrectMessage = document.createElement('p');
+                if (currentLang === 'en') {
+                    allCorrectMessage.textContent = 'Congratulations! You answered all questions correctly.';
+                } else if (currentLang === 'fr') {
+                    allCorrectMessage.textContent = 'Félicitations ! Vous avez répondu correctement à toutes les questions.';
+                } else {
+                    allCorrectMessage.textContent = 'تهانينا! لقد أجبت على جميع الأسئلة بشكل صحيح.';
+                }
+                resultsDetails.appendChild(allCorrectMessage);
+            }
+            
+            // Update professor message visibility
+            if (userName.toLowerCase() === 'sherif' && currentLang === 'en') {
+                professorMessage.style.display = 'block';
+            } else {
+                professorMessage.style.display = 'none';
+            }
+        }
+        
+        // Restart quiz
+        restartBtn.addEventListener('click', () => {
+            // Reset quiz state
+            currentQuestion = 0;
+            userAnswers = new Array(15).fill(null);
+            resultsShown = false;
+            
+            // Show welcome screen
+            resultsScreen.style.display = 'none';
+            welcomeScreen.style.display = 'block';
+            
+            // Reset form
+            userNameInput.value = userName;
+            
+            // Hide professor message
+            professorMessage.style.display = 'none';
+        });
+        
+        // Download results
+        downloadBtn.addEventListener('click', () => {
+            const questions = quizData[currentLang];
+            let score = 0;
+            
+            for (let i = 0; i < 15; i++) {
+                if (userAnswers[i] === questions[i].correct) {
+                    score++;
+                }
+            }
+            
+            let resultsText = `Roadmap Mastery Quiz Results\n`;
+            resultsText += `Name: ${userName}\n`;
+            resultsText += `Score: ${score}/15\n`;
+            resultsText += `Date: ${new Date().toLocaleDateString()}\n\n`;
+            resultsText += `Detailed Results:\n\n`;
+            
+            for (let i = 0; i < 15; i++) {
+                resultsText += `${i + 1}. ${questions[i].question}\n`;
+                resultsText += `Your Answer: ${userAnswers[i] !== null ? questions[i].options[userAnswers[i]] : 'Not answered'}\n`;
+                resultsText += `Correct Answer: ${questions[i].options[questions[i].correct]}\n`;
+                resultsText += `Explanation: ${questions[i].explanation}\n\n`;
+            }
+            
+            const blob = new Blob([resultsText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `roadmap-quiz-results-${userName}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+        
+        // Confetti function
+        function triggerConfetti() {
+            // Main burst
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.6 }
+            });
+            
+            // Side bursts
+            setTimeout(() => {
+                confetti({
+                    particleCount: 80,
+                    angle: 60,
+                    spread: 80,
+                    origin: { x: 0 }
+                });
+                
+                confetti({
+                    particleCount: 80,
+                    angle: 120,
+                    spread: 80,
+                    origin: { x: 1 }
+                });
+            }, 250);
+            
+            // Additional burst
+            setTimeout(() => {
+                confetti({
+                    particleCount: 100,
+                    startVelocity: 30,
+                    spread: 360,
+                    origin: { x: 0.5, y: 0.5 }
+                });
+            }, 500);
+        }
+        
+        // Initialize with English
+        updateLanguage('en');
+    </script>
+</body>
+</html>
