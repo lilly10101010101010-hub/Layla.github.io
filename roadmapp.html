@@ -1,0 +1,2157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuraPath 3D | Multilingual Roadmap Visualization</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+</head>
+<body>
+    <!-- Background Canvas for 3D Elements -->
+    <canvas id="bgCanvas"></canvas>
+    
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <div class="language-current" id="currentLanguage">
+            <i class="fas fa-globe"></i>
+            <span>English</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="language-dropdown">
+            <div class="language-option" data-lang="en">
+                <i class="flag-icon flag-us"></i>
+                <span>English</span>
+                <i class="fas fa-check check-icon"></i>
+            </div>
+            <div class="language-option" data-lang="ar">
+                <i class="flag-icon flag-sa"></i>
+                <span>العربية (Arabic)</span>
+                <i class="fas fa-check check-icon"></i>
+            </div>
+            <div class="language-option" data-lang="fr">
+                <i class="flag-icon flag-fr"></i>
+                <span>Français (French)</span>
+                <i class="fas fa-check check-icon"></i>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-project-diagram"></i>
+                <span data-key="appName">NeuraPath 3D</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" data-key="navRoadmap"><i class="fas fa-road"></i> <span>Roadmap</span></a>
+                <a href="#" class="nav-link" data-key="navAssistant"><i class="fas fa-brain"></i> <span>AI Assistant</span></a>
+                <a href="#" class="nav-link" data-key="navCollaborate"><i class="fas fa-share-alt"></i> <span>Collaborate</span></a>
+                <a href="#" class="nav-link" data-key="navAnalytics"><i class="fas fa-chart-network"></i> <span>Analytics</span></a>
+            </div>
+            <button class="cta-btn" data-key="launchProject">Launch Project <i class="fas fa-rocket"></i></button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="hero">
+            <h1 class="title-glitch" data-key="heroTitle">Roadmap Reimagined</h1>
+            <p class="subtitle" data-key="heroSubtitle">Visualize your journey in an immersive 3D space. Connect goals, track progress, and navigate complexity like never before.</p>
+            <div class="hero-btns">
+                <button class="btn-primary" id="createRoadmap" data-key="createRoadmap"><i class="fas fa-plus-circle"></i> Create New Roadmap</button>
+                <button class="btn-secondary" data-key="vrMode"><i class="fas fa-vr-cardboard"></i> Enter VR Mode</button>
+            </div>
+        </header>
+
+        <!-- Interactive Roadmap Section -->
+        <section class="roadmap-section">
+            <div class="section-header">
+                <h2><i class="fas fa-sitemap"></i> <span data-key="interactiveRoadmap">Interactive 3D Roadmap</span></h2>
+                <div class="view-controls">
+                    <button class="view-btn active" data-view="3d" data-key="view3d"><i class="fas fa-cube"></i> 3D View</button>
+                    <button class="view-btn" data-view="mindmap" data-key="viewMindmap"><i class="fas fa-project-diagram"></i> Mind Map</button>
+                    <button class="view-btn" data-view="timeline" data-key="viewTimeline"><i class="fas fa-stream"></i> Timeline</button>
+                </div>
+            </div>
+
+            <div class="roadmap-container">
+                <!-- 3D Roadmap Visualization -->
+                <div class="roadmap-visualization">
+                    <div class="roadmap-3d" id="roadmap3d">
+                        <!-- 3D nodes will be generated here by JavaScript -->
+                        <div class="instructions">
+                            <p><i class="fas fa-mouse-pointer"></i> <span data-key="instruction1">Click and drag to rotate view</span></p>
+                            <p><i class="fas fa-search-plus"></i> <span data-key="instruction2">Scroll to zoom in/out</span></p>
+                            <p><i class="fas fa-hand-point-up"></i> <span data-key="instruction3">Click nodes to interact</span></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Node Details Panel -->
+                    <div class="node-details">
+                        <h3><i class="fas fa-info-circle"></i> <span data-key="nodeDetails">Node Details</span></h3>
+                        <div class="details-content">
+                            <div class="detail-item">
+                                <span class="detail-label" data-key="nodeNameLabel">Node Name:</span>
+                                <span class="detail-value" id="nodeName" data-key="selectNode">Select a node</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label" data-key="nodeStatusLabel">Status:</span>
+                                <span class="detail-value" id="nodeStatus">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label" data-key="nodePriorityLabel">Priority:</span>
+                                <span class="detail-value" id="nodePriority">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label" data-key="nodeConnectionsLabel">Connections:</span>
+                                <span class="detail-value" id="nodeConnections">-</span>
+                            </div>
+                            <div class="progress-container">
+                                <span class="detail-label" data-key="nodeProgressLabel">Progress:</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="nodeProgress"></div>
+                                </div>
+                                <span class="progress-text" id="nodeProgressText">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Roadmap Controls -->
+                <div class="roadmap-controls">
+                    <h3><i class="fas fa-sliders-h"></i> <span data-key="roadmapControls">Roadmap Controls</span></h3>
+                    <div class="control-group">
+                        <label for="roadmapStyle"><i class="fas fa-palette"></i> <span data-key="visualStyle">Visual Style</span></label>
+                        <select id="roadmapStyle">
+                            <option value="neural" data-key="neuralNetwork">Neural Network</option>
+                            <option value="galaxy" data-key="galaxyCluster">Galaxy Cluster</option>
+                            <option value="circuit" data-key="circuitBoard">Circuit Board</option>
+                            <option value="organic" data-key="organicGrowth">Organic Growth</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label><i class="fas fa-tachometer-alt"></i> <span data-key="animationSpeed">Animation Speed</span></label>
+                        <input type="range" id="animationSpeed" min="0" max="100" value="50">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label><i class="fas fa-expand-arrows-alt"></i> <span data-key="nodeDensity">Node Density</span></label>
+                        <input type="range" id="nodeDensity" min="5" max="30" value="15">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label><i class="fas fa-lightbulb"></i> <span data-key="glowIntensity">Glow Intensity</span></label>
+                        <input type="range" id="glowIntensity" min="0" max="100" value="75">
+                    </div>
+                    
+                    <button class="btn-control" id="addNode" data-key="addNode"><i class="fas fa-plus"></i> Add Node</button>
+                    <button class="btn-control" id="addConnection" data-key="addConnection"><i class="fas fa-link"></i> Add Connection</button>
+                    <button class="btn-control" id="simulateProgress" data-key="simulateProgress"><i class="fas fa-play"></i> Simulate Progress</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Roadmap Creation Panel -->
+        <section class="creation-panel">
+            <h2><i class="fas fa-magic"></i> <span data-key="createRoadmapTitle">Create Your Roadmap</span></h2>
+            <div class="creation-steps">
+                <div class="step active">
+                    <div class="step-number">1</div>
+                    <h4 data-key="step1Title">Define Goals</h4>
+                    <p data-key="step1Desc">What do you want to achieve? Add your main objectives.</p>
+                    <div class="step-input">
+                        <input type="text" id="goalInput" placeholder="Enter a goal (e.g., 'Learn Machine Learning')" data-key="goalPlaceholder">
+                        <button id="addGoal" data-key="addButton"><i class="fas fa-plus"></i> Add</button>
+                    </div>
+                    <div class="goals-list" id="goalsList"></div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4 data-key="step2Title">Break Down Tasks</h4>
+                    <p data-key="step2Desc">Divide each goal into manageable tasks and milestones.</p>
+                    <div class="task-breakdown">
+                        <select id="goalSelector">
+                            <option value="" data-key="selectGoal">Select a goal to break down</option>
+                        </select>
+                        <div class="task-input">
+                            <input type="text" id="taskInput" placeholder="Enter a task (e.g., 'Complete Python basics course')" data-key="taskPlaceholder">
+                            <button id="addTask" data-key="addTaskButton"><i class="fas fa-plus"></i> Add Task</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4 data-key="step3Title">Connect & Visualize</h4>
+                    <p data-key="step3Desc">See your roadmap come to life in 3D space with intelligent connections.</p>
+                    <button class="btn-primary" id="visualizeRoadmap" data-key="generateVisualization"><i class="fas fa-eye"></i> Generate 3D Visualization</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Showcase -->
+        <section class="features">
+            <h2><i class="fas fa-star"></i> <span data-key="whyRevolutionary">Why This Is Revolutionary</span></h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 data-key="feature1Title">AI-Powered Pathfinding</h3>
+                    <p data-key="feature1Desc">Our neural network algorithm suggests optimal connections and identifies potential bottlenecks before they occur.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-vr-cardboard"></i>
+                    </div>
+                    <h3 data-key="feature2Title">Immersive VR Ready</h3>
+                    <p data-key="feature2Desc">Step inside your roadmap with full VR support. Literally walk through your project timeline.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <h3 data-key="feature3Title">Real-time Collaboration</h3>
+                    <p data-key="feature3Desc">Multiple users can edit and navigate the same roadmap simultaneously with live updates.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 data-key="feature4Title">Predictive Analytics</h3>
+                    <p data-key="feature4Desc">Get forecasts on completion dates, resource allocation, and success probability based on your progress.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-project-diagram"></i>
+                    <span data-key="appName">NeuraPath 3D</span>
+                </div>
+                <p class="tagline" data-key="tagline">Reimagining how we plan, visualize, and achieve complex goals.</p>
+                <div class="tech-stack">
+                    <span data-key="poweredBy">Powered by:</span>
+                    <span class="tech">Three.js</span>
+                    <span class="tech">WebGL</span>
+                    <span class="tech">AI Algorithms</span>
+                    <span class="tech">WebSocket</span>
+                </div>
+                <p class="copyright" data-key="copyright">© 2023 Phenomenal Roadmap Project | Created to wow professors and students alike</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="notificationToast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span class="toast-text" id="toastText">Roadmap node created successfully!</span>
+        </div>
+    </div>
+
+    <!-- Audio Element for Sound Effects -->
+    <audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" preload="auto"></audio>
+
+    <script>
+        // Language data for all three languages
+        const translations = {
+            en: {
+                // App Name
+                appName: "NeuraPath 3D",
+                
+                // Navigation
+                navRoadmap: "Roadmap",
+                navAssistant: "AI Assistant",
+                navCollaborate: "Collaborate",
+                navAnalytics: "Analytics",
+                launchProject: "Launch Project",
+                
+                // Hero Section
+                heroTitle: "Roadmap Reimagined",
+                heroSubtitle: "Visualize your journey in an immersive 3D space. Connect goals, track progress, and navigate complexity like never before.",
+                createRoadmap: "Create New Roadmap",
+                vrMode: "Enter VR Mode",
+                
+                // Interactive Roadmap
+                interactiveRoadmap: "Interactive 3D Roadmap",
+                view3d: "3D View",
+                viewMindmap: "Mind Map",
+                viewTimeline: "Timeline",
+                instruction1: "Click and drag to rotate view",
+                instruction2: "Scroll to zoom in/out",
+                instruction3: "Click nodes to interact",
+                
+                // Node Details
+                nodeDetails: "Node Details",
+                nodeNameLabel: "Node Name:",
+                selectNode: "Select a node",
+                nodeStatusLabel: "Status:",
+                nodePriorityLabel: "Priority:",
+                nodeConnectionsLabel: "Connections:",
+                nodeProgressLabel: "Progress:",
+                
+                // Roadmap Controls
+                roadmapControls: "Roadmap Controls",
+                visualStyle: "Visual Style",
+                neuralNetwork: "Neural Network",
+                galaxyCluster: "Galaxy Cluster",
+                circuitBoard: "Circuit Board",
+                organicGrowth: "Organic Growth",
+                animationSpeed: "Animation Speed",
+                nodeDensity: "Node Density",
+                glowIntensity: "Glow Intensity",
+                addNode: "Add Node",
+                addConnection: "Add Connection",
+                simulateProgress: "Simulate Progress",
+                
+                // Creation Panel
+                createRoadmapTitle: "Create Your Roadmap",
+                step1Title: "Define Goals",
+                step1Desc: "What do you want to achieve? Add your main objectives.",
+                goalPlaceholder: "Enter a goal (e.g., 'Learn Machine Learning')",
+                addButton: "Add",
+                step2Title: "Break Down Tasks",
+                step2Desc: "Divide each goal into manageable tasks and milestones.",
+                selectGoal: "Select a goal to break down",
+                taskPlaceholder: "Enter a task (e.g., 'Complete Python basics course')",
+                addTaskButton: "Add Task",
+                step3Title: "Connect & Visualize",
+                step3Desc: "See your roadmap come to life in 3D space with intelligent connections.",
+                generateVisualization: "Generate 3D Visualization",
+                
+                // Features
+                whyRevolutionary: "Why This Is Revolutionary",
+                feature1Title: "AI-Powered Pathfinding",
+                feature1Desc: "Our neural network algorithm suggests optimal connections and identifies potential bottlenecks before they occur.",
+                feature2Title: "Immersive VR Ready",
+                feature2Desc: "Step inside your roadmap with full VR support. Literally walk through your project timeline.",
+                feature3Title: "Real-time Collaboration",
+                feature3Desc: "Multiple users can edit and navigate the same roadmap simultaneously with live updates.",
+                feature4Title: "Predictive Analytics",
+                feature4Desc: "Get forecasts on completion dates, resource allocation, and success probability based on your progress.",
+                
+                // Footer
+                tagline: "Reimagining how we plan, visualize, and achieve complex goals.",
+                poweredBy: "Powered by:",
+                copyright: "© 2023 Phenomenal Roadmap Project | Created to wow professors and students alike",
+                
+                // Notifications
+                notificationGoalAdded: "Goal added: {goal}",
+                notificationTaskAdded: "Task added to: {goal}",
+                notificationSelectNode: "Select a node from the visualization",
+                notificationSwitchedView: "Switched to {view} view",
+                notificationAddNode: "Add Node: Click on the visualization to place a new node",
+                notificationAddConnection: "Add Connection: Select two nodes to connect them",
+                notificationSimulating: "Simulating progress... Watch the nodes update!",
+                notificationGenerating: "Generating 3D visualization...",
+                notificationGenerated: "3D Roadmap generated successfully! Check the visualization above.",
+                notificationNoGoals: "Please add at least one goal first!",
+                notificationWizard: "Starting new roadmap creation wizard..."
+            },
+            
+            ar: {
+                // App Name
+                appName: "نيوراباث ثلاثي الأبعاد",
+                
+                // Navigation
+                navRoadmap: "خريطة الطريق",
+                navAssistant: "المساعد الذكي",
+                navCollaborate: "التعاون",
+                navAnalytics: "التحليلات",
+                launchProject: "إطلاق المشروع",
+                
+                // Hero Section
+                heroTitle: "خريطة الطريق مُعاد تخيلها",
+                heroSubtitle: "تصور رحلتك في فضاء ثلاثي الأبعاد غامر. قم بتوصيل الأهداف، وتتبع التقدم، وتنقل عبر التعقيد كما لم يحدث من قبل.",
+                createRoadmap: "إنشاء خريطة طريق جديدة",
+                vrMode: "الدخول إلى وضع الواقع الافتراضي",
+                
+                // Interactive Roadmap
+                interactiveRoadmap: "خريطة الطريق التفاعلية ثلاثية الأبعاد",
+                view3d: "عرض ثلاثي الأبعاد",
+                viewMindmap: "خريطة ذهنية",
+                viewTimeline: "الجدول الزمني",
+                instruction1: "انقر واسحب لتدوير العرض",
+                instruction2: "قم بالتمرير للتكبير/التصغير",
+                instruction3: "انقر على العقد للتفاعل",
+                
+                // Node Details
+                nodeDetails: "تفاصيل العقدة",
+                nodeNameLabel: "اسم العقدة:",
+                selectNode: "اختر عقدة",
+                nodeStatusLabel: "الحالة:",
+                nodePriorityLabel: "الأولوية:",
+                nodeConnectionsLabel: "الاتصالات:",
+                nodeProgressLabel: "التقدم:",
+                
+                // Roadmap Controls
+                roadmapControls: "عناصر التحكم في خريطة الطريق",
+                visualStyle: "النمط المرئي",
+                neuralNetwork: "الشبكة العصبية",
+                galaxyCluster: "عنقود المجرة",
+                circuitBoard: "لوحة الدوائر",
+                organicGrowth: "النمو العضوي",
+                animationSpeed: "سرعة التحريك",
+                nodeDensity: "كثافة العقد",
+                glowIntensity: "شدة التوهج",
+                addNode: "إضافة عقدة",
+                addConnection: "إضافة اتصال",
+                simulateProgress: "محاكاة التقدم",
+                
+                // Creation Panel
+                createRoadmapTitle: "أنشئ خريطة طريقك",
+                step1Title: "تحديد الأهداف",
+                step1Desc: "ماذا تريد أن تحقق؟ أضف أهدافك الرئيسية.",
+                goalPlaceholder: "أدخل هدفًا (مثال: 'تعلم التعلم الآلي')",
+                addButton: "إضافة",
+                step2Title: "تقسيم المهام",
+                step2Desc: "قسّم كل هدف إلى مهام ومعالم قابلة للإدارة.",
+                selectGoal: "اختر هدفًا لتقسيمه",
+                taskPlaceholder: "أدخل مهمة (مثال: 'أكمل دورة أساسيات بايثون')",
+                addTaskButton: "إضافة مهمة",
+                step3Title: "الاتصال والتصور",
+                step3Desc: "شاهد خريطة طريقك تنبض بالحياة في فضاء ثلاثي الأبعاد مع اتصالات ذكية.",
+                generateVisualization: "إنشاء تصور ثلاثي الأبعاد",
+                
+                // Features
+                whyRevolutionary: "لماذا هذا ثوري",
+                feature1Title: "إيجاد المسار بالذكاء الاصطناعي",
+                feature1Desc: "تقترح خوارزمية الشبكة العصبية الخاصة بنا اتصالات مثالية وتحدد الاختناقات المحتملة قبل حدوثها.",
+                feature2Title: "جاهز للواقع الافتراضي الغامر",
+                feature2Desc: "ادخل إلى خريطة طريقك بدعم كامل للواقع الافتراضي. امشِ فعليًا خلال الجدول الزمني لمشروعك.",
+                feature3Title: "التعاون في الوقت الحقيقي",
+                feature3Desc: "يمكن لعدة مستخدمين تحرير والتنقل في نفس خريطة الطريق في وقت واحد مع تحديثات مباشرة.",
+                feature4Title: "التحليلات التنبؤية",
+                feature4Desc: "احصل على توقعات لتواريخ الإكمال، وتخصيص الموارد، واحتمالية النجاح بناءً على تقدمك.",
+                
+                // Footer
+                tagline: "إعادة تخيل كيفية تخطيطنا وتصورنا وتحقيقنا للأهداف المعقدة.",
+                poweredBy: "مدعوم بـ:",
+                copyright: "© 2023 مشروع خريطة الطريق المذهلة | تم إنشاؤه لإبهار الأساتذة والطلاب على حد سواء",
+                
+                // Notifications
+                notificationGoalAdded: "تمت إضافة الهدف: {goal}",
+                notificationTaskAdded: "تمت إضافة المهمة إلى: {goal}",
+                notificationSelectNode: "اختر عقدة من التصور",
+                notificationSwitchedView: "تم التبديل إلى عرض {view}",
+                notificationAddNode: "إضافة عقدة: انقر على التصور لوضع عقدة جديدة",
+                notificationAddConnection: "إضافة اتصال: اختر عقدتين لتوصيلهما",
+                notificationSimulating: "جاري محاكاة التقدم... شاهد العقدة تتحدّث!",
+                notificationGenerating: "جاري إنشاء التصور ثلاثي الأبعاد...",
+                notificationGenerated: "تم إنشاء خريطة الطريق ثلاثية الأبعاد بنجاح! تحقق من التصور أعلاه.",
+                notificationNoGoals: "يرجى إضافة هدف واحد على الأقل أولاً!",
+                notificationWizard: "بدء معالج إنشاء خريطة طريق جديدة..."
+            },
+            
+            fr: {
+                // App Name
+                appName: "NeuraPath 3D",
+                
+                // Navigation
+                navRoadmap: "Feuille de Route",
+                navAssistant: "Assistant IA",
+                navCollaborate: "Collaborer",
+                navAnalytics: "Analytiques",
+                launchProject: "Lancer le Projet",
+                
+                // Hero Section
+                heroTitle: "Feuille de Route Réimaginée",
+                heroSubtitle: "Visualisez votre parcours dans un espace 3D immersif. Connectez des objectifs, suivez les progrès et naviguez dans la complexité comme jamais auparavant.",
+                createRoadmap: "Créer une Nouvelle Feuille de Route",
+                vrMode: "Mode VR",
+                
+                // Interactive Roadmap
+                interactiveRoadmap: "Feuille de Route Interactive 3D",
+                view3d: "Vue 3D",
+                viewMindmap: "Carte Mentale",
+                viewTimeline: "Chronologie",
+                instruction1: "Cliquez et faites glisser pour pivoter la vue",
+                instruction2: "Défilez pour zoomer/dézoomer",
+                instruction3: "Cliquez sur les nœuds pour interagir",
+                
+                // Node Details
+                nodeDetails: "Détails du Nœud",
+                nodeNameLabel: "Nom du Nœud:",
+                selectNode: "Sélectionnez un nœud",
+                nodeStatusLabel: "Statut:",
+                nodePriorityLabel: "Priorité:",
+                nodeConnectionsLabel: "Connexions:",
+                nodeProgressLabel: "Progression:",
+                
+                // Roadmap Controls
+                roadmapControls: "Contrôles de la Feuille de Route",
+                visualStyle: "Style Visuel",
+                neuralNetwork: "Réseau Neuronal",
+                galaxyCluster: "Amas Galactique",
+                circuitBoard: "Circuit Imprimé",
+                organicGrowth: "Croissance Organique",
+                animationSpeed: "Vitesse d'Animation",
+                nodeDensity: "Densité des Nœuds",
+                glowIntensity: "Intensité de la Lueur",
+                addNode: "Ajouter un Nœud",
+                addConnection: "Ajouter une Connexion",
+                simulateProgress: "Simuler la Progression",
+                
+                // Creation Panel
+                createRoadmapTitle: "Créez Votre Feuille de Route",
+                step1Title: "Définir les Objectifs",
+                step1Desc: "Que voulez-vous accomplir ? Ajoutez vos objectifs principaux.",
+                goalPlaceholder: "Entrez un objectif (ex: 'Apprendre le Machine Learning')",
+                addButton: "Ajouter",
+                step2Title: "Décomposer les Tâches",
+                step2Desc: "Divisez chaque objectif en tâches et étapes gérables.",
+                selectGoal: "Sélectionnez un objectif à décomposer",
+                taskPlaceholder: "Entrez une tâche (ex: 'Terminer le cours de base Python')",
+                addTaskButton: "Ajouter une Tâche",
+                step3Title: "Connecter et Visualiser",
+                step3Desc: "Voyez votre feuille de route prendre vie dans un espace 3D avec des connexions intelligentes.",
+                generateVisualization: "Générer la Visualisation 3D",
+                
+                // Features
+                whyRevolutionary: "Pourquoi C'est Révolutionnaire",
+                feature1Title: "Recherche de Chemin par IA",
+                feature1Desc: "Notre algorithme de réseau neuronal suggère des connexions optimales et identifie les goulots d'étranglement potentiels avant qu'ils ne se produisent.",
+                feature2Title: "Prêt pour la VR Immersive",
+                feature2Desc: "Plongez dans votre feuille de route avec un support VR complet. Marchez littéralement à travers votre chronologie de projet.",
+                feature3Title: "Collaboration en Temps Réel",
+                feature3Desc: "Plusieurs utilisateurs peuvent éditer et naviguer dans la même feuille de route simultanément avec des mises à jour en direct.",
+                feature4Title: "Analytiques Prédictives",
+                feature4Desc: "Obtenez des prévisions sur les dates d'achèvement, l'allocation des ressources et la probabilité de succès basée sur votre progression.",
+                
+                // Footer
+                tagline: "Réimaginer comment nous planifions, visualisons et atteignons des objectifs complexes.",
+                poweredBy: "Propulsé par:",
+                copyright: "© 2023 Projet de Feuille de Route Phénoménale | Créé pour impressionner les professeurs et les étudiants",
+                
+                // Notifications
+                notificationGoalAdded: "Objectif ajouté: {goal}",
+                notificationTaskAdded: "Tâche ajoutée à: {goal}",
+                notificationSelectNode: "Sélectionnez un nœud dans la visualisation",
+                notificationSwitchedView: "Passé à la vue {view}",
+                notificationAddNode: "Ajouter un nœud: Cliquez sur la visualisation pour placer un nouveau nœud",
+                notificationAddConnection: "Ajouter une connexion: Sélectionnez deux nœuds pour les connecter",
+                notificationSimulating: "Simulation de la progression... Regardez les nœuds se mettre à jour!",
+                notificationGenerating: "Génération de la visualisation 3D...",
+                notificationGenerated: "Feuille de route 3D générée avec succès! Vérifiez la visualisation ci-dessus.",
+                notificationNoGoals: "Veuillez ajouter au moins un objectif d'abord!",
+                notificationWizard: "Démarrage de l'assistant de création de feuille de route..."
+            }
+        };
+
+        // Current language
+        let currentLang = 'en';
+        
+        // Initialize the interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Background animation
+            initBackgroundAnimation();
+            
+            // Language switcher
+            initLanguageSwitcher();
+            
+            // Roadmap node interactions
+            initRoadmapNodes();
+            
+            // Form interactions
+            initCreationPanel();
+            
+            // Control interactions
+            initControls();
+            
+            // Notification system
+            initNotifications();
+        });
+        
+        function initLanguageSwitcher() {
+            const currentLanguage = document.getElementById('currentLanguage');
+            const languageOptions = document.querySelectorAll('.language-option');
+            const languageDropdown = document.querySelector('.language-dropdown');
+            
+            // Set current language display
+            function updateCurrentLanguageDisplay(lang) {
+                const langName = lang === 'en' ? 'English' : lang === 'ar' ? 'العربية' : 'Français';
+                currentLanguage.querySelector('span').textContent = langName;
+                
+                // Update check icons
+                languageOptions.forEach(option => {
+                    const checkIcon = option.querySelector('.check-icon');
+                    if (option.dataset.lang === lang) {
+                        checkIcon.style.display = 'inline-block';
+                    } else {
+                        checkIcon.style.display = 'none';
+                    }
+                });
+                
+                // Update direction for Arabic
+                if (lang === 'ar') {
+                    document.documentElement.dir = 'rtl';
+                    document.documentElement.lang = 'ar';
+                } else {
+                    document.documentElement.dir = 'ltr';
+                    document.documentElement.lang = lang;
+                }
+            }
+            
+            // Toggle language dropdown
+            currentLanguage.addEventListener('click', function(e) {
+                e.stopPropagation();
+                languageDropdown.classList.toggle('show');
+            });
+            
+            // Handle language selection
+            languageOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const selectedLang = this.dataset.lang;
+                    currentLang = selectedLang;
+                    
+                    // Update UI text
+                    translatePage(selectedLang);
+                    
+                    // Update display
+                    updateCurrentLanguageDisplay(selectedLang);
+                    
+                    // Show notification
+                    const langName = selectedLang === 'en' ? 'English' : selectedLang === 'ar' ? 'Arabic' : 'French';
+                    showNotification(`Language switched to ${langName}`);
+                    
+                    // Close dropdown
+                    languageDropdown.classList.remove('show');
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function() {
+                languageDropdown.classList.remove('show');
+            });
+            
+            // Initialize with English
+            updateCurrentLanguageDisplay('en');
+        }
+        
+        function translatePage(lang) {
+            // Get all elements with data-key attribute
+            const translatableElements = document.querySelectorAll('[data-key]');
+            
+            translatableElements.forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    // Handle placeholder attributes
+                    if (element.hasAttribute('placeholder')) {
+                        element.placeholder = translations[lang][key];
+                    } 
+                    // Handle button/text content
+                    else if (element.tagName === 'BUTTON' || element.tagName === 'SPAN' || element.tagName === 'P' || element.tagName === 'H1' || element.tagName === 'H2' || element.tagName === 'H3' || element.tagName === 'H4' || element.tagName === 'LABEL' || element.tagName === 'A') {
+                        element.textContent = translations[lang][key];
+                    }
+                    // Handle option elements
+                    else if (element.tagName === 'OPTION') {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            // Update select options
+            const roadmapStyle = document.getElementById('roadmapStyle');
+            if (roadmapStyle) {
+                Array.from(roadmapStyle.options).forEach(option => {
+                    const key = option.getAttribute('data-key');
+                    if (key && translations[lang] && translations[lang][key]) {
+                        option.textContent = translations[lang][key];
+                    }
+                });
+            }
+            
+            // Update goal selector placeholder
+            const goalSelector = document.getElementById('goalSelector');
+            if (goalSelector && goalSelector.firstElementChild) {
+                const key = goalSelector.firstElementChild.getAttribute('data-key');
+                if (key && translations[lang] && translations[lang][key]) {
+                    goalSelector.firstElementChild.textContent = translations[lang][key];
+                }
+            }
+        }
+        
+        function initBackgroundAnimation() {
+            // Create a pseudo-3D background with floating elements
+            const bgCanvas = document.getElementById('bgCanvas');
+            const ctx = bgCanvas.getContext('2d');
+            
+            // Set canvas to full window size
+            function resizeCanvas() {
+                bgCanvas.width = window.innerWidth;
+                bgCanvas.height = window.innerHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Create floating particles
+            const particles = [];
+            const particleCount = 80;
+            
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * bgCanvas.width;
+                    this.y = Math.random() * bgCanvas.height;
+                    this.size = Math.random() * 3 + 1;
+                    this.speedX = Math.random() * 0.5 - 0.25;
+                    this.speedY = Math.random() * 0.5 - 0.25;
+                    this.color = `rgba(${Math.floor(Math.random() * 100 + 155)}, ${Math.floor(Math.random() * 100 + 155)}, 255, ${Math.random() * 0.5 + 0.1})`;
+                }
+                
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    
+                    if (this.x > bgCanvas.width) this.x = 0;
+                    else if (this.x < 0) this.x = bgCanvas.width;
+                    
+                    if (this.y > bgCanvas.height) this.y = 0;
+                    else if (this.y < 0) this.y = bgCanvas.height;
+                }
+                
+                draw() {
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Create glow effect
+                    ctx.shadowBlur = 15;
+                    ctx.shadowColor = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size * 1.5, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            }
+            
+            // Initialize particles
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+            
+            // Animation loop
+            function animateParticles() {
+                ctx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+                
+                // Draw connecting lines between close particles
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 100) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(100, 150, 255, ${0.2 * (1 - distance/100)})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                    
+                    particles[i].update();
+                    particles[i].draw();
+                }
+                
+                requestAnimationFrame(animateParticles);
+            }
+            
+            animateParticles();
+        }
+        
+        function initRoadmapNodes() {
+            // Create interactive nodes for the roadmap visualization
+            const roadmap3d = document.getElementById('roadmap3d');
+            const nodeDetails = {
+                nodeName: document.getElementById('nodeName'),
+                nodeStatus: document.getElementById('nodeStatus'),
+                nodePriority: document.getElementById('nodePriority'),
+                nodeConnections: document.getElementById('nodeConnections'),
+                nodeProgress: document.getElementById('nodeProgress'),
+                nodeProgressText: document.getElementById('nodeProgressText')
+            };
+            
+            // Sample nodes data
+            const nodes = [
+                { id: 1, name: "Project Foundation", status: "Completed", priority: "High", connections: 3, progress: 100, x: 20, y: 30 },
+                { id: 2, name: "Research Phase", status: "In Progress", priority: "High", connections: 4, progress: 75, x: 50, y: 10 },
+                { id: 3, name: "Prototype Development", status: "In Progress", priority: "Medium", connections: 3, progress: 40, x: 80, y: 30 },
+                { id: 4, name: "User Testing", status: "Not Started", priority: "Medium", connections: 2, progress: 0, x: 50, y: 60 },
+                { id: 5, name: "Final Implementation", status: "Not Started", priority: "High", connections: 2, progress: 0, x: 20, y: 80 },
+                { id: 6, name: "Documentation", status: "Not Started", priority: "Low", connections: 2, progress: 0, x: 80, y: 80 }
+            ];
+            
+            // Create node elements
+            nodes.forEach(node => {
+                const nodeElement = document.createElement('div');
+                nodeElement.className = 'roadmap-node';
+                nodeElement.dataset.id = node.id;
+                nodeElement.style.left = `${node.x}%`;
+                nodeElement.style.top = `${node.y}%`;
+                
+                // Determine node class based on status
+                let statusClass = '';
+                if (node.status === "Completed") statusClass = "completed";
+                else if (node.status === "In Progress") statusClass = "in-progress";
+                else statusClass = "not-started";
+                
+                nodeElement.classList.add(statusClass);
+                
+                // Node content
+                nodeElement.innerHTML = `
+                    <div class="node-glow"></div>
+                    <div class="node-content">
+                        <i class="fas fa-${node.priority === 'High' ? 'exclamation-circle' : node.priority === 'Medium' ? 'circle' : 'circle-notch'}"></i>
+                        <span class="node-title">${node.name}</span>
+                    </div>
+                    <div class="node-progress-ring">
+                        <svg width="60" height="60">
+                            <circle class="progress-ring-circle" cx="30" cy="30" r="28"/>
+                        </svg>
+                        <span class="progress-text">${node.progress}%</span>
+                    </div>
+                `;
+                
+                // Add click event
+                nodeElement.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    // Update node details panel
+                    nodeDetails.nodeName.textContent = node.name;
+                    nodeDetails.nodeStatus.textContent = node.status;
+                    nodeDetails.nodePriority.textContent = node.priority;
+                    nodeDetails.nodeConnections.textContent = `${node.connections} connected nodes`;
+                    nodeDetails.nodeProgress.style.width = `${node.progress}%`;
+                    nodeDetails.nodeProgressText.textContent = `${node.progress}%`;
+                    
+                    // Highlight selected node
+                    document.querySelectorAll('.roadmap-node').forEach(n => n.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    // Play click sound
+                    document.getElementById('clickSound').play();
+                    
+                    // Show notification
+                    showNotification(translations[currentLang].notificationSelectNode || "Select a node from the visualization");
+                });
+                
+                roadmap3d.appendChild(nodeElement);
+            });
+            
+            // Add connections between nodes (simulated with CSS)
+            setTimeout(() => {
+                const connections = [
+                    { from: 1, to: 2 },
+                    { from: 1, to: 3 },
+                    { from: 2, to: 3 },
+                    { from: 2, to: 4 },
+                    { from: 3, to: 5 },
+                    { from: 4, to: 6 },
+                    { from: 5, to: 6 }
+                ];
+                
+                connections.forEach(conn => {
+                    const fromNode = document.querySelector(`.roadmap-node[data-id="${conn.from}"]`);
+                    const toNode = document.querySelector(`.roadmap-node[data-id="${conn.to}"]`);
+                    
+                    if (fromNode && toNode) {
+                        const connection = document.createElement('div');
+                        connection.className = 'node-connection';
+                        
+                        // Calculate position and angle
+                        const fromRect = fromNode.getBoundingClientRect();
+                        const toRect = toNode.getBoundingClientRect();
+                        const roadmapRect = roadmap3d.getBoundingClientRect();
+                        
+                        const x1 = fromRect.left + fromRect.width/2 - roadmapRect.left;
+                        const y1 = fromRect.top + fromRect.height/2 - roadmapRect.top;
+                        const x2 = toRect.left + toRect.width/2 - roadmapRect.left;
+                        const y2 = toRect.top + toRect.height/2 - roadmapRect.top;
+                        
+                        const length = Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
+                        const angle = Math.atan2(y2-y1, x2-x1) * 180 / Math.PI;
+                        
+                        connection.style.width = `${length}px`;
+                        connection.style.left = `${x1}px`;
+                        connection.style.top = `${y1}px`;
+                        connection.style.transform = `rotate(${angle}deg)`;
+                        connection.style.transformOrigin = '0 0';
+                        
+                        roadmap3d.appendChild(connection);
+                    }
+                });
+            }, 100);
+        }
+        
+        function initCreationPanel() {
+            const goalsList = document.getElementById('goalsList');
+            const goalSelector = document.getElementById('goalSelector');
+            let goals = [];
+            
+            // Add goal functionality
+            document.getElementById('addGoal').addEventListener('click', function() {
+                const goalInput = document.getElementById('goalInput');
+                const goalText = goalInput.value.trim();
+                
+                if (goalText) {
+                    const goalId = goals.length + 1;
+                    goals.push({ id: goalId, text: goalText, tasks: [] });
+                    
+                    // Add to goals list
+                    const goalItem = document.createElement('div');
+                    goalItem.className = 'goal-item';
+                    goalItem.innerHTML = `
+                        <i class="fas fa-bullseye"></i>
+                        <span>${goalText}</span>
+                        <button class="delete-goal" data-id="${goalId}"><i class="fas fa-times"></i></button>
+                    `;
+                    goalsList.appendChild(goalItem);
+                    
+                    // Add to goal selector
+                    const option = document.createElement('option');
+                    option.value = goalId;
+                    option.textContent = goalText;
+                    goalSelector.appendChild(option);
+                    
+                    // Clear input
+                    goalInput.value = '';
+                    
+                    // Show notification
+                    const notificationText = translations[currentLang].notificationGoalAdded.replace('{goal}', goalText);
+                    showNotification(notificationText);
+                    
+                    // Add delete functionality
+                    goalItem.querySelector('.delete-goal').addEventListener('click', function() {
+                        const id = parseInt(this.dataset.id);
+                        goals = goals.filter(g => g.id !== id);
+                        goalItem.remove();
+                        
+                        // Remove from selector
+                        const optionToRemove = goalSelector.querySelector(`option[value="${id}"]`);
+                        if (optionToRemove) optionToRemove.remove();
+                    });
+                }
+            });
+            
+            // Add task functionality
+            document.getElementById('addTask').addEventListener('click', function() {
+                const taskInput = document.getElementById('taskInput');
+                const taskText = taskInput.value.trim();
+                const selectedGoalId = parseInt(goalSelector.value);
+                
+                if (taskText && selectedGoalId) {
+                    const goal = goals.find(g => g.id === selectedGoalId);
+                    if (goal) {
+                        goal.tasks.push(taskText);
+                        taskInput.value = '';
+                        const notificationText = translations[currentLang].notificationTaskAdded.replace('{goal}', goal.text);
+                        showNotification(notificationText);
+                    }
+                }
+            });
+            
+            // Visualize roadmap button
+            document.getElementById('visualizeRoadmap').addEventListener('click', function() {
+                if (goals.length === 0) {
+                    showNotification(translations[currentLang].notificationNoGoals);
+                    return;
+                }
+                
+                // Simulate visualization generation
+                showNotification(translations[currentLang].notificationGenerating);
+                
+                setTimeout(() => {
+                    showNotification(translations[currentLang].notificationGenerated);
+                    
+                    // Animate the visualization container
+                    const roadmap3d = document.getElementById('roadmap3d');
+                    roadmap3d.style.animation = "pulse 2s";
+                    setTimeout(() => {
+                        roadmap3d.style.animation = "";
+                    }, 2000);
+                }, 1500);
+            });
+        }
+        
+        function initControls() {
+            // View controls
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const view = this.dataset.view;
+                    const viewName = this.querySelector('span').textContent;
+                    const notificationText = translations[currentLang].notificationSwitchedView.replace('{view}', viewName);
+                    showNotification(notificationText);
+                });
+            });
+            
+            // Control sliders
+            document.querySelectorAll('input[type="range"]').forEach(slider => {
+                slider.addEventListener('input', function() {
+                    const value = this.value;
+                    const id = this.id;
+                    
+                    // Update the 3D visualization based on control
+                    if (id === 'glowIntensity') {
+                        document.documentElement.style.setProperty('--glow-intensity', `${value}%`);
+                    }
+                });
+            });
+            
+            // Control buttons
+            document.getElementById('addNode').addEventListener('click', function() {
+                showNotification(translations[currentLang].notificationAddNode);
+            });
+            
+            document.getElementById('addConnection').addEventListener('click', function() {
+                showNotification(translations[currentLang].notificationAddConnection);
+            });
+            
+            document.getElementById('simulateProgress').addEventListener('click', function() {
+                showNotification(translations[currentLang].notificationSimulating);
+                
+                // Simulate progress on nodes
+                const nodes = document.querySelectorAll('.roadmap-node:not(.completed)');
+                nodes.forEach(node => {
+                    if (!node.classList.contains('completed')) {
+                        const progressText = node.querySelector('.progress-text');
+                        const currentProgress = parseInt(progressText.textContent);
+                        const newProgress = Math.min(currentProgress + 20, 100);
+                        
+                        progressText.textContent = `${newProgress}%`;
+                        
+                        if (newProgress === 100) {
+                            node.classList.add('completed');
+                            node.classList.remove('in-progress');
+                        } else if (newProgress > 0) {
+                            node.classList.add('in-progress');
+                            node.classList.remove('not-started');
+                        }
+                        
+                        // Animate the progress update
+                        node.style.animation = "glow 1.5s";
+                        setTimeout(() => {
+                            node.style.animation = "";
+                        }, 1500);
+                    }
+                });
+            });
+            
+            // Create roadmap button
+            document.getElementById('createRoadmap').addEventListener('click', function() {
+                showNotification(translations[currentLang].notificationWizard);
+                
+                // Scroll to creation panel
+                document.querySelector('.creation-panel').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // VR Mode button
+            document.querySelector('[data-key="vrMode"]').addEventListener('click', function() {
+                showNotification(currentLang === 'en' ? "Entering VR Mode..." : 
+                                currentLang === 'ar' ? "جارٍ الدخول إلى وضع الواقع الافتراضي..." :
+                                "Entrée en mode VR...");
+            });
+            
+            // Launch Project button
+            document.querySelector('[data-key="launchProject"]').addEventListener('click', function() {
+                showNotification(currentLang === 'en' ? "Launching project..." : 
+                                currentLang === 'ar' ? "جارٍ إطلاق المشروع..." :
+                                "Lancement du projet...");
+            });
+        }
+        
+        function initNotifications() {
+            window.showNotification = function(message) {
+                const toast = document.getElementById('notificationToast');
+                const toastText = document.getElementById('toastText');
+                
+                toastText.textContent = message;
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            };
+        }
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #6C63FF;
+            --secondary: #36D1DC;
+            --accent: #FF6B9D;
+            --dark: #0F0B30;
+            --darker: #080616;
+            --light: #F5F7FF;
+            --glow-intensity: 75%;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Language Selector */
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+            font-family: 'Exo 2', sans-serif;
+        }
+        
+        .language-current {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(15, 11, 48, 0.9);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--light);
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+        
+        .language-current:hover {
+            background: rgba(108, 99, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .language-current i:first-child {
+            color: var(--secondary);
+        }
+        
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 10px;
+            background: rgba(15, 11, 48, 0.95);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            border-radius: 15px;
+            width: 220px;
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .language-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .language-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 1px solid rgba(108, 99, 255, 0.1);
+        }
+        
+        .language-option:last-child {
+            border-bottom: none;
+        }
+        
+        .language-option:hover {
+            background: rgba(108, 99, 255, 0.2);
+        }
+        
+        .flag-icon {
+            width: 24px;
+            height: 18px;
+            border-radius: 3px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .flag-us {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30"><clipPath id="t"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><path d="M0,0 v30 h60 v-30 z" fill="%23002a68"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="%23fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(%23t)" stroke="%23cf142b" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="%23fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="%23cf142b" stroke-width="6"/></svg>');
+        }
+        
+        .flag-sa {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30"><path d="M0,0 h60 v30 h-60 z" fill="%23006c35"/><path d="M20,9 l3,10 l-8-6 h10 l-8,6 l3-10" fill="%23fff"/><path d="M20,12 h20 v6 h-20 z" fill="%23fff"/><text x="30" y="17" text-anchor="middle" fill="%23006c35" font-size="10" font-weight="bold">الله أكبر</text></svg>');
+        }
+        
+        .flag-fr {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30"><path d="M0,0 h20 v30 h-20 z" fill="%23002a68"/><path d="M20,0 h20 v30 h-20 z" fill="%23fff"/><path d="M40,0 h20 v30 h-20 z" fill="%23cf142b"/></svg>');
+        }
+        
+        .check-icon {
+            margin-left: auto;
+            color: var(--secondary);
+            display: none;
+        }
+        
+        /* RTL Support for Arabic */
+        [dir="rtl"] .nav-links {
+            flex-direction: row-reverse;
+        }
+        
+        [dir="rtl"] .logo i {
+            margin-right: 0;
+            margin-left: 0.5rem;
+        }
+        
+        [dir="rtl"] .nav-link i {
+            margin-right: 0;
+            margin-left: 0.5rem;
+        }
+        
+        [dir="rtl"] .cta-btn i {
+            margin-right: 0.5rem;
+            margin-left: 0;
+        }
+        
+        [dir="rtl"] .section-header {
+            flex-direction: row-reverse;
+        }
+        
+        [dir="rtl"] .roadmap-container {
+            direction: ltr; /* Keep visualization LTR */
+        }
+        
+        [dir="rtl"] .creation-steps {
+            flex-direction: row-reverse;
+        }
+        
+        [dir="rtl"] .feature-grid {
+            direction: rtl;
+        }
+        
+        [dir="rtl"] .language-selector {
+            right: auto;
+            left: 20px;
+        }
+        
+        [dir="rtl"] .language-dropdown {
+            right: auto;
+            left: 0;
+        }
+        
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .main-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 11, 48, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(108, 99, 255, 0.3);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
+            font-size: 2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background: rgba(108, 99, 255, 0.2);
+            color: var(--secondary);
+        }
+        
+        .cta-btn {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border: none;
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(108, 99, 255, 0.3);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 8rem 2rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            margin-bottom: 4rem;
+        }
+        
+        .title-glitch {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+            position: relative;
+            animation: glitch 3s infinite;
+        }
+        
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            2% { transform: translate(-2px, 2px); }
+            4% { transform: translate(-2px, -2px); }
+            6% { transform: translate(2px, 2px); }
+            8% { transform: translate(2px, -2px); }
+            10% { transform: translate(0); }
+            100% { transform: translate(0); }
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            color: #B8B5FF;
+            line-height: 1.6;
+        }
+        
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary, .btn-secondary {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border: none;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-primary:hover, .btn-secondary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(108, 99, 255, 0.3);
+        }
+        
+        .roadmap-section {
+            background: rgba(15, 11, 48, 0.7);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin-bottom: 4rem;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .section-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--secondary);
+        }
+        
+        .view-controls {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .view-btn {
+            background: rgba(108, 99, 255, 0.1);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            color: var(--light);
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .view-btn.active, .view-btn:hover {
+            background: rgba(108, 99, 255, 0.3);
+            color: var(--secondary);
+        }
+        
+        .roadmap-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+        
+        .roadmap-visualization {
+            position: relative;
+            background: rgba(8, 6, 22, 0.8);
+            border-radius: 20px;
+            height: 600px;
+            overflow: hidden;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+        }
+        
+        #roadmap3d {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .roadmap-node {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            z-index: 10;
+            transition: var(--transition);
+        }
+        
+        .roadmap-node .node-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0.5;
+            filter: blur(15px);
+            z-index: -1;
+        }
+        
+        .roadmap-node .node-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+            width: 100%;
+        }
+        
+        .roadmap-node .node-content i {
+            font-size: 2rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+        
+        .roadmap-node .node-title {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100px;
+        }
+        
+        .roadmap-node .node-progress-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .roadmap-node .node-progress-ring svg {
+            transform: rotate(-90deg);
+        }
+        
+        .roadmap-node .node-progress-ring circle {
+            fill: none;
+            stroke-width: 4;
+            stroke-linecap: round;
+        }
+        
+        .roadmap-node.completed .node-progress-ring circle {
+            stroke: var(--secondary);
+        }
+        
+        .roadmap-node.in-progress .node-progress-ring circle {
+            stroke: var(--primary);
+        }
+        
+        .roadmap-node.not-started .node-progress-ring circle {
+            stroke: #555;
+        }
+        
+        .roadmap-node .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .roadmap-node.selected {
+            transform: translate(-50%, -50%) scale(1.2);
+            z-index: 20;
+        }
+        
+        .roadmap-node.completed {
+            border-color: var(--secondary);
+        }
+        
+        .roadmap-node.in-progress {
+            border-color: var(--primary);
+        }
+        
+        .roadmap-node.not-started {
+            border-color: #555;
+        }
+        
+        .node-connection {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            z-index: 5;
+            pointer-events: none;
+        }
+        
+        .instructions {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(15, 11, 48, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+        }
+        
+        .instructions p {
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .node-details {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(15, 11, 48, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            width: 280px;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .node-details h3 {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--secondary);
+        }
+        
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #B8B5FF;
+        }
+        
+        .detail-value {
+            font-weight: 400;
+        }
+        
+        .progress-container {
+            margin-top: 15px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 1s ease;
+        }
+        
+        .progress-text {
+            display: block;
+            text-align: right;
+            font-size: 0.9rem;
+        }
+        
+        .roadmap-controls {
+            background: rgba(15, 11, 48, 0.7);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+        }
+        
+        .roadmap-controls h3 {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--secondary);
+        }
+        
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .control-group label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .control-group select, .control-group input {
+            width: 100%;
+            padding: 10px 15px;
+            background: rgba(8, 6, 22, 0.8);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            border-radius: 10px;
+            color: var(--light);
+            font-family: 'Exo 2', sans-serif;
+        }
+        
+        .control-group input[type="range"] {
+            padding: 0;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(108, 99, 255, 0.2);
+            border-radius: 10px;
+            outline: none;
+        }
+        
+        .control-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            border: 2px solid var(--light);
+        }
+        
+        .btn-control {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: rgba(108, 99, 255, 0.2);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            border-radius: 10px;
+            color: var(--light);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 600;
+        }
+        
+        .btn-control:hover {
+            background: rgba(108, 99, 255, 0.4);
+            transform: translateY(-3px);
+        }
+        
+        .creation-panel {
+            background: rgba(15, 11, 48, 0.7);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin-bottom: 4rem;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .creation-panel h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--secondary);
+        }
+        
+        .creation-steps {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .step {
+            flex: 1;
+            background: rgba(8, 6, 22, 0.8);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .step h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+        
+        .step p {
+            color: #B8B5FF;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .step-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .step-input input {
+            flex: 1;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            border-radius: 10px;
+            color: var(--light);
+            font-family: 'Exo 2', sans-serif;
+        }
+        
+        .step-input button {
+            padding: 12px 20px;
+            background: var(--primary);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .goals-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .goal-item {
+            background: rgba(108, 99, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .goal-item i {
+            color: var(--secondary);
+        }
+        
+        .goal-item span {
+            flex: 1;
+        }
+        
+        .delete-goal {
+            background: none;
+            border: none;
+            color: #FF6B9D;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .task-breakdown {
+            margin-top: 20px;
+        }
+        
+        .task-breakdown select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            border-radius: 10px;
+            color: var(--light);
+            font-family: 'Exo 2', sans-serif;
+            margin-bottom: 15px;
+        }
+        
+        .task-input {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .task-input input {
+            flex: 1;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            border-radius: 10px;
+            color: var(--light);
+            font-family: 'Exo 2', sans-serif;
+        }
+        
+        .task-input button {
+            padding: 12px 20px;
+            background: var(--primary);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .features {
+            margin-bottom: 4rem;
+        }
+        
+        .features h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            color: var(--secondary);
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: rgba(15, 11, 48, 0.7);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(108, 99, 255, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-icon i {
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+        
+        .feature-card p {
+            color: #B8B5FF;
+            line-height: 1.6;
+        }
+        
+        footer {
+            background: rgba(15, 11, 48, 0.9);
+            border-radius: 25px;
+            padding: 3rem;
+            text-align: center;
+            border-top: 1px solid rgba(108, 99, 255, 0.2);
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: #B8B5FF;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .tech-stack span:first-child {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        .tech {
+            background: rgba(108, 99, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+        }
+        
+        .copyright {
+            color: #888;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(108, 99, 255, 0.2);
+            padding-top: 2rem;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(15, 11, 48, 0.95);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            border-radius: 15px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 3000;
+            backdrop-filter: blur(10px);
+            max-width: 350px;
+        }
+        
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .toast i {
+            color: var(--secondary);
+            font-size: 1.5rem;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(108, 99, 255, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(108, 99, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(108, 99, 255, 0); }
+        }
+        
+        @keyframes glow {
+            0% { filter: brightness(1); }
+            50% { filter: brightness(1.5); }
+            100% { filter: brightness(1); }
+        }
+        
+        @media (max-width: 1200px) {
+            .roadmap-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .creation-steps {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .title-glitch {
+                font-size: 3rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .view-controls {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .language-selector {
+                top: 10px;
+                right: 10px;
+            }
+            
+            [dir="rtl"] .language-selector {
+                right: auto;
+                left: 10px;
+            }
+        }
+    </style>
+</body>
+</html>
