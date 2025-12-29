@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmapper | The Next-Gen Developer's Compass</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a0a1a;
+            --secondary: #00f3ff;
+            --accent: #7b2cbf;
+            --text: #e6f1ff;
+            --card-bg: rgba(10, 25, 47, 0.9);
+            --glow: 0 0 15px rgba(0, 243, 255, 0.5);
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--primary);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            text-shadow: var(--glow);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(123, 44, 191, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(0, 243, 255, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            color: var(--primary);
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: var(--glow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 243, 255, 0.3);
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 500px;
+        }
+
+        .orbital-system {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .center-orb {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: var(--secondary);
+            border-radius: 50%;
+            box-shadow: 0 0 30px var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--primary);
+            z-index: 2;
+        }
+
+        .orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 2px dashed rgba(0, 243, 255, 0.4);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .orbit-1 {
+            width: 300px;
+            height: 300px;
+            animation: spin 30s linear infinite;
+        }
+
+        .orbit-2 {
+            width: 400px;
+            height: 400px;
+            animation: spin 40s linear infinite reverse;
+        }
+
+        .orbit-node {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--glow);
+            transform-origin: center;
+            transition: transform 0.3s;
+            cursor: pointer;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+        }
+
+        .orbit-node:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--secondary);
+        }
+
+        .node-1 { top: -35px; left: calc(50% - 35px); }
+        .node-2 { top: calc(50% - 35px); right: -35px; }
+        .node-3 { bottom: -35px; left: calc(50% - 35px); }
+        .node-4 { top: calc(50% - 35px); left: -35px; }
+
+        .node-icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: var(--secondary);
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            position: relative;
+            color: var(--secondary);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        /* Definition Section */
+        .definition-content {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .definition-text {
+            font-size: 1.2rem;
+        }
+
+        .definition-text p {
+            margin-bottom: 20px;
+        }
+
+        .highlight-box {
+            background: var(--card-bg);
+            border-left: 5px solid var(--secondary);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--glow);
+            margin: 30px 0;
+        }
+
+        .visual-roadmap {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--glow);
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .roadmap-path {
+            position: absolute;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 5px;
+        }
+
+        .roadmap-node {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--secondary);
+            box-shadow: var(--glow);
+            border: 3px solid var(--secondary);
+            transform: translateY(-50%);
+            top: 50%;
+        }
+
+        .node-1 { left: 10%; }
+        .node-2 { left: 30%; }
+        .node-3 { left: 50%; }
+        .node-4 { left: 70%; }
+        .node-5 { left: 90%; }
+
+        /* Benefits Section */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .benefit-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--glow);
+            transition: transform 0.3s;
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+            z-index: 2;
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        /* Interactive Demo */
+        .demo-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: var(--glow);
+            margin-top: 50px;
+        }
+
+        .demo-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--secondary);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .demo-btn.active {
+            background: var(--secondary);
+            color: var(--primary);
+            box-shadow: var(--glow);
+        }
+
+        .demo-btn:hover:not(.active) {
+            background: rgba(0, 243, 255, 0.1);
+        }
+
+        .demo-visual {
+            height: 400px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .path-line {
+            position: absolute;
+            height: 8px;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            border-radius: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 5%;
+            width: 90%;
+            z-index: 1;
+        }
+
+        .demo-node {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            border: 3px solid var(--secondary);
+            box-shadow: var(--glow);
+            transform: translateY(-50%);
+            top: 50%;
+            transition: all 0.5s;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        .demo-node:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 0 25px var(--secondary);
+        }
+
+        .node-content {
+            position: absolute;
+            bottom: -100px;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            width: 250px;
+            box-shadow: var(--glow);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .demo-node:hover .node-content {
+            opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 5, 15, 0.95);
+            padding: 60px 0 30px;
+            border-top: 1px solid rgba(0, 243, 255, 0.2);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .footer-text {
+            opacity: 0.8;
+            max-width: 300px;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .footer-column h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            opacity: 1;
+            color: var(--secondary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 243, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-visual {
+                order: -1;
+                height: 400px;
+            }
+            
+            .definition-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-links {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .demo-btn {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-sitemap"></i>
+                    <span>ROADMAPPER</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#definition">Definition</a>
+                    <a href="#benefits">Benefits</a>
+                    <a href="#demo">Interactive Demo</a>
+                    <a href="#create">Create Your Own</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>The Developer's Compass: Navigating Your Tech Journey</h1>
+                    <p>Roadmaps are strategic visual guides that chart the path from novice to expert in any development field. They transform overwhelming learning curves into structured, achievable milestones.</p>
+                    <a href="#demo" class="cta-button">Explore Interactive Roadmap <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="hero-visual">
+                    <div class="orbital-system">
+                        <div class="center-orb pulse">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="orbit orbit-1"></div>
+                        <div class="orbit orbit-2"></div>
+                        
+                        <div class="orbit-node node-1">
+                            <div class="node-icon"><i class="fab fa-html5"></i></div>
+                            <span>Fundamentals</span>
+                        </div>
+                        <div class="orbit-node node-2">
+                            <div class="node-icon"><i class="fab fa-js"></i></div>
+                            <span>Core Skills</span>
+                        </div>
+                        <div class="orbit-node node-3">
+                            <div class="node-icon"><i class="fas fa-database"></i></div>
+                            <span>Backend</span>
+                        </div>
+                        <div class="orbit-node node-4">
+                            <div class="node-icon"><i class="fas fa-rocket"></i></div>
+                            <span>Deployment</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Definition Section -->
+    <section id="definition">
+        <div class="container">
+            <h2 class="section-title">What Is A Developer Roadmap?</h2>
+            <div class="definition-content">
+                <div class="definition-text">
+                    <p>A developer roadmap is a strategic visualization of the skills, technologies, and milestones required to achieve proficiency in a specific area of software development. Unlike simple to-do lists, roadmaps provide context, sequence, and interconnectedness between learning objectives.</p>
+                    
+                    <div class="highlight-box">
+                        <p><strong>Analogy:</strong> Think of a developer roadmap as a GPS for your coding journey. It doesn't just tell you the destination; it shows you the route, alerts you to upcoming turns, and helps you avoid dead ends.</p>
+                    </div>
+                    
+                    <p>Modern roadmaps are dynamic, often interactive guides that evolve with the tech landscape. They break down complex fields like web development, data science, or DevOps into digestible, sequential steps while showing how different technologies relate to each other.</p>
+                    
+                    <p>Effective roadmaps balance breadth and depth, showing both the "big picture" of a technology ecosystem and the specific skills needed at each stage of mastery.</p>
+                </div>
+                
+                <div class="visual-roadmap">
+                    <div class="roadmap-path"></div>
+                    <div class="roadmap-node node-1">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="roadmap-node node-2">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="roadmap-node node-3">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="roadmap-node node-4">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <div class="roadmap-node node-5">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits">
+        <div class="container">
+            <h2 class="section-title">Why Roadmaps Are Essential</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>Structured Learning Path</h3>
+                    <p>Roadmaps eliminate the "what should I learn next?" dilemma by providing a logical progression of skills, building from fundamentals to advanced topics.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Goal Clarity</h3>
+                    <p>They transform abstract career goals into concrete, achievable milestones, making progress measurable and motivation sustainable.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Efficiency & Time Saving</h3>
+                    <p>By following a proven path, developers avoid wasted time on irrelevant technologies or learning concepts in the wrong order.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <h3>Ecosystem Understanding</h3>
+                    <p>Roadmaps show how different technologies interconnect, helping developers understand not just "how" but "why" and "when" to use specific tools.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-road"></i>
+                    </div>
+                    <h3>Career Navigation</h3>
+                    <p>They provide visibility into specialization paths, helping developers make informed decisions about their career trajectory and skill investments.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Community Alignment</h3>
+                    <p>Following established roadmaps ensures developers learn skills valued by the industry and remain aligned with community best practices.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo Section -->
+    <section id="demo">
+        <div class="container">
+            <h2 class="section-title">Interactive Roadmap Explorer</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px; font-size: 1.2rem; opacity: 0.9;">Click on different roadmap paths to explore how developers progress through various specializations. Each node reveals key learning objectives.</p>
+            
+            <div class="demo-container">
+                <div class="demo-controls">
+                    <button class="demo-btn active" data-path="frontend">Frontend Development</button>
+                    <button class="demo-btn" data-path="backend">Backend Development</button>
+                    <button class="demo-btn" data-path="fullstack">Full-Stack Development</button>
+                    <button class="demo-btn" data-path="devops">DevOps Engineering</button>
+                </div>
+                
+                <div class="demo-visual">
+                    <div class="path-line"></div>
+                    
+                    <div class="demo-node" style="left: 10%;">
+                        <i class="fas fa-code"></i>
+                        <span>Fundamentals</span>
+                        <div class="node-content">
+                            <h4>Stage 1: Fundamentals</h4>
+                            <p>HTML, CSS, JavaScript basics, Git, and command line. The foundation of all web development.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-node" style="left: 25%;">
+                        <i class="fab fa-js"></i>
+                        <span>Core Language</span>
+                        <div class="node-content">
+                            <h4>Stage 2: Core Language</h4>
+                            <p>Deep dive into JavaScript: ES6+, async programming, DOM manipulation, and debugging.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-node" style="left: 40%;">
+                        <i class="fas fa-cube"></i>
+                        <span>Frameworks</span>
+                        <div class="node-content">
+                            <h4>Stage 3: Frameworks</h4>
+                            <p>React, Vue, or Angular. State management, component architecture, and modern build tools.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-node" style="left: 55%;">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>Advanced Topics</span>
+                        <div class="node-content">
+                            <h4>Stage 4: Advanced Topics</h4>
+                            <p>Performance optimization, testing, TypeScript, PWA, and responsive design patterns.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-node" style="left: 70%;">
+                        <i class="fas fa-tools"></i>
+                        <span>Tooling</span>
+                        <div class="node-content">
+                            <h4>Stage 5: Tooling</h4>
+                            <p>Webpack, CI/CD, testing frameworks, and advanced Git workflows for professional development.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-node" style="left: 85%;">
+                        <i class="fas fa-rocket"></i>
+                        <span>Specialization</span>
+                        <div class="node-content">
+                            <h4>Stage 6: Specialization</h4>
+                            <p>Choose a path: UI/UX focus, advanced animations, WebAssembly, or framework internals.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Create Your Own Section -->
+    <section id="create">
+        <div class="container">
+            <h2 class="section-title">Create Your Personalized Roadmap</h2>
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <p style="font-size: 1.2rem; margin-bottom: 40px;">The most effective roadmap is one tailored to your goals, learning style, and career aspirations. Start with a general template, then customize based on your interests and the specific demands of your target roles.</p>
+                <a href="#definition" class="cta-button">Begin Your Roadmap Journey <i class="fas fa-compass"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">ROADMAPPER</div>
+                    <p class="footer-text">The next-generation guide for developers navigating the ever-evolving technology landscape. Made with passion for computer science education.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Roadmap Types</h3>
+                        <ul>
+                            <li><a href="#">Frontend Developer</a></li>
+                            <li><a href="#">Backend Developer</a></li>
+                            <li><a href="#">DevOps Engineer</a></li>
+                            <li><a href="#">Mobile Developer</a></li>
+                            <li><a href="#">Data Scientist</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Interactive Charts</a></li>
+                            <li><a href="#">Learning Resources</a></li>
+                            <li><a href="#">Community Forums</a></li>
+                            <li><a href="#">Roadmap Templates</a></li>
+                            <li><a href="#">Progress Trackers</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">Contribute</a></li>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 Roadmapper | An Interactive Educational Tool | Created for Computer Science Education</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Interactive Demo Controls
+        document.querySelectorAll('.demo-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('.demo-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Get the path type
+                const pathType = this.getAttribute('data-path');
+                
+                // Update nodes based on path type
+                const nodes = document.querySelectorAll('.demo-node');
+                const icons = document.querySelectorAll('.demo-node i');
+                const titles = document.querySelectorAll('.demo-node span');
+                const contents = document.querySelectorAll('.node-content h4');
+                const descriptions = document.querySelectorAll('.node-content p');
+                
+                // Define different paths
+                const paths = {
+                    frontend: {
+                        icons: ['fa-code', 'fab fa-js', 'fas fa-cube', 'fas fa-mobile-alt', 'fas fa-tools', 'fas fa-rocket'],
+                        titles: ['Fundamentals', 'Core Language', 'Frameworks', 'Advanced Topics', 'Tooling', 'Specialization'],
+                        contents: [
+                            'Stage 1: Fundamentals',
+                            'Stage 2: Core Language',
+                            'Stage 3: Frameworks',
+                            'Stage 4: Advanced Topics',
+                            'Stage 5: Tooling',
+                            'Stage 6: Specialization'
+                        ],
+                        descriptions: [
+                            'HTML, CSS, JavaScript basics, Git, and command line. The foundation of all web development.',
+                            'Deep dive into JavaScript: ES6+, async programming, DOM manipulation, and debugging.',
+                            'React, Vue, or Angular. State management, component architecture, and modern build tools.',
+                            'Performance optimization, testing, TypeScript, PWA, and responsive design patterns.',
+                            'Webpack, CI/CD, testing frameworks, and advanced Git workflows for professional development.',
+                            'Choose a path: UI/UX focus, advanced animations, WebAssembly, or framework internals.'
+                        ]
+                    },
+                    backend: {
+                        icons: ['fa-server', 'fab fa-node-js', 'fas fa-database', 'fas fa-network-wired', 'fas fa-shield-alt', 'fas fa-cloud'],
+                        titles: ['Server Basics', 'Runtime', 'Databases', 'APIs & Services', 'Security', 'Deployment'],
+                        contents: [
+                            'Stage 1: Server Basics',
+                            'Stage 2: Runtime Environment',
+                            'Stage 3: Databases',
+                            'Stage 4: APIs & Services',
+                            'Stage 5: Security',
+                            'Stage 6: Deployment'
+                        ],
+                        descriptions: [
+                            'Understanding servers, HTTP, REST, and basic backend architecture principles.',
+                            'Node.js, Python, Java, or Go. Runtime specifics, package management, and environment setup.',
+                            'SQL and NoSQL databases, ORMs, migrations, and data modeling techniques.',
+                            'Building RESTful APIs, GraphQL, microservices architecture, and third-party integrations.',
+                            'Authentication, authorization, encryption, and security best practices for backend systems.',
+                            'Containerization with Docker, orchestration with Kubernetes, and cloud platform deployment.'
+                        ]
+                    },
+                    fullstack: {
+                        icons: ['fa-layer-group', 'fas fa-exchange-alt', 'fas fa-sync-alt', 'fas fa-project-diagram', 'fas fa-cogs', 'fas fa-user-check'],
+                        titles: ['Integration', 'Data Flow', 'Real-time', 'Architecture', 'Optimization', 'User-Centric'],
+                        contents: [
+                            'Stage 1: Integration',
+                            'Stage 2: Data Flow',
+                            'Stage 3: Real-time Features',
+                            'Stage 4: Architecture',
+                            'Stage 5: Optimization',
+                            'Stage 6: User-Centric'
+                        ],
+                        descriptions: [
+                            'Connecting frontend and backend, understanding the full request-response cycle.',
+                            'State management across client and server, data synchronization strategies.',
+                            'WebSockets, server-sent events, and real-time application patterns.',
+                            'Full-stack application architecture, design patterns, and scalability considerations.',
+                            'Performance tuning across the entire stack, from database queries to frontend rendering.',
+                            'Focus on user experience, accessibility, and meeting both technical and business requirements.'
+                        ]
+                    },
+                    devops: {
+                        icons: ['fa-code-branch', 'fas fa-box', 'fas fa-infinity', 'fas fa-chart-line', 'fas fa-robot', 'fas fa-cloud'],
+                        titles: ['Version Control', 'Containerization', 'Orchestration', 'Monitoring', 'Automation', 'Cloud Native'],
+                        contents: [
+                            'Stage 1: Version Control',
+                            'Stage 2: Containerization',
+                            'Stage 3: Orchestration',
+                            'Stage 4: Monitoring',
+                            'Stage 5: Automation',
+                            'Stage 6: Cloud Native'
+                        ],
+                        descriptions: [
+                            'Advanced Git workflows, branching strategies, and collaborative development practices.',
+                            'Docker fundamentals, image creation, container management, and Docker Compose.',
+                            'Kubernetes architecture, deployment, scaling, and management of containerized applications.',
+                            'Logging, metrics, alerting, and observability tools for infrastructure and applications.',
+                            'CI/CD pipelines, infrastructure as code, configuration management, and scripting.',
+                            'Cloud platform mastery, serverless architectures, and modern DevOps practices.'
+                        ]
+                    }
+                };
+                
+                // Update each node
+                nodes.forEach((node, index) => {
+                    // Update icon
+                    icons[index].className = `fas ${paths[pathType].icons[index]}`;
+                    
+                    // Update title
+                    titles[index].textContent = paths[pathType].titles[index];
+                    
+                    // Update content
+                    contents[index].textContent = paths[pathType].contents[index];
+                    descriptions[index].textContent = paths[pathType].descriptions[index];
+                });
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Animate roadmap nodes on scroll
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe roadmap nodes
+        document.querySelectorAll('.roadmap-node, .benefit-card').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Add pulse animation to center orb periodically
+        setInterval(() => {
+            const centerOrb = document.querySelector('.center-orb');
+            centerOrb.classList.remove('pulse');
+            void centerOrb.offsetWidth; // Trigger reflow
+            centerOrb.classList.add('pulse');
+        }, 4000);
+    </script>
+</body>
+</html>
