@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevPath - Developer Roadmaps</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #111111;
+            padding: 25px 0;
+            border-bottom: 1px solid #222222;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            background: linear-gradient(90deg, #00d4ff, #0088ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .language-selector {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .language-selector button {
+            background: none;
+            border: none;
+            color: #888888;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        .language-selector button:hover {
+            background-color: #222222;
+        }
+        
+        .language-selector button.active {
+            color: #00d4ff;
+            background-color: #222222;
+        }
+        
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+        
+        .nav-tab {
+            background-color: #1a1a1a;
+            color: #aaaaaa;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 1px solid #222222;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .nav-tab:hover {
+            background-color: #222222;
+            color: #00d4ff;
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(90deg, #00d4ff, #0088ff);
+            color: white;
+            border-color: transparent;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 40px 0 80px;
+        }
+        
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 80px 0;
+            background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
+        }
+        
+        .hero-section h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+        
+        .hero-section h1 span {
+            background: linear-gradient(90deg, #00d4ff, #0088ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-section p {
+            font-size: 20px;
+            color: #aaaaaa;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+        
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            margin: 40px auto;
+            width: 80%;
+            max-width: 600px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(90deg, #00d4ff, #0088ff);
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 18px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 132, 255, 0.3);
+        }
+        
+        /* Content Sections */
+        .content-section {
+            padding: 40px 0;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #ffffff;
+            text-align: center;
+        }
+        
+        .section-title span {
+            background: linear-gradient(90deg, #00d4ff, #0088ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-subtitle {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #00d4ff;
+        }
+        
+        .section-description {
+            font-size: 18px;
+            color: #aaaaaa;
+            margin-bottom: 40px;
+            max-width: 900px;
+            line-height: 1.6;
+        }
+        
+        /* Content Cards */
+        .content-card {
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 4px solid #00d4ff;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 132, 255, 0.15);
+        }
+        
+        .content-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        
+        .content-card p {
+            color: #aaaaaa;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .content-card ul, .content-card ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .content-card li {
+            color: #aaaaaa;
+            margin-bottom: 10px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        /* Three Column Layout */
+        .three-column {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .column {
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            padding: 30px;
+            border-top: 4px solid;
+        }
+        
+        .column-blue {
+            border-color: #00d4ff;
+        }
+        
+        .column-red {
+            border-color: #ff6b6b;
+        }
+        
+        .column-green {
+            border-color: #4cd964;
+        }
+        
+        .column h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        
+        /* Comparison Section */
+        .comparison-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .comparison-card {
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            padding: 30px;
+        }
+        
+        .without-roadmap {
+            border-top: 4px solid #ff6b6b;
+        }
+        
+        .with-roadmap {
+            border-top: 4px solid #4cd964;
+        }
+        
+        .comparison-card h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .without-roadmap h3 {
+            color: #ff6b6b;
+        }
+        
+        .with-roadmap h3 {
+            color: #4cd964;
+        }
+        
+        /* Checkbox Styles */
+        .checkbox-list {
+            margin-top: 20px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 8px;
+            border-radius: 6px;
+            background-color: #222222;
+        }
+        
+        .checkbox-item.checked {
+            border-left: 3px solid #4cd964;
+        }
+        
+        .checkbox-item.unchecked {
+            border-left: 3px solid #ff6b6b;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            accent-color: #00d4ff;
+            flex-shrink: 0;
+        }
+        
+        .checkbox-item span {
+            color: #aaaaaa;
+            font-size: 15px;
+        }
+        
+        .checkbox-item.checked span {
+            color: #4cd964;
+        }
+        
+        .checkbox-item.unchecked span {
+            color: #ff6b6b;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .three-column {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .hero-section h1 {
+                font-size: 40px;
+            }
+            
+            .hero-section p {
+                font-size: 18px;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .comparison-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .hero-section {
+                padding: 60px 0;
+            }
+            
+            .hero-section h1 {
+                font-size: 32px;
+            }
+            
+            .hero-section p {
+                font-size: 16px;
+                padding: 0 15px;
+            }
+            
+            .nav-tabs {
+                gap: 10px;
+                margin: 20px 0;
+            }
+            
+            .nav-tab {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            .three-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-card {
+                padding: 20px;
+            }
+            
+            .column {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                padding: 0 15px;
+            }
+            
+            .hero-section h1 {
+                font-size: 28px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+        }
+        
+        /* Language-specific styles */
+        .arabic-text {
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .french-text {
+            font-style: italic;
+        }
+        
+        /* Multi-language content */
+        .multi-language {
+            display: none;
+        }
+        
+        .multi-language.active {
+            display: block;
+        }
+        
+        /* Language Toggle */
+        .language-content {
+            display: none;
+        }
+        
+        .language-content.active {
+            display: block;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header with Language Selector -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Dev<span>Path</span></div>
+                <div class="language-selector">
+                    <button class="active" data-lang="en">English</button>
+                    <button data-lang="fr">Français</button>
+                    <button data-lang="ar">العربية</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="container">
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-page="home">Home</button>
+            <button class="nav-tab" data-page="definition">Definition</button>
+            <button class="nav-tab" data-page="understanding">Understanding</button>
+            <button class="nav-tab" data-page="components">Components</button>
+            <button class="nav-tab" data-page="benefits">Benefits</button>
+            <button class="nav-tab" data-page="types">Types</button>
+            <button class="nav-tab" data-page="roadmap">Web Development Roadmap</button>
+            <button class="nav-tab" data-page="comparison">Comparison</button>
+        </div>
+    </div>
+
+    <!-- Main Content - All Pages -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Page 1: Home -->
+            <div class="page active" id="home">
+                <section class="hero-section">
+                    <div class="language-content active" data-lang="en">
+                        <h1>Master Your Development Journey with <span>Strategic Roadmaps</span></h1>
+                        <p>Developer roadmaps are visual guides that chart the optimal path from novice to expert. They transform overwhelming learning curves into structured, achievable milestones tailored for computer science students and aspiring developers.</p>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <h1>Maîtrisez votre parcours de développement avec des <span>Roadmaps Stratégiques</span></h1>
+                        <p>Les roadmaps développeur sont des guides visuels qui tracent le chemin optimal du novice à l'expert. Elles transforment les courbes d'apprentissage accablantes en jalons structurés et réalisables adaptés aux étudiants en informatique et aux développeurs en herbe.</p>
+                    </div>
+                    <div class="language-content arabic-text" data-lang="ar">
+                        <h1>أتقن رحلتك في التطوير باستخدام <span>خرائط الطريق الاستراتيجية</span></h1>
+                        <p>خرائط طريق المطورين هي أدلة بصرية ترسم المسار الأمثل من المبتدئ إلى الخبير. تحول منحنيات التعلم الساحقة إلى معالم منظمة وقابلة للتحقيق مصممة خصيصًا لطلاب علوم الكمبيوتر والمطورين الطموحين.</p>
+                    </div>
+                    <div class="divider"></div>
+                    <button class="cta-button" id="explore-roadmaps">Explore Roadmaps</button>
+                </section>
+            </div>
+
+            <!-- Page 2: Definition -->
+            <div class="page" id="definition">
+                <section class="content-section">
+                    <div class="language-content active" data-lang="en">
+                        <h1 class="section-title">What is a <span>Developer Roadmap?</span></h1>
+                        <p class="section-description">A structured learning path designed to guide aspiring developers through the essential skills and technologies needed for specific career paths in software development.</p>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <h1 class="section-title">Qu'est-ce qu'un <span>Roadmap Développeur?</span></h1>
+                        <p class="section-description">Un parcours d'apprentissage structuré conçu pour guider les développeurs en herbe à travers les compétences et technologies essentielles nécessaires pour des parcours professionnels spécifiques dans le développement de logiciels.</p>
+                    </div>
+                    <div class="language-content arabic-text" data-lang="ar">
+                        <h1 class="section-title">ما هي <span>خارطة طريق المطور؟</span></h1>
+                        <p class="section-description">مسار تعليمي منظم مصمم لتوجيه المطورين الطموحين عبر المهارات والتقنيات الأساسية اللازمة لمسارات مهنية محددة في تطوير البرمجيات.</p>
+                    </div>
+                    
+                    <div class="divider"></div>
+                    
+                    <div class="three-column">
+                        <div class="column column-blue">
+                            <div class="language-content active" data-lang="en">
+                                <h3>Definition</h3>
+                                <p>A developer roadmap is a strategic visualization of the learning journey required to become proficient in a specific area of software development.</p>
+                            </div>
+                            <div class="language-content" data-lang="fr">
+                                <h3>Définition</h3>
+                                <p>Un roadmap développeur est une visualisation stratégique du parcours d'apprentissage nécessaire pour devenir compétent dans un domaine spécifique du développement de logiciels.</p>
+                            </div>
+                            <div class="language-content arabic-text" data-lang="ar">
+                                <h3>تعريف</h3>
+                                <p>خارطة طريق المطور هي تصور استراتيجي لرحلة التعلم المطلوبة للوصول إلى الكفاءة في مجال محدد من تطوير البرمجيات.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="column column-red">
+                            <div class="language-content active" data-lang="en">
+                                <h3>Components</h3>
+                                <ul>
+                                    <li>Sequential skill progression</li>
+                                    <li>Technology stacks and tools</li>
+                                    <li>Learning resources and references</li>
+                                    <li>Project milestones and goals</li>
+                                    <li>Timeline estimates</li>
+                                </ul>
+                            </div>
+                            <div class="language-content" data-lang="fr">
+                                <h3>Composants</h3>
+                                <ul>
+                                    <li>Progression séquentielle des compétences</li>
+                                    <li>Piles technologiques et outils</li>
+                                    <li>Ressources et références d'apprentissage</li>
+                                    <li>Jalons et objectifs de projet</li>
+                                    <li>Estimations de calendrier</li>
+                                </ul>
+                            </div>
+                            <div class="language-content arabic-text" data-lang="ar">
+                                <h3>مكونات</h3>
+                                <ul>
+                                    <li>تقدم مهارات متسلسل</li>
+                                    <li>مجموعات تقنية وأدوات</li>
+                                    <li>موارد ومراجع تعليمية</li>
+                                    <li>معالم وأهداف المشروع</li>
+                                    <li>تقديرات الجدول الزمني</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="column column-green">
+                            <div class="language-content active" data-lang="en">
+                                <h3>Types</h3>
+                                <ul>
+                                    <li>Frontend Development</li>
+                                    <li>Backend Development</li>
+                                    <li>Full-Stack Development</li>
+                                    <li>Mobile Development</li>
+                                    <li>Data Science</li>
+                                    <li>Cybersecurity</li>
+                                </ul>
+                            </div>
+                            <div class="language-content" data-lang="fr">
+                                <h3>Types</h3>
+                                <ul>
+                                    <li>Développement Frontend</li>
+                                    <li>Développement Backend</li>
+                                    <li>Développement Full-Stack</li>
+                                    <li>Développement Mobile</li>
+                                    <li>Science des Données</li>
+                                    <li>Cybersécurité</li>
+                                </ul>
+                            </div>
+                            <div class="language-content arabic-text" data-lang="ar">
+                                <h3>أنواع</h3>
+                                <ul>
+                                    <li>تطوير الواجهة الأمامية</li>
+                                    <li>تطوير الواجهة الخلفية</li>
+                                    <li>تطوير كامل المكدس</li>
+                                    <li>تطوير الجوال</li>
+                                    <li>علم البيانات</li>
+                                    <li>الأمن السيبراني</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Page 3: Understanding -->
+            <div class="page" id="understanding">
+                <section class="content-section">
+                    <div class="language-content active" data-lang="en">
+                        <h1 class="section-title">Understanding <span>Developer Roadmaps</span></h1>
+                        <p class="section-description">A developer roadmap is a strategic visualization of the learning journey required to become proficient in a specific area of software development. It outlines the progression from fundamental concepts to advanced specialization, serving as both a guide and a progress tracker.</p>
+                        
+                        <div class="content-card">
+                            <h3>The GPS for Your Coding Education</h3>
+                            <p>Think of it as a GPS for your coding education—it shows you not only the destination but also the optimal route, potential detours, and estimated time to reach each milestone.</p>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>Goal-Oriented</h3>
+                                <p>Roadmaps transform abstract career goals into concrete, actionable learning objectives with clear success metrics.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>Structured Progression</h3>
+                                <p>Skills are organized in logical sequence, ensuring foundational knowledge before advancing to complex topics.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>Dynamic & Updated</h3>
+                                <p>Roadmaps evolve with technology trends, incorporating new tools and best practices as the industry changes.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-content" data-lang="fr">
+                        <h1 class="section-title">Comprendre les <span>Roadmaps Développeur</span></h1>
+                        <p class="section-description">Un roadmap développeur est une visualisation stratégique du parcours d'apprentissage nécessaire pour devenir compétent dans un domaine spécifique du développement de logiciels. Il décrit la progression des concepts fondamentaux vers la spécialisation avancée, servant à la fois de guide et de suivi de progression.</p>
+                        
+                        <div class="content-card">
+                            <h3>Le GPS de votre éducation en codage</h3>
+                            <p>Considérez-le comme un GPS pour votre éducation en codage—il vous montre non seulement la destination mais aussi l'itinéraire optimal, les détours potentiels et le temps estimé pour atteindre chaque jalon.</p>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>Axé sur les objectifs</h3>
+                                <p>Les roadmaps transforment les objectifs de carrière abstraits en objectifs d'apprentissage concrets et actionnables avec des mesures de succès claires.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>Progression structurée</h3>
+                                <p>Les compétences sont organisées de manière séquentielle logique, garantissant des connaissances fondamentales avant d'aborder des sujets complexes.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>Dynamique et mis à jour</h3>
+                                <p>Les roadmaps évoluent avec les tendances technologiques, intégrant de nouveaux outils et meilleures pratiques à mesure que l'industrie change.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-content arabic-text" data-lang="ar">
+                        <h1 class="section-title">فهم <span>خرائط طريق المطورين</span></h1>
+                        <p class="section-description">خارطة طريق المطور هي تصور استراتيجي لرحلة التعلم المطلوبة للوصول إلى الكفاءة في مجال محدد من تطوير البرمجيات. تخطط التقدم من المفاهيم الأساسية إلى التخصص المتقدم، وتعمل كدليل ومتابع للتقدم.</p>
+                        
+                        <div class="content-card">
+                            <h3>نظام تحديد المواقع لتعليم البرمجة الخاص بك</h3>
+                            <p>فكر فيها كنظام تحديد المواقع لتعليم البرمجة الخاص بك—فهي تظهر لك ليس فقط الوجهة ولكن أيضًا المسار الأمثل، والمتغيرات المحتملة، والوقت المقدر للوصول إلى كل معلم.</p>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>مرتكز على الهدف</h3>
+                                <p>تحول خرائط الطريق أهداف المهنة المجردة إلى أهداف تعليمية ملموسة وقابلة للتنفيذ مع مقاييس نجاح واضحة.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>تقدم منظم</h3>
+                                <p>يتم تنظيم المهارات بتسلسل منطقي، مما يضمن المعرفة الأساسية قبل التقدم إلى مواضيع معقدة.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>ديناميكي ومحدث</h3>
+                                <p>تتطور خرائط الطريق مع اتجاهات التكنولوجيا، وتدمج أدوات جديدة وأفضل الممارسات مع تغير الصناعة.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Page 4: Components -->
+            <div class="page" id="components">
+                <section class="content-section">
+                    <div class="language-content active" data-lang="en">
+                        <h1 class="section-title">Key Components of a <span>Developer Roadmap</span></h1>
+                        <p class="section-description">Every effective developer roadmap consists of several essential components that work together to create a comprehensive learning guide.</p>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>Learning Milestones</h3>
+                                <p>Clear checkpoints that mark progress and validate skill acquisition at each stage of the journey.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>Skill Dependencies</h3>
+                                <p>Visual representation of how different skills build upon each other and which prerequisites are required.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>Time Estimates</h3>
+                                <p>Realistic timeframes for each learning phase, helping with planning and expectation management.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>Tools & Technologies</h3>
+                                <p>Specific programming languages, frameworks, and tools to learn at each stage of development.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>Project Suggestions</h3>
+                                <p>Practical projects that apply learned skills and build a professional portfolio.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>Learning Resources</h3>
+                                <p>Curated list of tutorials, courses, documentation, and books for each skill area.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-content" data-lang="fr">
+                        <h1 class="section-title">Composants clés d'un <span>Roadmap Développeur</span></h1>
+                        <p class="section-description">Chaque roadmap développeur efficace se compose de plusieurs composants essentiels qui travaillent ensemble pour créer un guide d'apprentissage complet.</p>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>Jalons d'apprentissage</h3>
+                                <p>Points de contrôle clairs qui marquent les progrès et valident l'acquisition de compétences à chaque étape du parcours.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>Dépendances de compétences</h3>
+                                <p>Représentation visuelle de la façon dont différentes compétences s'appuient les unes sur les autres et des prérequis nécessaires.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>Estimations de temps</h3>
+                                <p>Délais réalistes pour chaque phase d'apprentissage, aidant à la planification et à la gestion des attentes.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>Outils & Technologies</h3>
+                                <p>Langages de programmation, frameworks et outils spécifiques à apprendre à chaque étape du développement.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>Suggestions de projets</h3>
+                                <p>Projets pratiques qui appliquent les compétences apprises et construisent un portfolio professionnel.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>Ressources d'apprentissage</h3>
+                                <p>Liste organisée de tutoriels, cours, documentation et livres pour chaque domaine de compétence.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-content arabic-text" data-lang="ar">
+                        <h1 class="section-title">المكونات الرئيسية لـ <span>خارطة طريق المطور</span></h1>
+                        <p class="section-description">تتكون كل خارطة طريق مطور فعالة من عدة مكونات أساسية تعمل معًا لإنشاء دليل تعليمي شامل.</p>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>معالم التعلم</h3>
+                                <p>نقاط تفتيش واضحة تحدد التقدم وتتحقق من اكتساب المهارات في كل مرحلة من الرحلة.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>اعتمادات المهارات</h3>
+                                <p>تمثيل مرئي لكيفية بناء المهارات المختلفة على بعضها البعض والمتطلبات الأساسية المطلوبة.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>تقديرات الوقت</h3>
+                                <p>أطر زمنية واقعية لكل مرحلة تعليمية، تساعد في التخطيط وإدارة التوقعات.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>الأدوات والتقنيات</h3>
+                                <p>لغات البرمجة المحددة، وأطر العمل، والأدوات التي يجب تعلمها في كل مرحلة من مراحل التطوير.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>اقتراحات المشاريع</h3>
+                                <p>مشاريع عملية تطبق المهارات المكتسبة وتبني محفظة مهنية.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>موارد التعلم</h3>
+                                <p>قائمة مختارة من البرامج التعليمية والدورات والوثائق والكتب لكل مجال مهارة.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Page 5: Benefits -->
+            <div class="page" id="benefits">
+                <section class="content-section">
+                    <div class="language-content active" data-lang="en">
+                        <h1 class="section-title">Benefits of Following a <span>Developer Roadmap</span></h1>
+                        <p class="section-description">Implementing a structured roadmap provides numerous advantages for computer science students and aspiring developers at all levels.</p>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>Clear Direction</h3>
+                                <p>Eliminates the "what to learn next" dilemma by providing a logical progression of skills and technologies.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>Time Efficiency</h3>
+                                <p>Prevents wasting time on irrelevant technologies or learning concepts in the wrong order.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>Goal Achievement</h3>
+                                <p>Transforms abstract career aspirations into concrete, achievable milestones with measurable progress.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>Confidence Building</h3>
+                                <p>Provides validation of progress and skill acquisition, boosting motivation and self-assurance.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>Industry Relevance</h3>
+                                <p>Ensures learning aligns with current industry demands and best practices.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>Academic Enhancement</h3>
+                                <p>Complements formal education by filling gaps and providing practical, career-focused learning.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-content" data-lang="fr">
+                        <h1 class="section-title">Avantages de suivre un <span>Roadmap Développeur</span></h1>
+                        <p class="section-description">Mettre en œuvre un roadmap structuré offre de nombreux avantages pour les étudiants en informatique et les développeurs en herbe à tous les niveaux.</p>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>Direction claire</h3>
+                                <p>Élimine le dilemme "quoi apprendre ensuite" en fournissant une progression logique des compétences et technologies.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>Efficacité temporelle</h3>
+                                <p>Empêche de perdre du temps sur des technologies non pertinentes ou d'apprendre des concepts dans le mauvais ordre.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>Réalisation d'objectifs</h3>
+                                <p>Transforme les aspirations de carrière abstraites en jalons concrets et réalisables avec des progrès mesurables.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>Construction de confiance</h3>
+                                <p>Fournit une validation des progrès et de l'acquisition de compétences, stimulant la motivation et l'assurance.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>Pertinence industrielle</h3>
+                                <p>Garantit que l'apprentissage correspond aux demandes et meilleures pratiques actuelles de l'industrie.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>Amélioration académique</h3>
+                                <p>Complète l'éducation formelle en comblant les lacunes et en fournissant un apprentissage pratique axé sur la carrière.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-content arabic-text" data-lang="ar">
+                        <h1 class="section-title">فوائد اتباع <span>خارطة طريق المطور</span></h1>
+                        <p class="section-description">يوفر تنفيذ خارطة طريق منظمة العديد من المزايا لطلاب علوم الكمبيوتر والمطورين الطموحين على جميع المستويات.</p>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>توجيه واضح</h3>
+                                <p>يقضي على معضلة "ماذا أتعلم بعد" من خلال توفير تقدم منطقي للمهارات والتقنيات.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>كفاءة الوقت</h3>
+                                <p>يمنع إضاعة الوقت على تقنيات غير ذات صلة أو تعلم مفاهيم بترتيب خاطئ.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>تحقيق الهدف</h3>
+                                <pيحول طموحات المهنة المجردة إلى معالم ملموسة وقابلة للتحقيق مع تقدم قابل للقياس.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>بناء الثقة</h3>
+                                <p>يوفر التحقق من التقدم واكتساب المهارات، مما يعزز الدافع والثقة بالنفس.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>ملاءمة الصناعة</h3>
+                                <p>يضمن توافق التعلم مع متطلبات الصناعة الحالية وأفضل الممارسات.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>تعزيز الأكاديمي</h3>
+                                <p>يكمل التعليم الرسمي من خلال سد الفجوت وتوفير تعليم عملي يركز على المهنة.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Page 6: Types -->
+            <div class="page" id="types">
+                <section class="content-section">
+                    <div class="language-content active" data-lang="en">
+                        <h1 class="section-title">Common Types of <span>Developer Roadmaps</span></h1>
+                        <p class="section-description">Different development specializations require tailored roadmaps. Here are the most common types used in the industry.</p>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>Frontend Development</h3>
+                                <p>HTML, CSS, JavaScript, frameworks like React/Vue/Angular, responsive design, and modern tooling.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>Backend Development</h3>
+                                <p>Server-side languages (Node.js, Python, Java), databases, APIs, authentication, and deployment.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>Mobile Development</h3>
+                                <p>Native (Swift/Kotlin) or cross-platform (React Native/Flutter), mobile UI/UX, and app store deployment.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>Data Science</h3>
+                                <p>Python/R, statistics, machine learning, data visualization, and big data technologies.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>Cybersecurity</h3>
+                                <p>Networking, cryptography, ethical hacking, security tools, and compliance standards.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>DevOps</h3>
+                                <p>Cloud platforms, containers (Docker), orchestration (Kubernetes), CI/CD, and infrastructure as code.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-content" data-lang="fr">
+                        <h1 class="section-title">Types courants de <span>Roadmaps Développeur</span></h1>
+                        <p class="section-description">Différentes spécialisations de développement nécessitent des roadmaps adaptés. Voici les types les plus courants utilisés dans l'industrie.</p>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>Développement Frontend</h3>
+                                <p>HTML, CSS, JavaScript, frameworks comme React/Vue/Angular, design responsive et outils modernes.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>Développement Backend</h3>
+                                <p>Langages côté serveur (Node.js, Python, Java), bases de données, API, authentification et déploiement.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>Développement Mobile</h3>
+                                <p>Natif (Swift/Kotlin) ou multiplateforme (React Native/Flutter), UI/UX mobile et déploiement d'applications.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>Science des Données</h3>
+                                <p>Python/R, statistiques, apprentissage automatique, visualisation de données et technologies de big data.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>Cybersécurité</h3>
+                                <p>Réseautage, cryptographie, piratage éthique, outils de sécurité et normes de conformité.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>DevOps</h3>
+                                <p>Plateformes cloud, conteneurs (Docker), orchestration (Kubernetes), CI/CD et infrastructure as code.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-content arabic-text" data-lang="ar">
+                        <h1 class="section-title">أنواع شائعة من <span>خرائط طريق المطورين</span></h1>
+                        <p class="section-description">تتطلب التخصصات المختلفة في التطوير خرائط طريق مخصصة. فيما يلي أكثر الأنواع شيوعًا المستخدمة في الصناعة.</p>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>تطوير الواجهة الأمامية</h3>
+                                <p>HTML، CSS، JavaScript، أطر العمل مثل React/Vue/Angular، التصميم المتجاوب والأدوات الحديثة.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>تطوير الواجهة الخلفية</h3>
+                                <p>لغات جانب الخادم (Node.js، Python، Java)، قواعد البيانات، واجهات برمجة التطبيقات، المصادقة والنشر.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>تطوير الجوال</h3>
+                                <p>الأصلي (Swift/Kotlin) أو متعدد المنصات (React Native/Flutter)، واجهة المستخدم/تجربة المستخدم للجوال ونشر متجر التطبيقات.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="three-column">
+                            <div class="column column-blue">
+                                <h3>علم البيانات</h3>
+                                <p>Python/R، الإحصاء، التعلم الآلي، تصور البيانات وتقنيات البيانات الضخمة.</p>
+                            </div>
+                            
+                            <div class="column column-red">
+                                <h3>الأمن السيبراني</h3>
+                                <p>الشبكات، التشفير، الاختراق الأخلاقي، أدوات الأمن ومعايير الامتثال.</p>
+                            </div>
+                            
+                            <div class="column column-green">
+                                <h3>DevOps</h3>
+                                <p>منصات السحابة، الحاويات (Docker)، الأوركسترا (Kubernetes)، CI/CD والبنية التحتية كرمز.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Page 7: Web Development Roadmap -->
+            <div class="page" id="roadmap">
+                <section class="content-section">
+                    <div class="language-content active" data-lang="en">
+                        <h1 class="section-title">Sample <span>Web Development Roadmap</span></h1>
+                        <p class="section-description">A visual representation of a typical learning path for becoming a professional web developer.</p>
+                        
+                        <div class="content-card">
+                            <h3>Foundations</h3>
+                            <ul>
+                                <li>HTML5 & Semantic Markup</li>
+                                <li>CSS3 & Responsive Design</li>
+                                <li>JavaScript Fundamentals</li>
+                                <li>Git & Version Control</li>
+                                <li>Command Line Basics</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="content-card">
+                            <h3>Frontend Development</h3>
+                            <ul>
+                                <li>Advanced JavaScript (ES6+)</li>
+                                <li>React.js or Vue.js Framework</li>
+                                <li>State Management (Redux/Vuex)</li>
+                                <li>Modern CSS (Flexbox/Grid)</li>
+                                <li>Build Tools (Webpack, Vite)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="content-card">
+                            <h3>Backend Development</h3>
+                            <ul>
+                                <li>Node.js & Express.js</li>
+                                <li>Databases (SQL & NoSQL)</li>
+                                <li>RESTful API Design</li>
+                                <li>Authentication & Authorization</li>
+                                <li>Server Deployment</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="content-card">
+                            <h3>Advanced Topics</h3>
+                            <div class="checkbox-list">
+                                <div class="checkbox-item checked">
+                                    <input type="checkbox" checked disabled>
+                                    <span>TypeScript</span>
+                                </div>
+                                <div class="checkbox-item checked">
+                                    <input type="checkbox" checked disabled>
+                                    <span>Testing (Jest, Cypress)</span>
+                                </div>
+                                <div class="checkbox-item checked">
+                                    <input type="checkbox" checked disabled>
+                                    <span>Performance Optimization</span>
+                                </div>
+                                <div class="checkbox-item checked">
+                                    <input type="checkbox" checked disabled>
+                                    <span>Web Security</span>
+                                </div>
+                                <div class="checkbox-item checked">
+                                    <input type="checkbox" checked disabled>
+                                    <span>CI/CD Pipelines</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-content" data-lang="fr">
+                        <h1 class="section-title">Exemple de <span>Roadmap Développement Web</span></h1>
+                        <p class="section-description">Une représentation visuelle d'un parcours d'apprentissage typique pour devenir un développeur web professionnel.</p>
+                        
+                        <div class="content-card">
+                            <h3>Fondations</h3>
+                            <ul>
+                                <li>HTML5 & Balisage Sémantique</li>
+                                <li>CSS3 & Design Responsive</li>
+                                <li>Fondamentaux JavaScript</li>
+                                <li>Git & Contrôle de Version</li>
+                                <li>Bases de la Ligne de Commande</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="content-card">
+                            <h3>Développement Frontend</h3>
+                            <ul>
+                                <li>JavaScript Avancé (ES6+)</li>
+                                <li>Framework React.js ou Vue.js</li>
+                                <li>Gestion d'État (Redux/Vuex)</li>
+                                <li>CSS Moderne (Flexbox/Grid)</li>
+                                <li>Outils de Build (Webpack, Vite)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="content-card">
+                            <h3>Développement Backend</h3>
+                            <ul>
+                                <li>Node.js & Express.js</li>
+                                <li>Bases de Données (SQL & NoSQL)</li>
+                                <li>Conception d'API RESTful</li>
+                                <li>Authentification & Autorisation</li>
+                                <li>Déploiement Serveur</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="content-card">
+                            <h3>Sujets Avancés</h3>
+                            <div class="checkbox-list">
+                                <div class="checkbox-item checked">
+                                    <input type="checkbox" checked disabled>
+                                    <span>TypeScript</span>
+                                </div>
+                                <div class="checkbox-item checked">
+                                    <input type="checkbox" checked disabled>
+                                    <span>Tests (Jest, Cypress)</span>
+                                </div>
+                                <div class="checkbox-item checked">
+                                    <input type="checkbox" checked disabled>
+                                    <span>Optimisation des Performances</span>
+                                </div>
+                                <div class="checkbox-item checked">
+                                    <input type="checkbox" checked disabled>
+                                    <span>Sécurité Web</span>
+                                </div>
+                                <div class="checkbox-item checked">
+                                    <input type="checkbox" checked disabled>
+                                    <span>Pipelines CI/CD</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-content arabic-text" data-lang="ar">
+                        <h1 class="section-title">نموذج <span>خارطة طريق تطوير الويب</span></h1>
+                        <p class="section-description">تمثيل مرئي لمسار تعليمي نموذجي لتصبح مطور ويب محترف.</p>
+                        
+                        <div class="content-card">
+                            <h3>الأساسيات</h3>
+                            <ul>
+                                <li>HTML5 والترميز الدلالي</li>
+                                <li>CSS3 والتصميم المتجاوب</li>
+                                <li>أساسيات JavaScript</li>
+                                <li>Git والتحكم في الإصدار</li>
+                                <li>أساسيات سطر الأوامر</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="content-card">
+                            <h3>تطوير الواجهة الأمامية</h3>
+                            <ul>
+                                <li>JavaScript المتقدم (ES6+)</li>
+                                <li>إطار React.js أو Vue.js</li>
+                                <li>إدارة الحالة (Redux/Vuex)</li>
+                                <li>CSS الحديثة (Flexbox/Grid)</li>
+                                <li>أدوات البناء (Webpack, Vite)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="content-card">
+                            <h3>تطوير الواجهة الخلفية</h3>
+                            <ul>
+                                <li>Node.js و Express.js</li>
+                                <li>قواعد البيانات (SQL و NoSQL)</li>
+                                <li>تصميم API RESTful</li>
+                                <li>المصادقة والتفويض</li>
+                                <li>نشر الخادم</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="content-card">
+                            <h3>مواضيع متقدمة</h3>
+                            <div class="checkbox-list">
+                                <div class="checkbox-item checked">
+                                    <input type="checkbox" checked disabled>
+                                    <span>TypeScript</span>
+                                </div>
+                                <div class="checkbox-item checked">
+                                    <input type="checkbox" checked disabled>
+                                    <span>الاختبار (Jest, Cypress)</span>
+                                </div>
+                                <div class="checkbox-item checked">
+                                    <input type="checkbox" checked disabled>
+                                    <span>تحسين الأداء</span>
+                                </div>
+                                <div class="checkbox-item checked">
+                                    <input type="checkbox" checked disabled>
+                                    <span>أمن الويب</span>
+                                </div>
+                                <div class="checkbox-item checked">
+                                    <input type="checkbox" checked disabled>
+                                    <span>خطوط أنابيب CI/CD</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Page 8: Comparison -->
+            <div class="page" id="comparison">
+                <section class="content-section">
+                    <div class="language-content active" data-lang="en">
+                        <h1 class="section-title">With vs Without a <span>Roadmap</span></h1>
+                        <p class="section-description">See the difference a structured roadmap makes in a developer's learning journey.</p>
+                        
+                        <div class="comparison-section">
+                            <!-- Without Roadmap -->
+                            <div class="comparison-card without-roadmap">
+                                <h3>Without Roadmap</h3>
+                                <div class="checkbox-list">
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Unclear learning path</span>
+                                    </div>
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Random skill acquisition</span>
+                                    </div>
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Wasted time on irrelevant topics</span>
+                                    </div>
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Lack of direction & motivation</span>
+                                    </div>
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Difficulty measuring progress</span>
+                                    </div>
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Knowledge gaps & inconsistencies</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- With Roadmap -->
+                            <div class="comparison-card with-roadmap">
+                                <h3>With Roadmap</h3>
+                                <div class="checkbox-list">
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Clear, structured learning path</span>
+                                    </div>
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Sequential skill development</span>
+                                    </div>
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Focused, efficient learning</span>
+                                    </div>
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Clear goals & motivation</span>
+                                    </div>
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Measurable progress tracking</span>
+                                    </div>
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Comprehensive knowledge coverage</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-content" data-lang="fr">
+                        <h1 class="section-title">Avec vs Sans <span>Roadmap</span></h1>
+                        <p class="section-description">Voyez la différence qu'un roadmap structuré fait dans le parcours d'apprentissage d'un développeur.</p>
+                        
+                        <div class="comparison-section">
+                            <!-- Without Roadmap -->
+                            <div class="comparison-card without-roadmap">
+                                <h3>Sans Roadmap</h3>
+                                <div class="checkbox-list">
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Parcours d'apprentissage peu clair</span>
+                                    </div>
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Acquisition aléatoire de compétences</span>
+                                    </div>
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Temps perdu sur des sujets non pertinents</span>
+                                    </div>
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Manque de direction et de motivation</span>
+                                    </div>
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Difficulté à mesurer les progrès</span>
+                                    </div>
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Lacunes et incohérences de connaissances</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- With Roadmap -->
+                            <div class="comparison-card with-roadmap">
+                                <h3>Avec Roadmap</h3>
+                                <div class="checkbox-list">
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Parcours d'apprentissage clair et structuré</span>
+                                    </div>
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Développement séquentiel des compétences</span>
+                                    </div>
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Apprentissage ciblé et efficace</span>
+                                    </div>
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Objectifs et motivation clairs</span>
+                                    </div>
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Suivi mesurable des progrès</span>
+                                    </div>
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>Couverture complète des connaissances</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-content arabic-text" data-lang="ar">
+                        <h1 class="section-title">مع مقابل بدون <span>خارطة طريق</span></h1>
+                        <p class="section-description">شاهد الفرق الذي تحدثه خارطة الطريق المنظمة في رحلة تعلم المطور.</p>
+                        
+                        <div class="comparison-section">
+                            <!-- Without Roadmap -->
+                            <div class="comparison-card without-roadmap">
+                                <h3>بدون خارطة طريق</h3>
+                                <div class="checkbox-list">
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>مسار تعليمي غير واضح</span>
+                                    </div>
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>اكتساب مهارات عشوائي</span>
+                                    </div>
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>إضاعة الوقت في مواضيع غير ذات صلة</span>
+                                    </div>
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>نقص في التوجيه والتحفيز</span>
+                                    </div>
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>صعوبة قياس التقدم</span>
+                                    </div>
+                                    <div class="checkbox-item unchecked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>فجوات معرفية وعدم اتساق</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- With Roadmap -->
+                            <div class="comparison-card with-roadmap">
+                                <h3>مع خارطة طريق</h3>
+                                <div class="checkbox-list">
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>مسار تعليمي واضح ومنظم</span>
+                                    </div>
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>تطوير مهارات تسلسلي</span>
+                                    </div>
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>تعلم مركز وفعال</span>
+                                    </div>
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>أهداف وتحفيز واضح</span>
+                                    </div>
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>تتبع تقدم قابل للقياس</span>
+                                    </div>
+                                    <div class="checkbox-item checked">
+                                        <input type="checkbox" checked disabled>
+                                        <span>تغطية معرفية شاملة</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- 
+        NO FOOTER SECTION
+        No contact information
+        Website ends with the last content
+    -->
+    
+    <script>
+        // Language Switching
+        document.querySelectorAll('.language-selector button').forEach(button => {
+            button.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                
+                // Update active language button
+                document.querySelectorAll('.language-selector button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Show content for selected language
+                document.querySelectorAll('.language-content').forEach(content => {
+                    content.classList.remove('active');
+                    if (content.getAttribute('data-lang') === lang) {
+                        content.classList.add('active');
+                    }
+                });
+                
+                // Update body direction for Arabic
+                if (lang === 'ar') {
+                    document.body.style.direction = 'rtl';
+                    document.body.style.textAlign = 'right';
+                } else {
+                    document.body.style.direction = 'ltr';
+                    document.body.style.textAlign = 'left';
+                }
+            });
+        });
+        
+        // Page Navigation
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const pageId = this.getAttribute('data-page');
+                
+                // Update active tab
+                document.querySelectorAll('.nav-tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Show selected page
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                document.getElementById(pageId).classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+        
+        // Explore Roadmaps button
+        document.getElementById('explore-roadmaps').addEventListener('click', function() {
+            // Switch to roadmap page
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.getAttribute('data-page') === 'roadmap') {
+                    tab.classList.add('active');
+                }
+            });
+            
+            // Show roadmap page
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById('roadmap').classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Initialize
+        console.log("DevPath website loaded with 3 languages (English, French, Arabic) and no footer.");
+    </script>
+</body>
+</html>
