@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevPath | Professional Developer Roadmaps</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Light Theme Colors */
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #7c3aed;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --bg-card: #ffffff;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary-color: #8b5cf6;
+            --text-primary: #f3f4f6;
+            --text-secondary: #d1d5db;
+            --bg-primary: #111827;
+            --bg-secondary: #1f2937;
+            --bg-card: #1f2937;
+            --border-color: #374151;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Language Selector */
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 8px;
+            background: var(--bg-card);
+            padding: 8px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .lang-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: var(--bg-secondary);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--bg-primary);
+            box-shadow: var(--shadow-sm);
+            z-index: 999;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 16px;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 120px;
+            background: var(--bg-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%);
+            clip-path: polygon(100% 0, 100% 100%, 0 0);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Tabs Section */
+        .tabs-section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tabs-container {
+            background: var(--bg-card);
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 24px;
+            border: none;
+            background: transparent;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .tab-btn i {
+            font-size: 20px;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+            background: var(--bg-card);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 48px;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .tab-content p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.8;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: var(--bg-secondary);
+            padding: 32px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        /* Interactive Roadmap */
+        .roadmap-section {
+            padding: 100px 0;
+            background: var(--bg-secondary);
+        }
+
+        .roadmap-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .roadmap-path {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        .roadmap-steps {
+            position: relative;
+            z-index: 1;
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+
+        .roadmap-step:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .roadmap-step:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .step-content {
+            flex: 1;
+            padding: 32px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 40px;
+            flex-shrink: 0;
+            z-index: 2;
+            position: relative;
+        }
+
+        .step-number::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--bg-secondary);
+            border-radius: 50%;
+            border: 4px solid var(--primary-color);
+        }
+
+        .step-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--primary-color);
+        }
+
+        .step-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .step-content li {
+            padding: 8px 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .step-content li i {
+            color: var(--success-color);
+            font-size: 14px;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            padding: 100px 0 150px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .comparison-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .comparison-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .comparison-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .without-roadmap .comparison-icon {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .with-roadmap .comparison-icon {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+
+        .comparison-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .comparison-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .comparison-list li {
+            padding: 12px 0;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .comparison-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Language Content */
+        [lang="ar"] {
+            direction: rtl;
+            text-align: right;
+        }
+
+        [lang="fr"], [lang="en"] {
+            direction: ltr;
+            text-align: left;
+        }
+
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .tabs-header {
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                padding: 20px;
+                font-size: 16px;
+            }
+
+            .tab-content {
+                padding: 32px 24px;
+            }
+
+            .roadmap-step {
+                flex-direction: column !important;
+                text-align: center;
+                margin-bottom: 60px;
+            }
+
+            .step-number {
+                margin: 0 auto 24px;
+            }
+
+            .step-content {
+                margin: 0;
+            }
+
+            .features-grid,
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .hero {
+                padding: 140px 0 80px;
+            }
+
+            .section-header h2 {
+                font-size: 28px;
+            }
+
+            .feature-card,
+            .comparison-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="fr">Français</button>
+        <button class="lang-btn" data-lang="ar">العربية</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <span class="logo-text">DevPath</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#tabs" class="nav-link">What is a Roadmap?</a></li>
+                    <li><a href="#roadmap" class="nav-link">Sample Roadmap</a></li>
+                    <li><a href="#comparison" class="nav-link">With vs Without</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <!-- English Content -->
+                <div class="lang-content active" data-lang="en">
+                    <h1>Master Your Development Journey with Strategic Roadmaps</h1>
+                    <p>Developer roadmaps are visual guides that chart the optimal path from novice to expert. They transform overwhelming learning curves into structured, achievable milestones tailored for computer science students and aspiring developers.</p>
+                    <a href="#tabs" class="cta-button">
+                        <i class="fas fa-play-circle"></i>
+                        Explore Roadmaps
+                    </a>
+                </div>
+
+                <!-- French Content -->
+                <div class="lang-content" data-lang="fr">
+                    <h1>Maîtrisez Votre Parcours de Développement avec des Roadmaps Stratégiques</h1>
+                    <p>Les roadmaps de développeur sont des guides visuels qui tracent le chemin optimal du novice à l'expert. Elles transforment les courbes d'apprentissage écrasantes en étapes structurées et réalisables, adaptées aux étudiants en informatique et aux développeurs en herbe.</p>
+                    <a href="#tabs" class="cta-button">
+                        <i class="fas fa-play-circle"></i>
+                        Explorer les Roadmaps
+                    </a>
+                </div>
+
+                <!-- Arabic Content -->
+                <div class="lang-content" data-lang="ar">
+                    <h1>أتقن رحلتك في التطوير باستخدام خرائط الطريق الاستراتيجية</h1>
+                    <p>خرائط طريق المطورين هي أدلة مرئية ترسم المسار الأمثل من المبتدئ إلى الخبير. تحول منحنيات التعليم الساحقة إلى معالم منظمة وقابلة للتحقيق، مصممة خصيصًا لطلاب علوم الكمبيوتر والمطورين الطموحين.</p>
+                    <a href="#tabs" class="cta-button">
+                        <i class="fas fa-play-circle"></i>
+                        استكشف خرائط الطريق
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabs Section -->
+    <section class="tabs-section" id="tabs">
+        <div class="container">
+            <div class="section-header">
+                <!-- English Content -->
+                <div class="lang-content active" data-lang="en">
+                    <h2>What is a Developer Roadmap?</h2>
+                    <p>A structured learning path designed to guide aspiring developers through the essential skills and technologies needed for specific career paths in software development.</p>
+                </div>
+
+                <!-- French Content -->
+                <div class="lang-content" data-lang="fr">
+                    <h2>Qu'est-ce qu'une Roadmap de Développeur ?</h2>
+                    <p>Un parcours d'apprentissage structuré conçu pour guider les développeurs en herbe à travers les compétences et technologies essentielles nécessaires pour des carrières spécifiques dans le développement logiciel.</p>
+                </div>
+
+                <!-- Arabic Content -->
+                <div class="lang-content" data-lang="ar">
+                    <h2>ما هي خارطة طريق المطور؟</h2>
+                    <p>مسار تعليمي منظم مصمم لإرشاد المطورين الطموحين عبر المهارات والتقنيات الأساسية اللازمة لمسارات مهنية محددة في تطوير البرمجيات.</p>
+                </div>
+            </div>
+
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="definition">
+                        <i class="fas fa-map"></i>
+                        <span class="en">Definition</span>
+                        <span class="fr">Définition</span>
+                        <span class="ar">تعريف</span>
+                    </button>
+                    <button class="tab-btn" data-tab="components">
+                        <i class="fas fa-puzzle-piece"></i>
+                        <span class="en">Components</span>
+                        <span class="fr">Composants</span>
+                        <span class="ar">مكونات</span>
+                    </button>
+                    <button class="tab-btn" data-tab="benefits">
+                        <i class="fas fa-star"></i>
+                        <span class="en">Benefits</span>
+                        <span class="fr">Avantages</span>
+                        <span class="ar">فوائد</span>
+                    </button>
+                    <button class="tab-btn" data-tab="types">
+                        <i class="fas fa-code-branch"></i>
+                        <span class="en">Types</span>
+                        <span class="fr">Types</span>
+                        <span class="ar">أنواع</span>
+                    </button>
+                </div>
+
+                <!-- Definition Tab -->
+                <div class="tab-content active" data-tab="definition">
+                    <div class="lang-content active" data-lang="en">
+                        <h3>Understanding Developer Roadmaps</h3>
+                        <p>A developer roadmap is a strategic visualization of the learning journey required to become proficient in a specific area of software development. It outlines the progression from fundamental concepts to advanced specialization, serving as both a guide and a progress tracker.</p>
+                        <p>Think of it as a GPS for your coding education—it shows you not only the destination but also the optimal route, potential detours, and estimated time to reach each milestone.</p>
+                        
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-bullseye"></i>
+                                </div>
+                                <h4>Goal-Oriented</h4>
+                                <p>Roadmaps transform abstract career goals into concrete, actionable learning objectives with clear success metrics.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-layer-group"></i>
+                                </div>
+                                <h4>Structured Progression</h4>
+                                <p>Skills are organized in logical sequence, ensuring foundational knowledge before advancing to complex topics.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-sync-alt"></i>
+                                </div>
+                                <h4>Dynamic & Updated</h4>
+                                <p>Roadmaps evolve with technology trends, incorporating new tools and best practices as the industry changes.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="fr">
+                        <h3>Comprendre les Roadmaps de Développeur</h3>
+                        <p>Une roadmap de développeur est une visualisation stratégique du parcours d'apprentissage nécessaire pour devenir compétent dans un domaine spécifique du développement logiciel. Elle décrit la progression des concepts fondamentaux à la spécialisation avancée, servant à la fois de guide et de suivi de progression.</p>
+                        <p>Considérez-la comme un GPS pour votre éducation en codage—elle vous montre non seulement la destination mais aussi l'itinéraire optimal, les détours potentiels et le temps estimé pour atteindre chaque étape.</p>
+                        
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-bullseye"></i>
+                                </div>
+                                <h4>Orienté Objectif</h4>
+                                <p>Les roadmaps transforment les objectifs de carrière abstraits en objectifs d'apprentissage concrets et actionnables avec des métriques de réussite claires.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-layer-group"></i>
+                                </div>
+                                <h4>Progression Structurée</h4>
+                                <p>Les compétences sont organisées en séquence logique, garantissant les connaissances fondamentales avant d'aborder des sujets complexes.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-sync-alt"></i>
+                                </div>
+                                <h4>Dynamique et Mise à Jour</h4>
+                                <p>Les roadmaps évoluent avec les tendances technologiques, intégrant de nouveaux outils et meilleures pratiques à mesure que l'industrie change.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="ar">
+                        <h3>فهم خرائط طريق المطورين</h3>
+                        <p>خارطة طريق المطور هي تصور استراتيجي لرحلة التعلم المطلوبة للإتقان في مجال محدد من تطوير البرمجيات. تخطط التقدم من المفاهيم الأساسية إلى التخصص المتقدم، وتعمل كدليل وكأداة تتبع للتقدم.</p>
+                        <p>فكر فيها كـ GPS لتعليمك البرمجي—تظهر لك ليس فقط الوجهة ولكن أيضًا المسار الأمثل، والانحرافات المحتملة، والوقت المقدر للوصول إلى كل مرحلة.</p>
+                        
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-bullseye"></i>
+                                </div>
+                                <h4>موجه نحو الهدف</h4>
+                                <p>تحول خرائط الطريق الأهداف المهنية المجردة إلى أهداف تعلم ملموسة وقابلة للتنفيذ مع مقاييس نجاح واضحة.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-layer-group"></i>
+                                </div>
+                                <h4>تقدم منظم</h4>
+                                <p>يتم تنظيم المهارات في تسلسل منطقي، مما يضمن المعرفة الأساسية قبل التقدم إلى المواضيع المعقدة.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-sync-alt"></i>
+                                </div>
+                                <h4>ديناميكي ومحدث</h4>
+                                <p>تتطور خرائط الطريق مع اتجاهات التكنولوجيا، وتدمج أدوات وممارسات جديدة مع تغير الصناعة.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Components Tab -->
+                <div class="tab-content" data-tab="components">
+                    <div class="lang-content active" data-lang="en">
+                        <h3>Key Components of a Developer Roadmap</h3>
+                        <p>Every effective developer roadmap consists of several essential components that work together to create a comprehensive learning guide.</p>
+                        
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-flag"></i>
+                                </div>
+                                <h4>Learning Milestones</h4>
+                                <p>Clear checkpoints that mark progress and validate skill acquisition at each stage of the journey.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-sitemap"></i>
+                                </div>
+                                <h4>Skill Dependencies</h4>
+                                <p>Visual representation of how different skills build upon each other and which prerequisites are required.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <h4>Time Estimates</h4>
+                                <p>Realistic timeframes for each learning phase, helping with planning and expectation management.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-tools"></i>
+                                </div>
+                                <h4>Tools & Technologies</h4>
+                                <p>Specific programming languages, frameworks, and tools to learn at each stage of development.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-project-diagram"></i>
+                                </div>
+                                <h4>Project Suggestions</h4>
+                                <p>Practical projects that apply learned skills and build a professional portfolio.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <h4>Learning Resources</h4>
+                                <p>Curated list of tutorials, courses, documentation, and books for each skill area.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="fr">
+                        <h3>Composants Clés d'une Roadmap de Développeur</h3>
+                        <p>Chaque roadmap de développeur efficace se compose de plusieurs composants essentiels qui travaillent ensemble pour créer un guide d'apprentissage complet.</p>
+                        
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-flag"></i>
+                                </div>
+                                <h4>Jalons d'Apprentissage</h4>
+                                <p>Points de contrôle clairs qui marquent le progrès et valident l'acquisition de compétences à chaque étape du parcours.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-sitemap"></i>
+                                </div>
+                                <h4>Dépendances de Compétences</h4>
+                                <p>Représentation visuelle de la façon dont différentes compétences s'appuient les unes sur les autres et quels prérequis sont nécessaires.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <h4>Estimations de Temps</h4>
+                                <p>Délais réalistes pour chaque phase d'apprentissage, aidant à la planification et à la gestion des attentes.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-tools"></i>
+                                </div>
+                                <h4>Outils & Technologies</h4>
+                                <p>Langages de programmation, frameworks et outils spécifiques à apprendre à chaque étape de développement.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-project-diagram"></i>
+                                </div>
+                                <h4>Suggestions de Projets</h4>
+                                <p>Projets pratiques qui appliquent les compétences apprises et construisent un portfolio professionnel.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <h4>Ressources d'Apprentissage</h4>
+                                <p>Liste organisée de tutoriels, cours, documentations et livres pour chaque domaine de compétence.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="ar">
+                        <h3>المكونات الرئيسية لخارطة طريق المطور</h3>
+                        <p>تتكون كل خارطة طريق مطور فعالة من عدة مكونات أساسية تعمل معًا لإنشاء دليل تعلم شامل.</p>
+                        
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-flag"></i>
+                                </div>
+                                <h4>معالم التعلم</h4>
+                                <p>نقاط تفتيش واضحة تميز التقدم وتحقق من اكتساب المهارات في كل مرحلة من الرحلة.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-sitemap"></i>
+                                </div>
+                                <h4>التبعيات بين المهارات</h4>
+                                <p>تمثيل مرئي لكيفية بناء المهارات المختلفة على بعضها البعض والمتطلبات الأساسية المطلوبة.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <h4>التقديرات الزمنية</h4>
+                                <p>إطارات زمنية واقعية لكل مرحلة تعليمية، مما يساعد في التخطيط وإدارة التوقعات.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-tools"></i>
+                                </div>
+                                <h4>الأدوات والتقنيات</h4>
+                                <p>لغات البرمجة المحددة، والأطر، والأدوات التي يجب تعلمها في كل مرحلة من مراحل التطوير.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-project-diagram"></i>
+                                </div>
+                                <h4>اقتراحات المشاريع</h4>
+                                <p>مشاريع عملية تطبق المهارات المكتسبة وتبني محفظة مهنية.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <h4>موارد التعلم</h4>
+                                <p>قائمة مختارة من البرامج التعليمية والدورات والوثائق والكتب لكل مجال مهارة.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Benefits Tab -->
+                <div class="tab-content" data-tab="benefits">
+                    <div class="lang-content active" data-lang="en">
+                        <h3>Benefits of Following a Developer Roadmap</h3>
+                        <p>Implementing a structured roadmap provides numerous advantages for computer science students and aspiring developers at all levels.</p>
+                        
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-road"></i>
+                                </div>
+                                <h4>Clear Direction</h4>
+                                <p>Eliminates the "what to learn next" dilemma by providing a logical progression of skills and technologies.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-hourglass-half"></i>
+                                </div>
+                                <h4>Time Efficiency</h4>
+                                <p>Prevents wasting time on irrelevant technologies or learning concepts in the wrong order.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-bullseye"></i>
+                                </div>
+                                <h4>Goal Achievement</h4>
+                                <p>Transforms abstract career aspirations into concrete, achievable milestones with measurable progress.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h4>Confidence Building</h4>
+                                <p>Provides validation of progress and skill acquisition, boosting motivation and self-assurance.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-industry"></i>
+                                </div>
+                                <h4>Industry Relevance</h4>
+                                <p>Ensures learning aligns with current industry demands and best practices.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <h4>Academic Enhancement</h4>
+                                <p>Complements formal education by filling gaps and providing practical, career-focused learning.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="fr">
+                        <h3>Avantages de Suivre une Roadmap de Développeur</h3>
+                        <p>La mise en œuvre d'une roadmap structurée offre de nombreux avantages pour les étudiants en informatique et les développeurs en herbe à tous les niveaux.</p>
+                        
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-road"></i>
+                                </div>
+                                <h4>Direction Claire</h4>
+                                <p>Élimine le dilemme "quoi apprendre ensuite" en fournissant une progression logique des compétences et technologies.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-hourglass-half"></i>
+                                </div>
+                                <h4>Efficacité Temporelle</h4>
+                                <p>Empêche de perdre du temps sur des technologies non pertinentes ou d'apprendre des concepts dans le mauvais ordre.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-bullseye"></i>
+                                </div>
+                                <h4>Réalisation d'Objectifs</h4>
+                                <p>Transforme les aspirations de carrière abstraites en jalons concrets et réalisables avec un progrès mesurable.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h4>Construction de Confiance</h4>
+                                <p>Fournit une validation du progrès et de l'acquisition de compétences, renforçant la motivation et l'assurance.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-industry"></i>
+                                </div>
+                                <h4>Pertinence Industrielle</h4>
+                                <p>Garantit que l'apprentissage correspond aux demandes et meilleures pratiques actuelles de l'industrie.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <h4>Amélioration Académique</h4>
+                                <p>Complète l'éducation formelle en comblant les lacunes et en fournissant un apprentissage pratique axé sur la carrière.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="ar">
+                        <h3>فوائد اتباع خارطة طريق المطور</h3>
+                        <p>يوفر تنفيذ خارطة طريق منظمة العديد من المزايا لطلاب علوم الكمبيوتر والمطورين الطموحين في جميع المستويات.</p>
+                        
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-road"></i>
+                                </div>
+                                <h4>اتجاه واضح</h4>
+                                <p>يلغي معضلة "ماذا أتعلم بعد" من خلال تقدم منطقي للمهارات والتقنيات.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-hourglass-half"></i>
+                                </div>
+                                <h4>كفاءة الوقت</h4>
+                                <p>يمنع إضاعة الوقت على تقنيات غير ذات صلة أو تعلم المفاهيم بترتيب خاطئ.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-bullseye"></i>
+                                </div>
+                                <h4>تحقيق الهدف</h4>
+                                <p>يحول التطلعات المهنية المجردة إلى معالم ملموسة وقابلة للتحقيق مع تقدم قابل للقياس.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h4>بناء الثقة</h4>
+                                <p>يوفر التحقق من التقدم واكتساب المهارات، ويعزز الدافعية والثقة بالنفس.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-industry"></i>
+                                </div>
+                                <h4>ملاءمة الصناعة</h4>
+                                <p>يضمن أن التعلم يتوافق مع متطلبات الصناعة الحالية وأفضل الممارسات.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <h4>تحسين أكاديمي</h4>
+                                <p>يكمل التعليم الرسمي من خلال سد الفجوات وتوفير تعلم عملي يركز على المهنة.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Types Tab -->
+                <div class="tab-content" data-tab="types">
+                    <div class="lang-content active" data-lang="en">
+                        <h3>Common Types of Developer Roadmaps</h3>
+                        <p>Different development specializations require tailored roadmaps. Here are the most common types used in the industry.</p>
+                        
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fab fa-react"></i>
+                                </div>
+                                <h4>Frontend Development</h4>
+                                <p>HTML, CSS, JavaScript, frameworks like React/Vue/Angular, responsive design, and modern tooling.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-server"></i>
+                                </div>
+                                <h4>Backend Development</h4>
+                                <p>Server-side languages (Node.js, Python, Java), databases, APIs, authentication, and deployment.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <h4>Mobile Development</h4>
+                                <p>Native (Swift/Kotlin) or cross-platform (React Native/Flutter), mobile UI/UX, and app store deployment.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <h4>Data Science</h4>
+                                <p>Python/R, statistics, machine learning, data visualization, and big data technologies.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <h4>Cybersecurity</h4>
+                                <p>Networking, cryptography, ethical hacking, security tools, and compliance standards.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-infinity"></i>
+                                </div>
+                                <h4>DevOps</h4>
+                                <p>Cloud platforms, containers (Docker), orchestration (Kubernetes), CI/CD, and infrastructure as code.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="fr">
+                        <h3>Types Courants de Roadmaps de Développeur</h3>
+                        <p>Différentes spécialisations de développement nécessitent des roadmaps adaptées. Voici les types les plus courants utilisés dans l'industrie.</p>
+                        
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fab fa-react"></i>
+                                </div>
+                                <h4>Développement Frontend</h4>
+                                <p>HTML, CSS, JavaScript, frameworks comme React/Vue/Angular, design responsive et outils modernes.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-server"></i>
+                                </div>
+                                <h4>Développement Backend</h4>
+                                <p>Langages côté serveur (Node.js, Python, Java), bases de données, APIs, authentification et déploiement.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <h4>Développement Mobile</h4>
+                                <p>Natifs (Swift/Kotlin) ou cross-platform (React Native/Flutter), UI/UX mobile et déploiement sur app stores.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <h4>Science des Données</h4>
+                                <p>Python/R, statistiques, apprentissage automatique, visualisation de données et technologies de big data.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <h4>Cybersécurité</h4>
+                                <p>Réseaux, cryptographie, hacking éthique, outils de sécurité et normes de conformité.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-infinity"></i>
+                                </div>
+                                <h4>DevOps</h4>
+                                <p>Plateformes cloud, conteneurs (Docker), orchestration (Kubernetes), CI/CD et infrastructure as code.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="ar">
+                        <h3>الأنواع الشائعة لخرائط طريق المطورين</h3>
+                        <p>تتخصصات التطوير المختلفة تتطلب خرائط طريق مصممة خصيصًا. إليك أكثر الأنواع شيوعًا المستخدمة في الصناعة.</p>
+                        
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fab fa-react"></i>
+                                </div>
+                                <h4>تطوير الواجهة الأمامية</h4>
+                                <p>HTML، CSS، JavaScript، أطر عمل مثل React/Vue/Angular، تصميم متجاوب وأدوات حديثة.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-server"></i>
+                                </div>
+                                <h4>تطوير الواجهة الخلفية</h4>
+                                <p>لغات جانب الخادم (Node.js، Python، Java)، قواعد البيانات، واجهات برمجة التطبيقات، المصادقة والنشر.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <h4>تطوير الجوال</h4>
+                                <p>الأصلي (Swift/Kotlin) أو عبر المنصات (React Native/Flutter)، واجهة المستخدم / تجربة المستخدم للجوال، ونشر متجر التطبيقات.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <h4>علم البيانات</h4>
+                                <p>Python/R، الإحصائيات، التعلم الآلي، تصور البيانات وتقنيات البيانات الكبيرة.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <h4>الأمن السيبراني</h4>
+                                <p>الشبكات، التشفير، الاختراق الأخلاقي، أدوات الأمن ومعايير الامتثال.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-infinity"></i>
+                                </div>
+                                <h4>DevOps</h4>
+                                <p>منصات السحابة، الحاويات (Docker)، الأوركسترا (Kubernetes)، CI/CD والبنية التحتية ككود.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Roadmap Section -->
+    <section class="roadmap-section" id="roadmap">
+        <div class="container">
+            <div class="section-header">
+                <div class="lang-content active" data-lang="en">
+                    <h2>Sample Web Development Roadmap</h2>
+                    <p>A visual representation of a typical learning path for becoming a professional web developer.</p>
+                </div>
+                <div class="lang-content" data-lang="fr">
+                    <h2>Exemple de Roadmap de Développement Web</h2>
+                    <p>Une représentation visuelle d'un parcours d'apprentissage typique pour devenir un développeur web professionnel.</p>
+                </div>
+                <div class="lang-content" data-lang="ar">
+                    <h2>نموذج خارطة طريق تطوير الويب</h2>
+                    <p>تمثيل مرئي لمسار تعليمي نموذجي لتصبح مطور ويب محترف.</p>
+                </div>
+            </div>
+
+            <div class="roadmap-container">
+                <div class="roadmap-path"></div>
+                
+                <div class="roadmap-steps">
+                    <!-- Step 1 -->
+                    <div class="roadmap-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <div class="lang-content active" data-lang="en">
+                                <h3>Foundations</h3>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> HTML5 & Semantic Markup</li>
+                                    <li><i class="fas fa-check-circle"></i> CSS3 & Responsive Design</li>
+                                    <li><i class="fas fa-check-circle"></i> JavaScript Fundamentals</li>
+                                    <li><i class="fas fa-check-circle"></i> Git & Version Control</li>
+                                    <li><i class="fas fa-check-circle"></i> Command Line Basics</li>
+                                </ul>
+                            </div>
+                            <div class="lang-content" data-lang="fr">
+                                <h3>Fondations</h3>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> HTML5 & Balisage Sémantique</li>
+                                    <li><i class="fas fa-check-circle"></i> CSS3 & Design Responsive</li>
+                                    <li><i class="fas fa-check-circle"></i> Fondamentaux JavaScript</li>
+                                    <li><i class="fas fa-check-circle"></i> Git & Contrôle de Version</li>
+                                    <li><i class="fas fa-check-circle"></i> Bases de la Ligne de Commande</li>
+                                </ul>
+                            </div>
+                            <div class="lang-content" data-lang="ar">
+                                <h3>الأساسيات</h3>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> HTML5 والترميز الدلالي</li>
+                                    <li><i class="fas fa-check-circle"></i> CSS3 والتصميم المتجاوب</li>
+                                    <li><i class="fas fa-check-circle"></i> أساسيات JavaScript</li>
+                                    <li><i class="fas fa-check-circle"></i> Git والتحكم في الإصدار</li>
+                                    <li><i class="fas fa-check-circle"></i> أساسيات سطر الأوامر</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="roadmap-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <div class="lang-content active" data-lang="en">
+                                <h3>Frontend Development</h3>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> Advanced JavaScript (ES6+)</li>
+                                    <li><i class="fas fa-check-circle"></i> React.js or Vue.js Framework</li>
+                                    <li><i class="fas fa-check-circle"></i> State Management (Redux/Vuex)</li>
+                                    <li><i class="fas fa-check-circle"></i> Modern CSS (Flexbox/Grid)</li>
+                                    <li><i class="fas fa-check-circle"></i> Build Tools (Webpack, Vite)</li>
+                                </ul>
+                            </div>
+                            <div class="lang-content" data-lang="fr">
+                                <h3>Développement Frontend</h3>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> JavaScript Avancé (ES6+)</li>
+                                    <li><i class="fas fa-check-circle"></i> Framework React.js ou Vue.js</li>
+                                    <li><i class="fas fa-check-circle"></i> Gestion d'État (Redux/Vuex)</li>
+                                    <li><i class="fas fa-check-circle"></i> CSS Moderne (Flexbox/Grid)</li>
+                                    <li><i class="fas fa-check-circle"></i> Outils de Build (Webpack, Vite)</li>
+                                </ul>
+                            </div>
+                            <div class="lang-content" data-lang="ar">
+                                <h3>تطوير الواجهة الأمامية</h3>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> JavaScript المتقدم (ES6+)</li>
+                                    <li><i class="fas fa-check-circle"></i> إطار React.js أو Vue.js</li>
+                                    <li><i class="fas fa-check-circle"></i> إدارة الحالة (Redux/Vuex)</li>
+                                    <li><i class="fas fa-check-circle"></i> CSS الحديث (Flexbox/Grid)</li>
+                                    <li><i class="fas fa-check-circle"></i> أدوات البناء (Webpack, Vite)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="roadmap-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <div class="lang-content active" data-lang="en">
+                                <h3>Backend Development</h3>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> Node.js & Express.js</li>
+                                    <li><i class="fas fa-check-circle"></i> Databases (SQL & NoSQL)</li>
+                                    <li><i class="fas fa-check-circle"></i> RESTful API Design</li>
+                                    <li><i class="fas fa-check-circle"></i> Authentication & Authorization</li>
+                                    <li><i class="fas fa-check-circle"></i> Server Deployment</li>
+                                </ul>
+                            </div>
+                            <div class="lang-content" data-lang="fr">
+                                <h3>Développement Backend</h3>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> Node.js & Express.js</li>
+                                    <li><i class="fas fa-check-circle"></i> Bases de Données (SQL & NoSQL)</li>
+                                    <li><i class="fas fa-check-circle"></i> Conception d'API RESTful</li>
+                                    <li><i class="fas fa-check-circle"></i> Authentification & Autorisation</li>
+                                    <li><i class="fas fa-check-circle"></i> Déploiement de Serveur</li>
+                                </ul>
+                            </div>
+                            <div class="lang-content" data-lang="ar">
+                                <h3>تطوير الواجهة الخلفية</h3>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> Node.js & Express.js</li>
+                                    <li><i class="fas fa-check-circle"></i> قواعد البيانات (SQL & NoSQL)</li>
+                                    <li><i class="fas fa-check-circle"></i> تصميم واجهة برمجة التطبيقات RESTful</li>
+                                    <li><i class="fas fa-check-circle"></i> المصادقة والتفويض</li>
+                                    <li><i class="fas fa-check-circle"></i> نشر الخادم</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="roadmap-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <div class="lang-content active" data-lang="en">
+                                <h3>Advanced Topics</h3>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> TypeScript</li>
+                                    <li><i class="fas fa-check-circle"></i> Testing (Jest, Cypress)</li>
+                                    <li><i class="fas fa-check-circle"></i> Performance Optimization</li>
+                                    <li><i class="fas fa-check-circle"></i> Web Security</li>
+                                    <li><i class="fas fa-check-circle"></i> CI/CD Pipelines</li>
+                                </ul>
+                            </div>
+                            <div class="lang-content" data-lang="fr">
+                                <h3>Sujets Avancés</h3>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> TypeScript</li>
+                                    <li><i class="fas fa-check-circle"></i> Tests (Jest, Cypress)</li>
+                                    <li><i class="fas fa-check-circle"></i> Optimisation des Performances</li>
+                                    <li><i class="fas fa-check-circle"></i> Sécurité Web</li>
+                                    <li><i class="fas fa-check-circle"></i> Pipelines CI/CD</li>
+                                </ul>
+                            </div>
+                            <div class="lang-content" data-lang="ar">
+                                <h3>مواضيع متقدمة</h3>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> TypeScript</li>
+                                    <li><i class="fas fa-check-circle"></i> الاختبار (Jest, Cypress)</li>
+                                    <li><i class="fas fa-check-circle"></i> تحسين الأداء</li>
+                                    <li><i class="fas fa-check-circle"></i> أمن الويب</li>
+                                    <li><i class="fas fa-check-circle"></i> خطوط أنابيب CI/CD</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="comparison-section" id="comparison">
+        <div class="container">
+            <div class="section-header">
+                <div class="lang-content active" data-lang="en">
+                    <h2>With vs Without a Roadmap</h2>
+                    <p>See the difference a structured roadmap makes in a developer's learning journey.</p>
+                </div>
+                <div class="lang-content" data-lang="fr">
+                    <h2>Avec vs Sans Roadmap</h2>
+                    <p>Voyez la différence qu'une roadmap structurée fait dans le parcours d'apprentissage d'un développeur.</p>
+                </div>
+                <div class="lang-content" data-lang="ar">
+                    <h2>مع مقابل بدون خارطة طريق</h2>
+                    <p>شاهد الفرق الذي تحدثه خارطة طريق منظمة في رحلة تعلم المطور.</p>
+                </div>
+            </div>
+
+            <div class="comparison-grid">
+                <!-- Without Roadmap -->
+                <div class="comparison-card without-roadmap">
+                    <div class="comparison-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>Without Roadmap</h3>
+                        <ul class="comparison-list">
+                            <li><i class="fas fa-times-circle"></i> Unclear learning path</li>
+                            <li><i class="fas fa-times-circle"></i> Random skill acquisition</li>
+                            <li><i class="fas fa-times-circle"></i> Wasted time on irrelevant topics</li>
+                            <li><i class="fas fa-times-circle"></i> Lack of direction & motivation</li>
+                            <li><i class="fas fa-times-circle"></i> Difficulty measuring progress</li>
+                            <li><i class="fas fa-times-circle"></i> Knowledge gaps & inconsistencies</li>
+                        </ul>
+                    </div>
+                    <div class="lang-content" data-lang="fr">
+                        <h3>Sans Roadmap</h3>
+                        <ul class="comparison-list">
+                            <li><i class="fas fa-times-circle"></i> Parcours d'apprentissage flou</li>
+                            <li><i class="fas fa-times-circle"></i> Acquisition aléatoire de compétences</li>
+                            <li><i class="fas fa-times-circle"></i> Temps perdu sur des sujets non pertinents</li>
+                            <li><i class="fas fa-times-circle"></i> Manque de direction & motivation</li>
+                            <li><i class="fas fa-times-circle"></i> Difficulté à mesurer le progrès</li>
+                            <li><i class="fas fa-times-circle"></i> Lacunes & incohérences de connaissances</li>
+                        </ul>
+                    </div>
+                    <div class="lang-content" data-lang="ar">
+                        <h3>بدون خارطة طريق</h3>
+                        <ul class="comparison-list">
+                            <li><i class="fas fa-times-circle"></i> مسار تعلم غير واضح</li>
+                            <li><i class="fas fa-times-circle"></i> اكتساب عشوائي للمهارات</li>
+                            <li><i class="fas fa-times-circle"></i> وقت مهدر على مواضيع غير ذات صلة</li>
+                            <li><i class="fas fa-times-circle"></i> نقص في الاتجاه والدافع</li>
+                            <li><i class="fas fa-check-circle"></i> صعوبة قياس التقدم</li>
+                            <li><i class="fas fa-times-circle"></i> فجوات وتناقضات في المعرفة</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- With Roadmap -->
+                <div class="comparison-card with-roadmap">
+                    <div class="comparison-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>With Roadmap</h3>
+                        <ul class="comparison-list">
+                            <li><i class="fas fa-check-circle"></i> Clear, structured learning path</li>
+                            <li><i class="fas fa-check-circle"></i> Sequential skill development</li>
+                            <li><i class="fas fa-check-circle"></i> Focused, efficient learning</li>
+                            <li><i class="fas fa-check-circle"></i> Clear goals & motivation</li>
+                            <li><i class="fas fa-check-circle"></i> Measurable progress tracking</li>
+                            <li><i class="fas fa-check-circle"></i> Comprehensive knowledge coverage</li>
+                        </ul>
+                    </div>
+                    <div class="lang-content" data-lang="fr">
+                        <h3>Avec Roadmap</h3>
+                        <ul class="comparison-list">
+                            <li><i class="fas fa-check-circle"></i> Parcours d'apprentissage clair et structuré</li>
+                            <li><i class="fas fa-check-circle"></i> Développement séquentiel des compétences</li>
+                            <li><i class="fas fa-check-circle"></i> Apprentissage ciblé et efficace</li>
+                            <li><i class="fas fa-check-circle"></i> Objectifs clairs & motivation</li>
+                            <li><i class="fas fa-check-circle"></i> Suivi de progrès mesurable</li>
+                            <li><i class="fas fa-check-circle"></i> Couverture complète des connaissances</li>
+                        </ul>
+                    </div>
+                    <div class="lang-content" data-lang="ar">
+                        <h3>مع خارطة طريق</h3>
+                        <ul class="comparison-list">
+                            <li><i class="fas fa-check-circle"></i> مسار تعلم واضح ومنظم</li>
+                            <li><i class="fas fa-check-circle"></i> تطور متسلسل للمهارات</li>
+                            <li><i class="fas fa-check-circle"></i> تعلم مركز وفعال</li>
+                            <li><i class="fas fa-check-circle"></i> أهداف واضحة ودافع</li>
+                            <li><i class="fas fa-check-circle"></i> تتبع تقدم قابل للقياس</li>
+                            <li><i class="fas fa-check-circle"></i> تغطية شاملة للمعرفة</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Language Switching System
+        document.querySelectorAll('.lang-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all language buttons
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Get selected language
+                const selectedLang = button.getAttribute('data-lang');
+                
+                // Hide all language content
+                document.querySelectorAll('.lang-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show content for selected language
+                document.querySelectorAll(`.lang-content[data-lang="${selectedLang}"]`).forEach(content => {
+                    content.classList.add('active');
+                });
+                
+                // Update text direction for Arabic
+                if (selectedLang === 'ar') {
+                    document.documentElement.dir = 'rtl';
+                    document.documentElement.lang = 'ar';
+                } else {
+                    document.documentElement.dir = 'ltr';
+                    document.documentElement.lang = selectedLang;
+                }
+            });
+        });
+
+        // Tab Switching System
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                
+                // Remove active class from all tab buttons
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show selected tab content
+                document.querySelector(`.tab-content[data-tab="${tabId}"]`).classList.add('active');
+            });
+        });
+
+        // Navigation System
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Remove active class from all nav links
+                document.querySelectorAll('.nav-link').forEach(navLink => {
+                    navLink.classList.remove('active');
+                });
+                
+                // Add active class to clicked link
+                link.classList.add('active');
+                
+                // Scroll to section
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Update active nav link on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Initialize with English
+        document.documentElement.lang = 'en';
+        document.documentElement.dir = 'ltr';
+
+        // Add animation on scroll for roadmap steps
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe roadmap steps
+        document.querySelectorAll('.roadmap-step').forEach(step => {
+            step.style.opacity = '0';
+            step.style.transform = 'translateY(20px)';
+            step.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(step);
+        });
+
+        // Smooth scroll for CTA button
+        document.querySelector('.cta-button').addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetSection = document.querySelector('#tabs');
+            if (targetSection) {
+                window.scrollTo({
+                    top: targetSection.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    </script>
+</body>
+</html>
