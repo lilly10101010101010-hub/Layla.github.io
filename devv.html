@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevPath Quiz | Test Your Roadmap Knowledge</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Light Theme Colors - Same as roadmap website */
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #7c3aed;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --bg-card: #ffffff;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary-color: #8b5cf6;
+            --text-primary: #f3f4f6;
+            --text-secondary: #d1d5db;
+            --bg-primary: #111827;
+            --bg-secondary: #1f2937;
+            --bg-card: #1f2937;
+            --border-color: #374151;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Language Selector */
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 8px;
+            background: var(--bg-card);
+            padding: 8px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .lang-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: var(--bg-secondary);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--bg-primary);
+            box-shadow: var(--shadow-sm);
+            z-index: 999;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 16px;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 80px;
+            background: var(--bg-secondary);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%);
+            clip-path: polygon(100% 0, 100% 100%, 0 0);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .quiz-container {
+            background: var(--bg-card);
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .quiz-header {
+            padding: 32px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quiz-info {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .quiz-info-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .quiz-info-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .quiz-info-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .quiz-progress {
+            flex: 1;
+            margin: 0 32px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* Question Container */
+        .question-container {
+            padding: 48px;
+            display: none;
+        }
+
+        .question-container.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 32px;
+        }
+
+        .question-number {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .question-text {
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--text-primary);
+            margin-bottom: 32px;
+        }
+
+        /* Answer Options */
+        .answer-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .answer-option {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .answer-option:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .answer-option.selected {
+            border-color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .answer-option.correct {
+            border-color: var(--success-color);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .answer-option.incorrect {
+            border-color: var(--error-color);
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .answer-letter {
+            width: 40px;
+            height: 40px;
+            background: var(--border-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .answer-option.selected .answer-letter {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .answer-option.correct .answer-letter {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .answer-option.incorrect .answer-letter {
+            background: var(--error-color);
+            color: white;
+        }
+
+        .answer-text {
+            font-size: 16px;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .answer-feedback {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .answer-option.correct .answer-feedback {
+            color: var(--success-color);
+            opacity: 1;
+        }
+
+        .answer-option.incorrect .answer-feedback {
+            color: var(--error-color);
+            opacity: 1;
+        }
+
+        /* Quiz Controls */
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .control-button {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-prev {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-prev:hover:not(:disabled) {
+            background: var(--border-color);
+        }
+
+        .btn-next {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-next:hover:not(:disabled) {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-submit {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            background: #0da271;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Results Section */
+        .results-section {
+            padding: 100px 0;
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .results-container {
+            background: var(--bg-card);
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 48px;
+            text-align: center;
+        }
+
+        .results-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 32px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+        }
+
+        .results-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .results-score {
+            font-size: 72px;
+            font-weight: 800;
+            margin: 32px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .results-message {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .results-breakdown {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin: 40px 0;
+        }
+
+        .breakdown-item {
+            background: var(--bg-secondary);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .breakdown-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .breakdown-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .results-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .action-button {
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+        }
+
+        .btn-restart {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-restart:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-review {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-review:hover {
+            background: var(--border-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Language Content */
+        [lang="ar"] {
+            direction: rtl;
+            text-align: right;
+        }
+
+        [lang="fr"], [lang="en"] {
+            direction: ltr;
+            text-align: left;
+        }
+
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .quiz-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .quiz-progress {
+                width: 100%;
+                margin: 0;
+            }
+
+            .question-container {
+                padding: 32px 24px;
+            }
+
+            .question-text {
+                font-size: 20px;
+            }
+
+            .results-breakdown {
+                grid-template-columns: 1fr;
+            }
+
+            .results-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .hero {
+                padding: 140px 0 60px;
+            }
+
+            .section-header h2 {
+                font-size: 28px;
+            }
+
+            .answer-option {
+                padding: 16px;
+            }
+
+            .answer-letter {
+                width: 36px;
+                height: 36px;
+                margin-right: 12px;
+            }
+
+            .control-button {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="fr">Français</button>
+        <button class="lang-btn" data-lang="ar">العربية</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <span class="logo-text">DevPath Quiz</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#quiz" class="nav-link">Start Quiz</a></li>
+                    <li><a href="#results" class="nav-link">Results</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <!-- English Content -->
+                <div class="lang-content active" data-lang="en">
+                    <h1>Test Your Developer Roadmap Knowledge</h1>
+                    <p>Take this 15-question quiz to assess your understanding of developer roadmaps, their components, benefits, and implementation strategies. Perfect for computer science students and aspiring developers.</p>
+                    <button class="cta-button" id="startQuizBtn">
+                        <i class="fas fa-play"></i>
+                        Start Quiz Now
+                    </button>
+                </div>
+
+                <!-- French Content -->
+                <div class="lang-content" data-lang="fr">
+                    <h1>Testez Vos Connaissances sur les Roadmaps de Développeur</h1>
+                    <p>Passez ce quiz de 15 questions pour évaluer votre compréhension des roadmaps de développeur, leurs composants, avantages et stratégies de mise en œuvre. Parfait pour les étudiants en informatique et les développeurs en herbe.</p>
+                    <button class="cta-button" id="startQuizBtn">
+                        <i class="fas fa-play"></i>
+                        Commencer le Quiz
+                    </button>
+                </div>
+
+                <!-- Arabic Content -->
+                <div class="lang-content" data-lang="ar">
+                    <h1>اختبر معرفتك بخارطة طريق المطورين</h1>
+                    <p>خضع لهذا الاختبار المكون من 15 سؤالًا لتقييم فهمك لخرائط طريق المطورين ومكوناتها وفوائدها واستراتيجيات التنفيذ. مثالي لطلاب علوم الكمبيوتر والمطورين الطموحين.</p>
+                    <button class="cta-button" id="startQuizBtn">
+                        <i class="fas fa-play"></i>
+                        ابدأ الاختبار الآن
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section" id="quiz">
+        <div class="container">
+            <div class="section-header">
+                <!-- English Content -->
+                <div class="lang-content active" data-lang="en">
+                    <h2>Developer Roadmap Quiz</h2>
+                    <p>Answer all 15 questions to test your knowledge. Each question has 4 possible answers with only one correct choice.</p>
+                </div>
+
+                <!-- French Content -->
+                <div class="lang-content" data-lang="fr">
+                    <h2>Quiz sur les Roadmaps de Développeur</h2>
+                    <p>Répondez à toutes les 15 questions pour tester vos connaissances. Chaque question a 4 réponses possibles avec une seule bonne réponse.</p>
+                </div>
+
+                <!-- Arabic Content -->
+                <div class="lang-content" data-lang="ar">
+                    <h2>اختبار خارطة طريق المطورين</h2>
+                    <p>أجب على جميع الأسئلة الـ 15 لاختبار معرفتك. لكل سؤال 4 إجابات محتملة مع اختيار واحد صحيح فقط.</p>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <div class="quiz-info">
+                        <div class="quiz-info-item">
+                            <div class="quiz-info-label">Questions</div>
+                            <div class="quiz-info-value" id="questionCount">1/15</div>
+                        </div>
+                        <div class="quiz-info-item">
+                            <div class="quiz-info-label">Score</div>
+                            <div class="quiz-info-value" id="currentScore">0</div>
+                        </div>
+                    </div>
+                    <div class="quiz-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width: 6.67%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question containers will be generated dynamically -->
+                <div id="questionsContainer"></div>
+
+                <!-- Quiz Controls -->
+                <div class="quiz-controls">
+                    <button class="control-button btn-prev" id="prevBtn" disabled>
+                        <i class="fas fa-arrow-left"></i>
+                        <span class="en">Previous</span>
+                        <span class="fr">Précédent</span>
+                        <span class="ar">السابق</span>
+                    </button>
+                    <button class="control-button btn-next" id="nextBtn">
+                        <i class="fas fa-arrow-right"></i>
+                        <span class="en">Next</span>
+                        <span class="fr">Suivant</span>
+                        <span class="ar">التالي</span>
+                    </button>
+                    <button class="control-button btn-submit" id="submitBtn" style="display: none;">
+                        <i class="fas fa-paper-plane"></i>
+                        <span class="en">Submit Quiz</span>
+                        <span class="fr">Soumettre le Quiz</span>
+                        <span class="ar">إرسال الاختبار</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section" id="results">
+        <div class="container">
+            <div class="results-container">
+                <div class="results-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                
+                <!-- English Content -->
+                <div class="lang-content active" data-lang="en">
+                    <h2 class="results-title">Quiz Completed!</h2>
+                    <div class="results-score" id="finalScore">0/15</div>
+                    <p class="results-message" id="resultMessage">Your results will appear here after completing the quiz.</p>
+                    
+                    <div class="results-breakdown">
+                        <div class="breakdown-item">
+                            <div class="breakdown-value" id="correctAnswers">0</div>
+                            <div class="breakdown-label">Correct Answers</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <div class="breakdown-value" id="incorrectAnswers">0</div>
+                            <div class="breakdown-label">Incorrect Answers</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <div class="breakdown-value" id="percentageScore">0%</div>
+                            <div class="breakdown-label">Percentage</div>
+                        </div>
+                    </div>
+                    
+                    <div class="results-actions">
+                        <button class="action-button btn-restart" id="restartBtn">
+                            <i class="fas fa-redo"></i>
+                            Restart Quiz
+                        </button>
+                        <button class="action-button btn-review" id="reviewBtn">
+                            <i class="fas fa-list"></i>
+                            Review Answers
+                        </button>
+                    </div>
+                </div>
+
+                <!-- French Content -->
+                <div class="lang-content" data-lang="fr">
+                    <h2 class="results-title">Quiz Terminé!</h2>
+                    <div class="results-score" id="finalScoreFr">0/15</div>
+                    <p class="results-message" id="resultMessageFr">Vos résultats apparaîtront ici après avoir terminé le quiz.</p>
+                    
+                    <div class="results-breakdown">
+                        <div class="breakdown-item">
+                            <div class="breakdown-value" id="correctAnswersFr">0</div>
+                            <div class="breakdown-label">Bonnes Réponses</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <div class="breakdown-value" id="incorrectAnswersFr">0</div>
+                            <div class="breakdown-label">Mauvaises Réponses</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <div class="breakdown-value" id="percentageScoreFr">0%</div>
+                            <div class="breakdown-label">Pourcentage</div>
+                        </div>
+                    </div>
+                    
+                    <div class="results-actions">
+                        <button class="action-button btn-restart" id="restartBtnFr">
+                            <i class="fas fa-redo"></i>
+                            Recommencer le Quiz
+                        </button>
+                        <button class="action-button btn-review" id="reviewBtnFr">
+                            <i class="fas fa-list"></i>
+                            Réviser les Réponses
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Arabic Content -->
+                <div class="lang-content" data-lang="ar">
+                    <h2 class="results-title">اكتمل الاختبار!</h2>
+                    <div class="results-score" id="finalScoreAr">0/15</div>
+                    <p class="results-message" id="resultMessageAr">ستظهر نتائجك هنا بعد الانتهاء من الاختبار.</p>
+                    
+                    <div class="results-breakdown">
+                        <div class="breakdown-item">
+                            <div class="breakdown-value" id="correctAnswersAr">0</div>
+                            <div class="breakdown-label">الإجابات الصحيحة</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <div class="breakdown-value" id="incorrectAnswersAr">0</div>
+                            <div class="breakdown-label">الإجابات الخاطئة</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <div class="breakdown-value" id="percentageScoreAr">0%</div>
+                            <div class="breakdown-label">النسبة المئوية</div>
+                        </div>
+                    </div>
+                    
+                    <div class="results-actions">
+                        <button class="action-button btn-restart" id="restartBtnAr">
+                            <i class="fas fa-redo"></i>
+                            إعادة الاختبار
+                        </button>
+                        <button class="action-button btn-review" id="reviewBtnAr">
+                            <i class="fas fa-list"></i>
+                            مراجعة الإجابات
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Quiz Questions Data
+        const quizQuestions = {
+            en: [
+                {
+                    question: "What is the primary purpose of a developer roadmap?",
+                    answers: [
+                        "To track daily coding hours",
+                        "To provide a structured learning path from beginner to expert",
+                        "To list all programming languages available",
+                        "To serve as a project management tool"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Which of these is NOT a key component of a developer roadmap?",
+                    answers: [
+                        "Learning milestones",
+                        "Skill dependencies",
+                        "Salary expectations",
+                        "Project suggestions"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "What is the main benefit of following a roadmap?",
+                    answers: [
+                        "It guarantees a job offer",
+                        "It eliminates the need for formal education",
+                        "It provides clear direction and eliminates the 'what to learn next' dilemma",
+                        "It makes learning programming faster without practice"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "Which roadmap would be most suitable for someone interested in building user interfaces?",
+                    answers: [
+                        "Backend Development Roadmap",
+                        "Frontend Development Roadmap",
+                        "DevOps Roadmap",
+                        "Data Science Roadmap"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "How often should developer roadmaps be updated?",
+                    answers: [
+                        "Never, they are static documents",
+                        "Only when starting a new job",
+                        "Regularly to reflect changing technology trends",
+                        "Once every 5 years"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "What does a 'skill dependency' in a roadmap indicate?",
+                    answers: [
+                        "Which skills require payment to learn",
+                        "Which skills build upon each other in sequence",
+                        "Which skills are outdated and should be avoided",
+                        "Which skills are only for senior developers"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Which of these is typically the FIRST step in a web development roadmap?",
+                    answers: [
+                        "Learning React or Vue.js",
+                        "Mastering database design",
+                        "Understanding HTML, CSS, and JavaScript basics",
+                        "Learning server deployment"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "What is a 'learning milestone' in a developer roadmap?",
+                    answers: [
+                        "A point where you should take a break from learning",
+                        "A clear checkpoint that marks progress and validates skill acquisition",
+                        "A financial goal to achieve",
+                        "A certificate you receive from online courses"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Why are project suggestions included in roadmaps?",
+                    answers: [
+                        "To provide theoretical knowledge only",
+                        "To apply learned skills and build a professional portfolio",
+                        "To replace formal education entirely",
+                        "To guarantee freelance work opportunities"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Which type of developer roadmap would include Docker and Kubernetes?",
+                    answers: [
+                        "Frontend Development",
+                        "Mobile Development",
+                        "DevOps",
+                        "Game Development"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "What is the advantage of using visual roadmaps over text-based lists?",
+                    answers: [
+                        "They require less time to create",
+                        "They provide clearer understanding of skill relationships and progression",
+                        "They automatically update themselves",
+                        "They are only for visual learners"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "When should someone customize a standard developer roadmap?",
+                    answers: [
+                        "Never, standard roadmaps are perfect as-is",
+                        "Only when they have 10+ years of experience",
+                        "To align with their specific goals, interests, and learning style",
+                        "Only for senior developer positions"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "Which of these is a common pitfall when NOT using a roadmap?",
+                    answers: [
+                        "Learning skills in logical order",
+                        "Wasting time on irrelevant technologies",
+                        "Having clear career direction",
+                        "Efficiently measuring progress"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "What role do time estimates play in a roadmap?",
+                    answers: [
+                        "They guarantee completion within that timeframe",
+                        "They help with planning and expectation management",
+                        "They are strict deadlines that must be met",
+                        "They only apply to full-time students"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "How do roadmaps help with career navigation?",
+                    answers: [
+                        "By providing direct job placements",
+                        "By guaranteeing salary increases",
+                        "By showing specialization paths and required skills for different roles",
+                        "By replacing the need for interviews"
+                    ],
+                    correct: 2
+                }
+            ],
+            fr: [
+                {
+                    question: "Quel est l'objectif principal d'une roadmap de développeur?",
+                    answers: [
+                        "Suivre les heures de codage quotidiennes",
+                        "Fournir un parcours d'apprentissage structuré du débutant à l'expert",
+                        "Lister tous les langages de programmation disponibles",
+                        "Servir d'outil de gestion de projet"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Lequel de ces éléments n'est PAS un composant clé d'une roadmap de développeur?",
+                    answers: [
+                        "Jalons d'apprentissage",
+                        "Dépendances de compétences",
+                        "Attentes salariales",
+                        "Suggestions de projets"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "Quel est le principal avantage de suivre une roadmap?",
+                    answers: [
+                        "Elle garantit une offre d'emploi",
+                        "Elle élimine le besoin d'éducation formelle",
+                        "Elle fournit une direction claire et élimine le dilemme 'quoi apprendre ensuite'",
+                        "Elle rend l'apprentissage de la programmation plus rapide sans pratique"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "Quelle roadmap serait la plus adaptée à quelqu'un intéressé par la construction d'interfaces utilisateur?",
+                    answers: [
+                        "Roadmap Développement Backend",
+                        "Roadmap Développement Frontend",
+                        "Roadmap DevOps",
+                        "Roadmap Science des Données"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "À quelle fréquence les roadmaps de développeur doivent-elles être mises à jour?",
+                    answers: [
+                        "Jamais, ce sont des documents statiques",
+                        "Seulement en commençant un nouvel emploi",
+                        "Régulièrement pour refléter les tendances technologiques changeantes",
+                        "Une fois tous les 5 ans"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "Que signifie une 'dépendance de compétences' dans une roadmap?",
+                    answers: [
+                        "Quelles compétences nécessitent un paiement pour être apprises",
+                        "Quelles compétences s'appuient les unes sur les autres en séquence",
+                        "Quelles compétences sont obsolètes et doivent être évitées",
+                        "Quelles compétences sont réservées aux développeurs seniors"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Lequel de ces éléments est généralement la PREMIÈRE étape d'une roadmap de développement web?",
+                    answers: [
+                        "Apprendre React ou Vue.js",
+                        "Maîtriser la conception de bases de données",
+                        "Comprendre les bases HTML, CSS et JavaScript",
+                        "Apprendre le déploiement de serveur"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "Qu'est-ce qu'un 'jalon d'apprentissage' dans une roadmap de développeur?",
+                    answers: [
+                        "Un point où vous devriez faire une pause dans l'apprentissage",
+                        "Un point de contrôle clair qui marque le progrès et valide l'acquisition de compétences",
+                        "Un objectif financier à atteindre",
+                        "Un certificat que vous recevez des cours en ligne"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Pourquoi des suggestions de projets sont-elles incluses dans les roadmaps?",
+                    answers: [
+                        "Pour fournir uniquement des connaissances théoriques",
+                        "Pour appliquer les compétences apprises et construire un portfolio professionnel",
+                        "Pour remplacer entièrement l'éducation formelle",
+                        "Pour garantir des opportunités de travail freelance"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Quel type de roadmap de développeur inclurait Docker et Kubernetes?",
+                    answers: [
+                        "Développement Frontend",
+                        "Développement Mobile",
+                        "DevOps",
+                        "Développement de Jeux"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "Quel est l'avantage d'utiliser des roadmaps visuelles plutôt que des listes textuelles?",
+                    answers: [
+                        "Elles nécessitent moins de temps à créer",
+                        "Elles fournissent une compréhension plus claire des relations et de la progression des compétences",
+                        "Elles se mettent à jour automatiquement",
+                        "Elles sont uniquement pour les apprenants visuels"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Quand quelqu'un devrait-il personnaliser une roadmap de développeur standard?",
+                    answers: [
+                        "Jamais, les roadmaps standard sont parfaites telles quelles",
+                        "Seulement quand ils ont 10+ ans d'expérience",
+                        "Pour s'aligner avec leurs objectifs spécifiques, intérêts et style d'apprentissage",
+                        "Seulement pour les postes de développeur senior"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "Lequel de ces éléments est un écueil courant lorsqu'on n'utilise PAS de roadmap?",
+                    answers: [
+                        "Apprendre des compétences dans un ordre logique",
+                        "Perdre du temps sur des technologies non pertinentes",
+                        "Avoir une direction de carrière claire",
+                        "Mesurer efficacement le progrès"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Quel rôle jouent les estimations de temps dans une roadmap?",
+                    answers: [
+                        "Elles garantissent l'achèvement dans ce délai",
+                        "Elles aident à la planification et à la gestion des attentes",
+                        "Ce sont des délais stricts qui doivent être respectés",
+                        "Elles s'appliquent uniquement aux étudiants à temps plein"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Comment les roadmaps aident-elles à la navigation de carrière?",
+                    answers: [
+                        "En fournissant des placements d'emploi directs",
+                        "En garantissant des augmentations de salaire",
+                        "En montrant les chemins de spécialisation et les compétences requises pour différents rôles",
+                        "En remplaçant le besoin d'entretiens"
+                    ],
+                    correct: 2
+                }
+            ],
+            ar: [
+                {
+                    question: "ما هو الغرض الأساسي من خارطة طريق المطور؟",
+                    answers: [
+                        "تتبع ساعات البرمجة اليومية",
+                        "توفير مسار تعليمي منظم من المبتدئ إلى الخبير",
+                        "سرد جميع لغات البرمجة المتاحة",
+                        "أن تكون أداة لإدارة المشاريع"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "أي من هذه ليس مكونًا رئيسيًا في خارطة طريق المطور؟",
+                    answers: [
+                        "معالم التعلم",
+                        "التبعيات بين المهارات",
+                        "التوقعات المتعلقة بالراتب",
+                        "اقتراحات المشاريع"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "ما الفائدة الرئيسية من اتباع خارطة طريق؟",
+                    answers: [
+                        "تضمن عرض عمل",
+                        "تلغي الحاجة للتعليم الرسمي",
+                        "توفر اتجاهًا واضحًا وتلغي معضلة 'ماذا أتعلم بعد'",
+                        "تجعل تعلم البرمجة أسرع دون ممارسة"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "أي خارطة طريق ستكون الأنسب لشخص مهتم ببناء واجهات المستخدم؟",
+                    answers: [
+                        "خارطة طريق تطوير الواجهة الخلفية",
+                        "خارطة طريق تطوير الواجهة الأمامية",
+                        "خارطة طريق DevOps",
+                        "خارطة طريق علم البيانات"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "كم مرة يجب تحديث خرائط طريق المطورين؟",
+                    answers: [
+                        "أبدًا، فهي وثائق ثابتة",
+                        "فقط عند البدء بوظيفة جديدة",
+                        "بانتظام لتعكس اتجاهات التكنولوجيا المتغيرة",
+                        "مرة كل 5 سنوات"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "ماذا تشير 'التبعية بين المهارات' في خارطة الطريق؟",
+                    answers: [
+                        "أي مهارات تتطلب الدفع لتعلمها",
+                        "أي مهارات تبني على بعضها البعض بالتسلسل",
+                        "أي مهارات قديمة ويجب تجنبها",
+                        "أي مهارات مخصصة فقط للمطورين المخضرمين"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "أي من هذه عادة ما تكون الخطوة الأولى في خارطة طريق تطوير الويب؟",
+                    answers: [
+                        "تعلم React أو Vue.js",
+                        "إتقان تصميم قواعد البيانات",
+                        "فهم أساسيات HTML و CSS و JavaScript",
+                        "تعلم نشر الخادم"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "ما هو 'معلم التعلم' في خارطة طريق المطور؟",
+                    answers: [
+                        "نقطة يجب فيها أخذ استراحة من التعلم",
+                        "نقطة تفتيش واضحة تميز التقدم وتحقق من اكتساب المهارات",
+                        "هدف مالي لتحقيقه",
+                        "شهادة تحصل عليها من الدورات عبر الإنترنت"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "لماذا يتم تضمين اقتراحات المشاريع في خرائط الطريق؟",
+                    answers: [
+                        "لتوفير المعرفة النظرية فقط",
+                        "لتطبيق المهارات المكتسبة وبناء محفظة مهنية",
+                        "لتحل محل التعليم الرسمي بالكامل",
+                        "لضمان فرص العمل الحر"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "أي نوع من خرائط طريق المطور سيتضمن Docker و Kubernetes؟",
+                    answers: [
+                        "تطوير الواجهة الأمامية",
+                        "تطوير الجوال",
+                        "DevOps",
+                        "تطوير الألعاب"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "ما ميزة استخدام خرائط الطريق المرئية على القوائم النصية؟",
+                    answers: [
+                        "تتطلب وقتًا أقل للإنشاء",
+                        "توفر فهمًا أوضح لعلاقات المهارات والتقدم",
+                        "تحدث نفسها تلقائيًا",
+                        "هي فقط للمتعلمين البصريين"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "متى يجب على شخص تخصيص خارطة طريق مطور قياسية؟",
+                    answers: [
+                        "أبدًا، خرائط الطريق القياسية مثالية كما هي",
+                        "فقط عندما يكون لديه خبرة 10+ سنوات",
+                        "لتتناسب مع أهدافه واهتماماته وأسلوب تعلمه المحدد",
+                        "فقط لمناصب المطورين المخضرمين"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "أي من هذه هو فخ شائع عند عدم استخدام خارطة طريق؟",
+                    answers: [
+                        "تعلم المهارات بترتيب منطقي",
+                        "إضاعة الوقت على تقنيات غير ذات صلة",
+                        "امتلاك اتجاه مهني واضح",
+                        "قياس التقدم بكفاءة"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "ما دور التقديرات الزمنية في خارطة الطريق؟",
+                    answers: [
+                        "تضمن الانتهاء ضمن ذلك الإطار الزمني",
+                        "تساعد في التخطيط وإدارة التوقعات",
+                        "هي مواعيد نهائية صارمة يجب الالتزام بها",
+                        "تنطبق فقط على الطلاب بدوام كامل"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "كيف تساعد خرائط الطريق في التنقل المهني؟",
+                    answers: [
+                        "بتوفير توظيف مباشر",
+                        "بضمان زيادات الراتب",
+                        "بإظهار مسارات التخصص والمهارات المطلوبة لأدوار مختلفة",
+                        "باستبدال الحاجة للمقابلات"
+                    ],
+                    correct: 2
+                }
+            ]
+        };
+
+        // Quiz State
+        let currentQuestion = 0;
+        let userAnswers = Array(15).fill(null);
+        let score = 0;
+        let currentLang = 'en';
+        let quizSubmitted = false;
+
+        // Initialize with English
+        document.documentElement.lang = 'en';
+        document.documentElement.dir = 'ltr';
+
+        // Language Switching System
+        document.querySelectorAll('.lang-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all language buttons
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Get selected language
+                currentLang = button.getAttribute('data-lang');
+                
+                // Hide all language content
+                document.querySelectorAll('.lang-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show content for selected language
+                document.querySelectorAll(`.lang-content[data-lang="${currentLang}"]`).forEach(content => {
+                    content.classList.add('active');
+                });
+                
+                // Update text direction for Arabic
+                if (currentLang === 'ar') {
+                    document.documentElement.dir = 'rtl';
+                    document.documentElement.lang = 'ar';
+                } else {
+                    document.documentElement.dir = 'ltr';
+                    document.documentElement.lang = currentLang;
+                }
+                
+                // Re-render quiz questions with new language
+                if (document.getElementById('questionsContainer').innerHTML !== '') {
+                    renderQuestion();
+                }
+            });
+        });
+
+        // Start Quiz Button
+        document.getElementById('startQuizBtn').addEventListener('click', startQuiz);
+
+        function startQuiz() {
+            // Reset quiz state
+            currentQuestion = 0;
+            userAnswers = Array(15).fill(null);
+            score = 0;
+            quizSubmitted = false;
+            
+            // Hide results, show quiz
+            document.querySelector('.results-section').classList.remove('active');
+            document.querySelector('.quiz-section').style.display = 'block';
+            
+            // Scroll to quiz section
+            document.querySelector('#quiz').scrollIntoView({ behavior: 'smooth' });
+            
+            // Initialize quiz
+            initializeQuiz();
+        }
+
+        function initializeQuiz() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            // Create question containers for each question
+            quizQuestions[currentLang].forEach((_, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = `question-container ${index === 0 ? 'active' : ''}`;
+                questionDiv.id = `question-${index}`;
+                container.appendChild(questionDiv);
+            });
+            
+            // Render first question
+            renderQuestion();
+            
+            // Update UI
+            updateQuizUI();
+        }
+
+        function renderQuestion() {
+            const questionData = quizQuestions[currentLang][currentQuestion];
+            const questionContainer = document.getElementById(`question-${currentQuestion}`);
+            
+            questionContainer.innerHTML = `
+                <div class="question-header">
+                    <div class="question-number">
+                        <span class="en">Question ${currentQuestion + 1} of 15</span>
+                        <span class="fr">Question ${currentQuestion + 1} sur 15</span>
+                        <span class="ar">سؤال ${currentQuestion + 1} من 15</span>
+                    </div>
+                </div>
+                <div class="question-text">${questionData.question}</div>
+                <div class="answer-options">
+                    ${questionData.answers.map((answer, index) => {
+                        let optionClass = 'answer-option';
+                        let letter = String.fromCharCode(65 + index); // A, B, C, D
+                        
+                        if (userAnswers[currentQuestion] === index) {
+                            optionClass += ' selected';
+                        }
+                        
+                        if (quizSubmitted && userAnswers[currentQuestion] === index) {
+                            if (index === questionData.correct) {
+                                optionClass += ' correct';
+                            } else {
+                                optionClass += ' incorrect';
+                            }
+                        }
+                        
+                        if (quizSubmitted && index === questionData.correct) {
+                            optionClass += ' correct';
+                        }
+                        
+                        return `
+                            <div class="${optionClass}" data-index="${index}">
+                                <div class="answer-letter">${letter}</div>
+                                <div class="answer-text">${answer}</div>
+                                <div class="answer-feedback">
+                                    ${index === questionData.correct ? '<i class="fas fa-check"></i>' : ''}
+                                    ${userAnswers[currentQuestion] === index && index !== questionData.correct ? '<i class="fas fa-times"></i>' : ''}
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+            
+            // Add event listeners to answer options
+            questionContainer.querySelectorAll('.answer-option').forEach(option => {
+                if (!quizSubmitted) {
+                    option.addEventListener('click', () => selectAnswer(parseInt(option.dataset.index)));
+                }
+            });
+        }
+
+        function selectAnswer(answerIndex) {
+            userAnswers[currentQuestion] = answerIndex;
+            
+            // Update UI for selected answer
+            const options = document.querySelectorAll(`#question-${currentQuestion} .answer-option`);
+            options.forEach(option => option.classList.remove('selected'));
+            options[answerIndex].classList.add('selected');
+            
+            // Enable next button
+            document.getElementById('nextBtn').disabled = false;
+            
+            // If it's the last question, show submit button
+            if (currentQuestion === 14) {
+                document.getElementById('submitBtn').style.display = 'inline-flex';
+                document.getElementById('nextBtn').style.display = 'none';
+            }
+        }
+
+        function updateQuizUI() {
+            // Update question count
+            document.getElementById('questionCount').textContent = `${currentQuestion + 1}/15`;
+            
+            // Update progress bar
+            const progressPercentage = ((currentQuestion + 1) / 15) * 100;
+            document.getElementById('progressFill').style.width = `${progressPercentage}%`;
+            
+            // Update score if quiz is submitted
+            if (quizSubmitted) {
+                calculateScore();
+                document.getElementById('currentScore').textContent = score;
+            }
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            
+            if (currentQuestion < 14) {
+                document.getElementById('nextBtn').disabled = userAnswers[currentQuestion] === null;
+            }
+        }
+
+        // Navigation
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                document.querySelectorAll('.question-container').forEach(container => {
+                    container.classList.remove('active');
+                });
+                document.getElementById(`question-${currentQuestion}`).classList.add('active');
+                renderQuestion();
+                updateQuizUI();
+                
+                // Hide submit button if going back from last question
+                if (currentQuestion < 14) {
+                    document.getElementById('submitBtn').style.display = 'none';
+                    document.getElementById('nextBtn').style.display = 'inline-flex';
+                }
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentQuestion < 14 && userAnswers[currentQuestion] !== null) {
+                currentQuestion++;
+                document.querySelectorAll('.question-container').forEach(container => {
+                    container.classList.remove('active');
+                });
+                document.getElementById(`question-${currentQuestion}`).classList.add('active');
+                renderQuestion();
+                updateQuizUI();
+                
+                // Show submit button if on last question
+                if (currentQuestion === 14) {
+                    document.getElementById('submitBtn').style.display = 'inline-flex';
+                    document.getElementById('nextBtn').style.display = 'none';
+                }
+            }
+        });
+
+        // Submit Quiz
+        document.getElementById('submitBtn').addEventListener('click', submitQuiz);
+
+        function submitQuiz() {
+            quizSubmitted = true;
+            calculateScore();
+            showResults();
+        }
+
+        function calculateScore() {
+            score = 0;
+            quizQuestions[currentLang].forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    score++;
+                }
+            });
+        }
+
+        function showResults() {
+            // Calculate results
+            const correct = score;
+            const incorrect = 15 - score;
+            const percentage = Math.round((score / 15) * 100);
+            
+            // Update results in all languages
+            // English
+            document.getElementById('finalScore').textContent = `${score}/15`;
+            document.getElementById('correctAnswers').textContent = correct;
+            document.getElementById('incorrectAnswers').textContent = incorrect;
+            document.getElementById('percentageScore').textContent = `${percentage}%`;
+            
+            // French
+            document.getElementById('finalScoreFr').textContent = `${score}/15`;
+            document.getElementById('correctAnswersFr').textContent = correct;
+            document.getElementById('incorrectAnswersFr').textContent = incorrect;
+            document.getElementById('percentageScoreFr').textContent = `${percentage}%`;
+            
+            // Arabic
+            document.getElementById('finalScoreAr').textContent = `${score}/15`;
+            document.getElementById('correctAnswersAr').textContent = correct;
+            document.getElementById('incorrectAnswersAr').textContent = incorrect;
+            document.getElementById('percentageScoreAr').textContent = `${percentage}%`;
+            
+            // Set result message based on score
+            let message = '';
+            if (percentage >= 90) {
+                message = currentLang === 'en' ? 'Excellent! You have a deep understanding of developer roadmaps.' :
+                         currentLang === 'fr' ? 'Excellent ! Vous avez une compréhension profonde des roadmaps de développeur.' :
+                         'ممتاز! لديك فهم عميق لخرائط طريق المطورين.';
+            } else if (percentage >= 70) {
+                message = currentLang === 'en' ? 'Good job! You have a solid understanding of developer roadmaps.' :
+                         currentLang === 'fr' ? 'Bon travail ! Vous avez une bonne compréhension des roadmaps de développeur.' :
+                         'عمل جيد! لديك فهم جيد لخرائط طريق المطورين.';
+            } else if (percentage >= 50) {
+                message = currentLang === 'en' ? 'Not bad! You have a basic understanding but could benefit from more study.' :
+                         currentLang === 'fr' ? 'Pas mal ! Vous avez une compréhension de base mais pourriez bénéficier de plus d\'étude.' :
+                         'ليس سيئًا! لديك فهم أساسي ولكن يمكنك الاستفادة من المزيد من الدراسة.';
+            } else {
+                message = currentLang === 'en' ? 'Keep learning! Review the roadmap concepts and try again.' :
+                         currentLang === 'fr' ? 'Continuez à apprendre ! Revoyez les concepts de roadmap et réessayez.' :
+                         'استمر في التعلم! راجع مفاهيم خارطة الطريق وحاول مرة أخرى.';
+            }
+            
+            // Update result messages
+            document.querySelectorAll('#resultMessage, #resultMessageFr, #resultMessageAr').forEach(el => {
+                el.textContent = message;
+            });
+            
+            // Show results, hide quiz
+            document.querySelector('.quiz-section').style.display = 'none';
+            document.querySelector('.results-section').classList.add('active');
+            
+            // Scroll to results
+            document.querySelector('#results').scrollIntoView({ behavior: 'smooth' });
+            
+            // Re-render all questions with feedback
+            renderQuestion();
+        }
+
+        // Restart Quiz
+        document.getElementById('restartBtn').addEventListener('click', startQuiz);
+        document.getElementById('restartBtnFr').addEventListener('click', startQuiz);
+        document.getElementById('restartBtnAr').addEventListener('click', startQuiz);
+
+        // Review Answers
+        document.getElementById('reviewBtn').addEventListener('click', reviewAnswers);
+        document.getElementById('reviewBtnFr').addEventListener('click', reviewAnswers);
+        document.getElementById('reviewBtnAr').addEventListener('click', reviewAnswers);
+
+        function reviewAnswers() {
+            // Go back to first question
+            currentQuestion = 0;
+            
+            // Show quiz, hide results
+            document.querySelector('.results-section').classList.remove('active');
+            document.querySelector('.quiz-section').style.display = 'block';
+            
+            // Re-render first question with feedback
+            document.querySelectorAll('.question-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            document.getElementById(`question-${currentQuestion}`).classList.add('active');
+            renderQuestion();
+            updateQuizUI();
+            
+            // Scroll to quiz
+            document.querySelector('#quiz').scrollIntoView({ behavior: 'smooth' });
+            
+            // Disable answer selection during review
+            const options = document.querySelectorAll('.answer-option');
+            options.forEach(option => {
+                option.style.cursor = 'default';
+            });
+        }
+
+        // Navigation System
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Remove active class from all nav links
+                document.querySelectorAll('.nav-link').forEach(navLink => {
+                    navLink.classList.remove('active');
+                });
+                
+                // Add active class to clicked link
+                link.classList.add('active');
+                
+                // Scroll to section
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Update active nav link on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
