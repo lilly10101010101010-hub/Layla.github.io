@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Development Target Skills</title>
+  <style>
+    /* All CSS from style.css goes here */
+    :root {
+      --primary-blue: #3b82f6;
+      --primary-purple: #7c3aed;
+      --accent-green: #10b981;
+      --dark-bg: #030712;
+      --card-bg: rgba(255, 255, 255, 0.06);
+      --border-light: rgba(255, 255, 255, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617);
+      color: #e5e7eb;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .skills-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .page-header {
+      text-align: center;
+      padding: 40px 20px;
+      margin-bottom: 40px;
+    }
+
+    .page-header h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin: 0;
+      background: linear-gradient(90deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .skill-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      border-color: #3b82f6;
+    }
+
+    .skill-number {
+      display: inline-block;
+      background: linear-gradient(135deg, #3b82f6, #7c3aed);
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 36px;
+      font-weight: bold;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+
+    .skill-title {
+      color: #e0e7ff;
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      margin-bottom: 20px;
+      border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+      padding-bottom: 10px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .skill-content {
+      color: #cbd5e1;
+      line-height: 1.6;
+      font-size: 1.05rem;
+    }
+
+    .skill-content p {
+      margin-bottom: 15px;
+    }
+
+    .skill-content strong {
+      color: #60a5fa;
+      font-weight: 600;
+    }
+
+    .skill-highlight {
+      background: rgba(59, 130, 246, 0.1);
+      border-left: 3px solid #3b82f6;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .skill-content ul {
+      padding-left: 20px;
+      margin: 15px 0;
+    }
+
+    .skill-content li {
+      margin-bottom: 8px;
+      padding-left: 5px;
+    }
+
+    .page-footer {
+      padding: 30px;
+      text-align: center;
+      background: rgba(2, 6, 23, 0.9);
+      color: #94a3b8;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: 40px;
+      border-radius: 10px;
+    }
+
+    .page-footer p {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .skills-container { padding: 10px; }
+      .page-header { padding: 30px 15px; }
+      .skill-card { padding: 20px; margin-bottom: 20px; }
+      .skill-title { font-size: 1.4rem; }
+      .skill-number { width: 32px; height: 32px; line-height: 32px; font-size: 0.9rem; }
+      body { padding: 10px; }
+    }
+
+    @media (max-width: 480px) {
+      .skill-card { padding: 15px; }
+      .skill-title { font-size: 1.2rem; }
+      .skill-content { font-size: 1rem; }
+      .page-header h1 { font-size: 1.8rem; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- HTML content from the first file goes here -->
+  <header class="page-header">
+    <h1>Web Development Target Skills</h1>
+  </header>
+  
+  <main class="skills-container">
+    <!-- All the skill cards from the original HTML -->
+    <!-- Skill 1 -->
+    <div class="skill-card">
+      <div class="skill-title">
+        <span class="skill-number">1</span>
+        Design or Co-design a Relevant Strategic Response to a Complex Problem
+      </div>
+      <!-- ... rest of your content ... -->
+    </div>
+    <!-- Skill 2 to Skill 9 cards here -->
+  </main>
+  
+  <footer class="page-footer">
+    <p>Web Development Target Skills</p>
+  </footer>
+</body>
+</html>
