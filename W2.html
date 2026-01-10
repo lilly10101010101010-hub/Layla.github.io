@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Front-End Development Target Skills</title>
+  <style>
+    /* Global Styles */
+    :root {
+      --primary-blue: #3b82f6;
+      --primary-purple: #7c3aed;
+      --accent-green: #10b981;
+      --dark-bg: #030712;
+      --card-bg: rgba(255, 255, 255, 0.06);
+      --border-light: rgba(255, 255, 255, 0.15);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617);
+      color: #e5e7eb;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      min-height: 100vh;
+    }
+
+    /* Skills Container */
+    .skills-container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 0;
+    }
+    
+    /* Page Header */
+    .page-header {
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+    
+    .page-header h1 {
+      font-size: 3rem;
+      margin: 0;
+      background: linear-gradient(90deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    
+    /* Skill Cards */
+    .skill-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 25px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    
+    .skill-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border-color: #3b82f6;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    
+    .skill-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #3b82f6, #7c3aed);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-weight: bold;
+      margin-right: 15px;
+      font-size: 1.2rem;
+    }
+    
+    .skill-title {
+      color: #e0e7ff;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+      border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+      padding-bottom: 12px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .skill-content {
+      color: #cbd5e1;
+      line-height: 1.7;
+      font-size: 1.1rem;
+    }
+    
+    .skill-content strong {
+      color: #60a5fa;
+      font-weight: 600;
+    }
+    
+    .skill-highlight {
+      background: rgba(59, 130, 246, 0.1);
+      border-left: 4px solid #3b82f6;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+    }
+    
+    .skill-content ul {
+      padding-left: 24px;
+      margin: 20px 0;
+    }
+    
+    .skill-content li {
+      margin-bottom: 10px;
+      position: relative;
+    }
+    
+    .skill-content li:before {
+      content: "•";
+      color: #3b82f6;
+      font-weight: bold;
+      position: absolute;
+      left: -15px;
+    }
+    
+    /* Footer */
+    .page-footer {
+      padding: 30px;
+      text-align: center;
+      background: rgba(2, 6, 23, 0.9);
+      color: #94a3b8;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: 40px;
+      font-size: 0.9rem;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .skills-container {
+        width: 95%;
+        padding: 30px 0;
+      }
+      
+      .page-header h1 {
+        font-size: 2.2rem;
+      }
+      
+      .skill-title {
+        font-size: 1.3rem;
+      }
+      
+      .skill-content {
+        font-size: 1rem;
+      }
+      
+      .skill-card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header class="page-header">
+  <h1>Front-End Development Target Skills</h1>
+</header>
+
+<!-- ========== MAIN CONTENT ========== -->
+<main class="skills-container">
+  
+  <!-- Skill 1 -->
+  <div class="skill-card">
+    <div class="skill-title">
+      <span class="skill-number">1</span>
+      How to Exploit Asynchronous Requests and Web Services to Modify Page Content
+    </div>
+    <div class="skill-content">
+      <p>Asynchronous requests allow a web page to communicate with a server without <strong>reloading the entire page</strong>. This is commonly done using technologies such as AJAX or the Fetch API. When a user performs an action (for example, clicking a button), the browser sends a request to a web service in the background, receives data, and updates only the relevant part of the page.</p>
+      
+      <div class="skill-highlight">
+        Web services provide the data needed for these updates, often in formats like JSON. By exploiting asynchronous requests, developers can create responsive and interactive user experiences, such as live search results, dynamic content updates, or real-time notifications.
+      </div>
+      
+      <p>This approach improves performance and usability because users do not experience full page refreshes.</p>
+    </div>
+  </div>
+  
+  <!-- Skill 2 -->
+  <div class="skill-card">
+    <div class="skill-title">
+      <span class="skill-number">2</span>
+      How to Use Local Data Storage to Optimize Loading Times
+    </div>
+    <div class="skill-content">
+      <p>Local data storage allows web applications to store data directly in the user's browser. Examples include local storage, session storage, and IndexedDB. By saving frequently used data locally, applications can reduce the number of requests sent to the server.</p>
+      
+      <div class="skill-highlight">
+        This optimization improves loading times because the application can retrieve data instantly from the browser instead of waiting for a network response.
+      </div>
+      
+      <p>Local storage is especially useful for caching user preferences, temporary data, or previously loaded content, leading to faster and smoother user experiences.</p>
+    </div>
+  </div>
+  
+  <!-- Skill 3 -->
+  <div class="skill-card">
+    <div class="skill-title">
+      <span class="skill-number">3</span>
+      Content Templates: Creating Templates and Integrating Data Dynamically
+    </div>
+    <div class="skill-content">
+      <p>Content templates define the structure of a web page or component while allowing data to be inserted dynamically. Instead of hard-coding content, templates use placeholders that are filled with data at runtime.</p>
+      
+      <div class="skill-highlight">
+        Dynamic integration of data into templates allows applications to display changing content, such as user profiles, product lists, or messages, using the same layout.
+      </div>
+      
+      <p>This approach improves code reusability, consistency, and maintainability, as developers can update the design in one place without rewriting logic for each piece of content.</p>
+    </div>
+  </div>
+  
+  <!-- Skill 4 -->
+  <div class="skill-card">
+    <div class="skill-title">
+      <span class="skill-number">4</span>
+      Event-Driven Programming: Promises and Asynchronous Processing
+    </div>
+    <div class="skill-content">
+      <p>Event-driven programming is based on responding to events such as user actions, system messages, or data arrival. In web development, events might include clicks, form submissions, or completed network requests.</p>
+      
+      <div class="skill-highlight">
+        Promises are a key tool for managing asynchronous processing. They represent a value that will be available in the future and allow developers to define what should happen when an operation succeeds or fails.
+      </div>
+      
+      <p>Using promises improves code readability and helps manage complex asynchronous workflows without deeply nested callbacks.</p>
+    </div>
+  </div>
+  
+  <!-- Skill 5 -->
+  <div class="skill-card">
+    <div class="skill-title">
+      <span class="skill-number">5</span>
+      HTTP Requests: Asynchronous/Synchronous Execution, Data Retrieval and Processing, Error Handling
+    </div>
+    <div class="skill-content">
+      <p>HTTP requests are used to retrieve or send data between a client and a server. <strong>Synchronous execution</strong> blocks the application until the request completes, which can cause delays and poor user experience. <strong>Asynchronous execution</strong> allows the application to continue running while waiting for the server response.</p>
+      
+      <div class="skill-highlight">
+        After data is retrieved, it must be processed, often by parsing formats like JSON and updating the user interface.
+      </div>
+      
+      <p>Error handling is a critical part of this process, as network failures, server errors, or invalid data can occur. Proper error handling ensures that applications remain stable and provide meaningful feedback to users.</p>
+    </div>
+  </div>
+  
+  <!-- Skill 6 -->
+  <div class="skill-card">
+    <div class="skill-title">
+      <span class="skill-number">6</span>
+      Local Data Storage: Accessing and Saving Data
+    </div>
+    <div class="skill-content">
+      <p>Accessing and saving data locally involves reading from and writing to browser storage mechanisms. Developers can store key-value pairs or structured data for later use. Data can be retrieved when the application starts or when needed, reducing dependency on constant server communication.</p>
+      
+      <div class="skill-highlight">
+        Managing local storage requires careful handling to ensure data consistency, security, and appropriate storage limits.
+      </div>
+      
+      <p>When used correctly, local storage improves performance and enhances offline or low-connectivity experiences.</p>
+    </div>
+  </div>
+  
+  <!-- Skill 7 -->
+  <div class="skill-card">
+    <div class="skill-title">
+      <span class="skill-number">7</span>
+      Optimizing Loading Items: Caching and Asynchronous Loading
+    </div>
+    <div class="skill-content">
+      <p>Optimizing loading items focuses on improving application speed and efficiency. <strong>Caching</strong> stores resources such as images, scripts, or data so they can be reused without re-downloading them from the server.</p>
+      
+      <div class="skill-highlight">
+        <strong>Asynchronous loading</strong> allows resources to load in the background while the rest of the application remains usable.
+      </div>
+      
+      <p>Together, caching and asynchronous loading reduce wait times, minimize bandwidth usage, and improve overall performance, especially for complex or data-heavy applications.</p>
+    </div>
+  </div>
+  
+  <!-- Skill 8 -->
+  <div class="skill-card">
+    <div class="skill-title">
+      <span class="skill-number">8</span>
+      Discovering a Client-Side Development Framework – Targeted Critical Learning
+    </div>
+    <div class="skill-content">
+      <p>Client-side development frameworks (such as React, Angular, or Vue) provide structured tools for building interactive user interfaces. Discovering these frameworks involves understanding how they manage components, data binding, state, and user interactions.</p>
+      
+      <div class="skill-highlight">
+        This is a critical learning objective because client-side frameworks help developers write scalable, maintainable, and efficient front-end applications.
+      </div>
+      
+      <p>Learning how to choose and use a framework develops skills in modern web architecture and prepares developers to build real-world applications that meet performance and usability expectations.</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="page-footer">
+  <p>Front-End Development Target Skills</p>
+</footer>
+
+<script>
+  // Add some interactive effects
+  document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.skill-card');
+    
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-8px)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
