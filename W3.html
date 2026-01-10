@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Back-End Development Target Skills</title>
+  <style>
+    /* Global Styles */
+    :root {
+      --primary-blue: #3b82f6;
+      --primary-purple: #7c3aed;
+      --accent-green: #10b981;
+      --dark-bg: #030712;
+      --card-bg: rgba(255, 255, 255, 0.06);
+      --border-light: rgba(255, 255, 255, 0.15);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617);
+      color: #e5e7eb;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Skills Container */
+    .skills-container {
+      width: 80%;
+      margin: 60px auto 80px;
+      max-width: 1200px;
+    }
+    
+    /* Page Header */
+    .page-header {
+      text-align: center;
+      padding: 50px 20px 40px;
+    }
+    
+    .page-header h1 {
+      font-size: 44px;
+      margin: 0;
+      background: linear-gradient(90deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+    }
+    
+    /* Skill Cards */
+    .skill-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      transition: all 0.3s ease;
+    }
+    
+    .skill-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      border-color: #3b82f6;
+    }
+    
+    .skill-number {
+      display: inline-block;
+      background: linear-gradient(135deg, #3b82f6, #7c3aed);
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 36px;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+    
+    .skill-title {
+      color: #e0e7ff;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+      padding-bottom: 10px;
+    }
+    
+    .skill-content {
+      color: #cbd5e1;
+      line-height: 1.6;
+      font-size: 1.05rem;
+    }
+    
+    .skill-content strong {
+      color: #60a5fa;
+    }
+    
+    .skill-highlight {
+      background: rgba(59, 130, 246, 0.1);
+      border-left: 3px solid #3b82f6;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    
+    .skill-content ul {
+      padding-left: 20px;
+      margin: 15px 0;
+    }
+    
+    .skill-content li {
+      margin-bottom: 8px;
+    }
+    
+    /* Footer */
+    .page-footer {
+      padding: 30px;
+      text-align: center;
+      background: rgba(2, 6, 23, 0.9);
+      color: #94a3b8;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header class="page-header">
+  <h1>Back-End Development Target Skills</h1>
+</header>
+
+<!-- ========== MAIN CONTENT ========== -->
+<main class="skills-container">
+  
+  <!-- Skill 1 -->
+  <div class="skill-card">
+    <div class="skill-title">
+      <span class="skill-number">1</span>
+      The Use of Server-Side Development Frameworks, API Development, and Web Services
+    </div>
+    <div class="skill-content">
+      <p>Server-side development focuses on the logic that runs on a server rather than in a user's browser. Server-side frameworks (such as Django, Spring, Laravel, or Express) provide structured tools to handle common tasks like routing requests, managing databases, handling security, and processing user input. These frameworks save time, reduce errors, and encourage best practices by offering reusable components instead of writing everything from scratch.</p>
+      
+      <div class="skill-highlight">
+        API (Application Programming Interface) development allows different software systems to communicate with each other. An API defines rules for how one application can request data or services from another.
+      </div>
+      
+      <p>For example, a mobile app might use an API to request user data from a server. APIs are essential for building scalable systems, supporting multiple clients (web, mobile, desktop), and separating frontend and backend responsibilities.</p>
+      
+      <p>Web services are systems that expose APIs over the internet using standard protocols like HTTP. They allow applications written in different programming languages and running on different platforms to interact. Together, server-side frameworks, APIs, and web services form the backbone of modern web applications by enabling data processing, communication, and integration.</p>
+    </div>
+  </div>
+  
+  <!-- Skill 2 -->
+  <div class="skill-card">
+    <div class="skill-title">
+      <span class="skill-number">2</span>
+      Object-Oriented Programming: Reusing Software Components and Maintaining Clean Code
+    </div>
+    <div class="skill-content">
+      <p>Object-Oriented Programming (OOP) is a programming paradigm based on the concept of objects, which bundle data (attributes) and behavior (methods) together. Core OOP principles include encapsulation, inheritance, polymorphism, and abstraction. These principles help developers create systems that are modular, reusable, and easier to understand.</p>
+      
+      <div class="skill-highlight">
+        Reusing software components is a key advantage of OOP. By designing classes that represent real-world concepts or system responsibilities, developers can reuse them across multiple projects or parts of the same application.
+      </div>
+      
+      <p>This reduces duplication and improves reliability since reused components are already tested.</p>
+      
+      <p>Maintaining clean code means writing code that is readable, well-structured, and easy to modify. Clean code follows naming conventions, avoids unnecessary complexity, and separates responsibilities clearly. OOP supports clean code by encouraging small, focused classes and methods, making software easier to debug, maintain, and extend over time.</p>
+    </div>
+  </div>
+  
+  <!-- Skill 3 -->
+  <div class="skill-card">
+    <div class="skill-title">
+      <span class="skill-number">3</span>
+      Web Services: Objects, Standards, APIs, and Exchange Formats
+    </div>
+    <div class="skill-content">
+      <p>Web services rely on several core concepts to function effectively. <strong>Objects</strong> represent structured data entities (such as users, products, or orders) that are exchanged between systems. These objects are typically serialized into a format that can be transmitted over a network.</p>
+      
+      <div class="skill-highlight">
+        <strong>Standards</strong> ensure that different systems can communicate reliably. Common standards include HTTP for communication, REST or SOAP for service design, and authentication standards for security.
+      </div>
+      
+      <p><strong>APIs</strong> define how clients interact with web services. They specify available operations, required inputs, and expected outputs. APIs act as contracts between systems, ensuring predictable behavior.</p>
+      
+      <p><strong>Exchange formats</strong> such as JSON and XML are used to transfer data between systems. JSON is lightweight and widely used in modern web applications, while XML is more structured and often used in enterprise systems. Together, objects, standards, APIs, and exchange formats make web services interoperable and scalable.</p>
+    </div>
+  </div>
+  
+  <!-- Skill 4 -->
+  <div class="skill-card">
+    <div class="skill-title">
+      <span class="skill-number">4</span>
+      Discovering Server-Side Frameworks
+    </div>
+    <div class="skill-content">
+      <p>Discovering server-side frameworks involves understanding their purpose, features, and use cases. A server-side framework provides a foundation for building backend applications efficiently by handling repetitive tasks like request handling, session management, and database interaction.</p>
+      
+      <div class="skill-highlight">
+        Different frameworks are designed for different needs. Some focus on rapid development, others on performance, scalability, or enterprise-level security.
+      </div>
+      
+      <p>Learning server-side frameworks helps developers understand architectural patterns such as Model-View-Controller (MVC) and how applications are structured in real-world environments.</p>
+      
+      <p>By exploring multiple frameworks, developers gain insight into best practices, trade-offs, and how to choose the right tool for a given project. This knowledge is critical for building robust and maintainable server-side applications.</p>
+    </div>
+  </div>
+  
+  <!-- Skill 5 -->
+  <div class="skill-card">
+    <div class="skill-title">
+      <span class="skill-number">5</span>
+      Recognizing and Using Design Patterns (Factory Method, Adapter, Observer) – Critical Learning Objective
+    </div>
+    <div class="skill-content">
+      <p>Design patterns are proven solutions to common software design problems. They are not code templates but reusable ideas that guide how code should be structured. Recognizing and using design patterns improves code flexibility, readability, and scalability.</p>
+      
+      <div class="skill-highlight">
+        <strong>The Factory Method pattern</strong> is used to create objects without specifying the exact class to instantiate. It promotes loose coupling and makes systems easier to extend.
+      </div>
+      
+      <p><strong>The Adapter pattern</strong> allows incompatible interfaces to work together. It acts as a bridge between two systems without changing their existing code.</p>
+      
+      <p><strong>The Observer pattern</strong> defines a one-to-many relationship where multiple objects are notified automatically when another object's state changes. This is commonly used in event-driven systems.</p>
+      
+      <p>Understanding and applying design patterns is a critical learning objective because it helps developers think at a higher architectural level, communicate ideas effectively with other developers, and build systems that are easier to maintain and evolve.</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="page-footer">
+  Back-End Development Target Skills
+</footer>
+
+</body>
+</html>
