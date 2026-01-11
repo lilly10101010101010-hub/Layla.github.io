@@ -1,0 +1,2192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Back-End Development Target Skills</title>
+  <style>
+    /* ========== EXISTING STYLES (PRESERVED) ========== */
+    :root {
+      --primary-blue: #3b82f6;
+      --primary-purple: #7c3aed;
+      --accent-green: #10b981;
+      --accent-orange: #f59e0b;
+      --accent-pink: #ec4899;
+      --accent-red: #ef4444;
+      --dark-bg: #030712;
+      --card-bg: rgba(255, 255, 255, 0.06);
+      --border-light: rgba(255, 255, 255, 0.15);
+      --text-primary: #e5e7eb;
+      --text-secondary: #cbd5e1;
+      --gradient-1: linear-gradient(135deg, #3b82f6, #7c3aed);
+      --gradient-2: linear-gradient(135deg, #10b981, #3b82f6);
+      --gradient-3: linear-gradient(135deg, #f59e0b, #ec4899);
+    }
+
+    .light-theme {
+      --dark-bg: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --border-light: rgba(30, 41, 59, 0.12);
+      --text-primary: #1e293b;
+      --text-secondary: #475569;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      background: radial-gradient(ellipse at top, var(--dark-bg), #020617);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      min-height: 100vh;
+      transition: all 0.3s ease;
+    }
+
+    .light-theme body {
+      background: radial-gradient(ellipse at top, var(--dark-bg), #e2e8f0);
+    }
+
+    /* Controls */
+    .controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1001;
+      display: flex;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-light);
+      border-radius: 25px;
+      padding: 8px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .light-theme .controls {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .control-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .control-btn.active {
+      background: var(--gradient-1);
+      color: white;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    }
+
+    .control-btn:hover:not(.active) {
+      background: rgba(59, 130, 246, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* AI Assistant */
+    .ai-assistant {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      width: 68px;
+      height: 68px;
+      background: var(--gradient-1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 10px 35px rgba(59, 130, 246, 0.5);
+      transition: all 0.3s ease;
+      border: none;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .ai-assistant:hover {
+      transform: scale(1.15) rotate(15deg);
+      box-shadow: 0 15px 45px rgba(59, 130, 246, 0.7);
+    }
+
+    /* Progress Tracker */
+    .progress-tracker {
+      position: fixed;
+      left: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 1000;
+    }
+
+    .progress-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      border: 2px solid transparent;
+    }
+
+    .progress-dot.active {
+      background: #3b82f6;
+      transform: scale(1.3);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+    }
+
+    /* Skill Cards (Original) */
+    .skill-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-light);
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 40px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .skill-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+      transform: scaleX(0);
+      transition: transform 0.6s ease;
+    }
+
+    .skill-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .skill-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.4);
+      border-color: #3b82f6;
+    }
+
+    /* ========== NEW PROFESSIONAL FEATURES ========== */
+
+    /* Advanced Progress System */
+    .skill-progress-system {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 40px;
+      margin: 60px 0;
+      border: 1px solid var(--border-light);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .level-display {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .level-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--gradient-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 800;
+      color: white;
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+      border: 4px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .level-info h3 {
+      margin: 0;
+      font-size: 1.8rem;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .level-progress-bar {
+      height: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 15px 0;
+      position: relative;
+    }
+
+    .level-progress-fill {
+      height: 100%;
+      background: var(--gradient-2);
+      border-radius: 6px;
+      position: relative;
+      transition: width 1s ease;
+    }
+
+    .skill-progress-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 40px;
+    }
+
+    .skill-progress-item {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      padding: 25px;
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+    }
+
+    .skill-progress-item:hover {
+      transform: translateY(-5px);
+      border-color: #3b82f6;
+    }
+
+    /* Interactive Coding Sandbox */
+    .code-sandbox-pro {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+      border-radius: 20px;
+      padding: 40px;
+      margin: 60px 0;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .sandbox-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .sandbox-tabs {
+      display: flex;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 8px;
+      border-radius: 12px;
+    }
+
+    .sandbox-tab {
+      padding: 12px 24px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .sandbox-tab.active {
+      background: var(--gradient-1);
+      color: white;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    .sandbox-container-pro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      height: 500px;
+    }
+
+    @media (max-width: 1024px) {
+      .sandbox-container-pro {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+    }
+
+    .code-editor-pro {
+      background: #0f172a;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .editor-header-pro {
+      background: #1e293b;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .code-area {
+      width: 100%;
+      height: 430px;
+      background: #0f172a;
+      color: #e2e8f0;
+      font-family: 'Fira Code', 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      padding: 25px;
+      border: none;
+      resize: none;
+      outline: none;
+    }
+
+    .code-output {
+      background: #0f172a;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .output-header {
+      background: #1e293b;
+      padding: 15px 25px;
+      color: #60a5fa;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .output-content {
+      height: 430px;
+      padding: 25px;
+      overflow-y: auto;
+      color: #94a3b8;
+      font-family: 'Fira Code', monospace;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    /* Interactive Flowcharts */
+    .flowchart-section {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 40px;
+      margin: 60px 0;
+      border: 1px solid var(--border-light);
+      position: relative;
+    }
+
+    .flowchart-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      position: relative;
+      padding: 40px 0;
+    }
+
+    .flowchart-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .flowchart-node {
+      width: 180px;
+      padding: 25px;
+      background: var(--gradient-1);
+      color: white;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+    }
+
+    .flowchart-node:hover {
+      transform: scale(1.1);
+      box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5);
+    }
+
+    .flowchart-arrow {
+      font-size: 2rem;
+      color: #60a5fa;
+      animation: bounce 2s infinite;
+    }
+
+    .flowchart-connector {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, #3b82f6, transparent);
+      z-index: 0;
+    }
+
+    /* Interview Questions with Analytics */
+    .interview-system {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
+      border-radius: 24px;
+      padding: 40px;
+      margin: 60px 0;
+      border: 1px solid var(--border-light);
+    }
+
+    .interview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .interview-stats {
+      display: flex;
+      gap: 30px;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      min-width: 120px;
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--gradient-3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 5px;
+    }
+
+    .interview-grid-pro {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    .interview-card-pro {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 30px;
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interview-card-pro:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 20px;
+    }
+
+    .difficulty-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .difficulty-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .difficulty-easy { background: #10b981; }
+    .difficulty-medium { background: #f59e0b; }
+    .difficulty-hard { background: #ef4444; }
+
+    /* Gamification System */
+    .gamification-system {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(236, 72, 153, 0.1));
+      border-radius: 24px;
+      padding: 40px;
+      margin: 60px 0;
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin: 40px 0;
+    }
+
+    .achievement-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .achievement-card.unlocked {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.1);
+    }
+
+    .achievement-icon {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      color: #f59e0b;
+    }
+
+    .achievement-progress {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 15px 0;
+    }
+
+    .achievement-progress-fill {
+      height: 100%;
+      background: var(--gradient-3);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    /* Leaderboard */
+    .leaderboard {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 30px;
+      margin-top: 40px;
+    }
+
+    .leaderboard-row {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+    }
+
+    .leaderboard-row:hover {
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateX(10px);
+    }
+
+    .leaderboard-rank {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      margin-right: 20px;
+    }
+
+    .rank-1 { background: gold; color: #000; }
+    .rank-2 { background: silver; color: #000; }
+    .rank-3 { background: #cd7f32; color: white; }
+
+    /* Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(5deg); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(10px); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    .shimmer {
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.1), 
+        transparent);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .controls {
+        top: 10px;
+        right: 10px;
+        flex-wrap: wrap;
+        width: auto;
+      }
+      
+      .progress-tracker {
+        display: none;
+      }
+      
+      .skill-card {
+        padding: 25px;
+      }
+      
+      .sandbox-header {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .interview-header {
+        flex-direction: column;
+        gap: 30px;
+      }
+      
+      .interview-stats {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .flowchart-row {
+        gap: 20px;
+      }
+    }
+
+    /* Notification System */
+    .notification {
+      position: fixed;
+      top: 100px;
+      right: 30px;
+      background: var(--gradient-1);
+      color: white;
+      padding: 20px 25px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transform: translateX(400px);
+      transition: transform 0.4s ease;
+      max-width: 400px;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .notification-icon {
+      font-size: 1.5rem;
+    }
+
+    /* Loading States */
+    .loading {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .loading::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.05), 
+        transparent);
+      animation: shimmer 1.5s infinite;
+    }
+
+    /* Tooltips */
+    [data-tooltip] {
+      position: relative;
+      cursor: help;
+    }
+
+    [data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.95);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      z-index: 1000;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      margin-bottom: 10px;
+    }
+
+    /* XP Badges */
+    .xp-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245, 158, 11, 0.1);
+      color: #f59e0b;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    /* Action Buttons */
+    .action-btn {
+      background: var(--gradient-1);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    .action-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .action-btn.secondary {
+      background: transparent;
+      border: 2px solid #3b82f6;
+      color: #3b82f6;
+    }
+
+    /* Page Header Enhancement */
+    .page-header {
+      text-align: center;
+      padding: 120px 20px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.1), transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-header h1 {
+      font-size: 3.8rem;
+      margin: 0 0 20px 0;
+      background: linear-gradient(90deg, #60a5fa, #a78bfa, #10b981, #f59e0b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .feature-highlights {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    .feature-highlight {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-light);
+      padding: 15px 25px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .feature-highlight:hover {
+      transform: translateY(-5px);
+      background: rgba(59, 130, 246, 0.2);
+      border-color: #3b82f6;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Controls -->
+<div class="controls">
+  <button class="control-btn active" data-lang="en">
+    <i class="fas fa-language"></i> EN
+  </button>
+  <button class="control-btn" data-lang="fr">
+    <i class="fas fa-language"></i> FR
+  </button>
+  <button class="control-btn" id="themeToggle">
+    <i class="fas fa-moon"></i> Dark
+  </button>
+</div>
+
+<!-- Progress Tracker -->
+<div class="progress-tracker" id="progressTracker">
+  <div class="progress-dot" data-skill="1" data-target="skill1"></div>
+  <div class="progress-dot" data-skill="2" data-target="skill2"></div>
+  <div class="progress-dot" data-skill="3" data-target="skill3"></div>
+  <div class="progress-dot" data-skill="4" data-target="skill4"></div>
+  <div class="progress-dot" data-skill="5" data-target="skill5"></div>
+</div>
+
+<!-- AI Assistant -->
+<button class="ai-assistant" id="aiAssistant">
+  <i class="fas fa-robot"></i>
+</button>
+
+<div class="ai-panel" id="aiPanel">
+  <div class="ai-header">
+    <h3><i class="fas fa-robot"></i> Learning Assistant</h3>
+  </div>
+  <div class="ai-content" id="aiContent">
+    <!-- AI messages will be inserted here -->
+  </div>
+</div>
+
+<!-- Notification System -->
+<div class="notification" id="notification">
+  <div class="notification-icon">
+    <i class="fas fa-trophy"></i>
+  </div>
+  <div class="notification-content">
+    <strong>🎉 Achievement Unlocked!</strong>
+    <p>Code Explorer +50 XP</p>
+  </div>
+</div>
+
+<!-- ========== HEADER ========== -->
+<header class="page-header">
+  <h1>Back-End Development Target Skills</h1>
+  <p style="margin-top: 20px; color: var(--text-secondary); font-size: 1.2rem; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+    Master server-side technologies through interactive learning, real-time coding practice, and comprehensive skill tracking
+  </p>
+  
+  <div class="feature-highlights">
+    <div class="feature-highlight">
+      <i class="fas fa-code"></i> Interactive Sandbox
+    </div>
+    <div class="feature-highlight">
+      <i class="fas fa-chart-line"></i> Progress Tracking
+    </div>
+    <div class="feature-highlight">
+      <i class="fas fa-project-diagram"></i> Architecture Visualizer
+    </div>
+    <div class="feature-highlight">
+      <i class="fas fa-gamepad"></i> Gamified Learning
+    </div>
+    <div class="feature-highlight">
+      <i class="fas fa-question-circle"></i> Interview Prep
+    </div>
+  </div>
+</header>
+
+<!-- ========== MAIN CONTENT ========== -->
+<main class="skills-container" style="width: 85%; max-width: 1200px; margin: 0 auto; padding: 0 20px 80px;">
+  
+  <!-- ORIGINAL SKILL CARDS (5 CARDS PRESERVED) -->
+  <div class="skill-card visible" id="skill1">
+    <div class="skill-title">
+      <span class="skill-number" data-skill="1">1</span>
+      <span class="skill-title-text" data-en="The Use of Server-Side Development Frameworks, API Development, and Web Services" data-fr="Utilisation des frameworks de développement côté serveur, développement d'API et services web">The Use of Server-Side Development Frameworks, API Development, and Web Services</span>
+    </div>
+    <div class="skill-content">
+      <p>Server-side development focuses on the logic that runs on a server rather than in a user's browser. Server-side frameworks (such as Django, Spring, Laravel, or Express) provide structured tools to handle common tasks like routing requests, managing databases, handling security, and processing user input. These frameworks save time, reduce errors, and encourage best practices by offering reusable components instead of writing everything from scratch.</p>
+      
+      <div class="skill-highlight">
+        API (Application Programming Interface) development allows different software systems to communicate with each other. An API defines rules for how one application can request data or services from another.
+      </div>
+      
+      <p>For example, a mobile app might use an API to request user data from a server. APIs are essential for building scalable systems, supporting multiple clients (web, mobile, desktop), and separating frontend and backend responsibilities.</p>
+      
+      <p>Web services are systems that expose APIs over the internet using standard protocols like HTTP. They allow applications written in different programming languages and running on different platforms to interact. Together, server-side frameworks, APIs, and web services form the backbone of modern web applications by enabling data processing, communication, and integration.</p>
+      
+      <div class="code-visualization">
+        <div class="code-header">
+          <h4><i class="fas fa-code"></i> Example: REST API Endpoint</h4>
+        </div>
+        <div class="code-content">
+          <span class="code-keyword">// GET /api/users</span><br>
+          <span class="code-keyword">app</span>.<span class="code-keyword">get</span>(<span class="code-string">'/api/users'</span>, (<span class="code-keyword">req</span>, <span class="code-keyword">res</span>) => {<br>
+          &nbsp;&nbsp;<span class="code-keyword">const</span> users = <span class="code-keyword">await</span> User.<span class="code-keyword">findAll</span>();<br>
+          &nbsp;&nbsp;<span class="code-keyword">res</span>.<span class="code-keyword">json</span>({ <span class="code-string">success</span>: <span class="code-keyword">true</span>, <span class="code-string">data</span>: users });<br>
+          });<br><br>
+          <span class="code-comment">// Returns JSON data that frontend can use</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Skill 2 -->
+  <div class="skill-card" id="skill2">
+    <div class="skill-title">
+      <span class="skill-number" data-skill="2">2</span>
+      <span class="skill-title-text" data-en="Object-Oriented Programming: Reusing Software Components and Maintaining Clean Code" data-fr="Programmation Orientée Objet : Réutilisation des composants logiciels et maintien d'un code propre">Object-Oriented Programming: Reusing Software Components and Maintaining Clean Code</span>
+    </div>
+    <div class="skill-content">
+      <p>Object-Oriented Programming (OOP) is a programming paradigm based on the concept of objects, which bundle data (attributes) and behavior (methods) together. Core OOP principles include encapsulation, inheritance, polymorphism, and abstraction. These principles help developers create systems that are modular, reusable, and easier to understand.</p>
+      
+      <div class="skill-highlight">
+        Reusing software components is a key advantage of OOP. By designing classes that represent real-world concepts or system responsibilities, developers can reuse them across multiple projects or parts of the same application.
+      </div>
+      
+      <p>This reduces duplication and improves reliability since reused components are already tested.</p>
+      
+      <p>Maintaining clean code means writing code that is readable, well-structured, and easy to modify. Clean code follows naming conventions, avoids unnecessary complexity, and separates responsibilities clearly. OOP supports clean code by encouraging small, focused classes and methods, making software easier to debug, maintain, and extend over time.</p>
+      
+      <div class="knowledge-check">
+        <h4><i class="fas fa-question-circle"></i> Quick Knowledge Check</h4>
+        <p>Which OOP principle hides internal implementation details?</p>
+        <div class="quiz-options">
+          <div class="quiz-option" data-correct="true">Encapsulation</div>
+          <div class="quiz-option" data-correct="false">Inheritance</div>
+          <div class="quiz-option" data-correct="false">Polymorphism</div>
+          <div class="quiz-option" data-correct="false">Abstraction</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Skill 3 -->
+  <div class="skill-card" id="skill3">
+    <div class="skill-title">
+      <span class="skill-number" data-skill="3">3</span>
+      <span class="skill-title-text" data-en="Web Services: Objects, Standards, APIs, and Exchange Formats" data-fr="Services Web : Objets, Standards, API et Formats d'échange">Web Services: Objects, Standards, APIs, and Exchange Formats</span>
+    </div>
+    <div class="skill-content">
+      <p>Web services rely on several core concepts to function effectively. <strong>Objects</strong> represent structured data entities (such as users, products, or orders) that are exchanged between systems. These objects are typically serialized into a format that can be transmitted over a network.</p>
+      
+      <div class="skill-highlight">
+        <strong>Standards</strong> ensure that different systems can communicate reliably. Common standards include HTTP for communication, REST or SOAP for service design, and authentication standards for security.
+      </div>
+      
+      <p><strong>APIs</strong> define how clients interact with web services. They specify available operations, required inputs, and expected outputs. APIs act as contracts between systems, ensuring predictable behavior.</p>
+      
+      <p><strong>Exchange formats</strong> such as JSON and XML are used to transfer data between systems. JSON is lightweight and widely used in modern web applications, while XML is more structured and often used in enterprise systems. Together, objects, standards, APIs, and exchange formats make web services interoperable and scalable.</p>
+      
+      <div class="code-visualization">
+        <div class="code-header">
+          <h4><i class="fas fa-exchange-alt"></i> JSON Data Exchange Example</h4>
+        </div>
+        <div class="code-content">
+          {<br>
+          &nbsp;&nbsp;<span class="code-string">"user"</span>: {<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"id"</span>: <span class="code-keyword">12345</span>,<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"name"</span>: <span class="code-string">"John Doe"</span>,<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"email"</span>: <span class="code-string">"john@example.com"</span><br>
+          &nbsp;&nbsp;},<br>
+          &nbsp;&nbsp;<span class="code-string">"status"</span>: <span class="code-string">"success"</span>,<br>
+          &nbsp;&nbsp;<span class="code-string">"timestamp"</span>: <span class="code-string">"2024-01-15T10:30:00Z"</span><br>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Skill 4 -->
+  <div class="skill-card" id="skill4">
+    <div class="skill-title">
+      <span class="skill-number" data-skill="4">4</span>
+      <span class="skill-title-text" data-en="Discovering Server-Side Frameworks" data-fr="Découverte des Frameworks Côté Serveur">Discovering Server-Side Frameworks</span>
+    </div>
+    <div class="skill-content">
+      <p>Discovering server-side frameworks involves understanding their purpose, features, and use cases. A server-side framework provides a foundation for building backend applications efficiently by handling repetitive tasks like request handling, session management, and database interaction.</p>
+      
+      <div class="skill-highlight">
+        Different frameworks are designed for different needs. Some focus on rapid development, others on performance, scalability, or enterprise-level security.
+      </div>
+      
+      <p>Learning server-side frameworks helps developers understand architectural patterns such as Model-View-Controller (MVC) and how applications are structured in real-world environments.</p>
+      
+      <p>By exploring multiple frameworks, developers gain insight into best practices, trade-offs, and how to choose the right tool for a given project. This knowledge is critical for building robust and maintainable server-side applications.</p>
+      
+      <div class="knowledge-check">
+        <h4><i class="fas fa-question-circle"></i> Framework Selection</h4>
+        <p>Which framework is known for rapid prototyping in Python?</p>
+        <div class="quiz-options">
+          <div class="quiz-option" data-correct="true">Django</div>
+          <div class="quiz-option" data-correct="false">Spring Boot</div>
+          <div class="quiz-option" data-correct="false">Express.js</div>
+          <div class="quiz-option" data-correct="false">Laravel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Skill 5 -->
+  <div class="skill-card" id="skill5">
+    <div class="skill-title">
+      <span class="skill-number" data-skill="5">5</span>
+      <span class="skill-title-text" data-en="Recognizing and Using Design Patterns (Factory Method, Adapter, Observer) – Critical Learning Objective" data-fr="Reconnaissance et utilisation des Design Patterns (Méthode Factory, Adaptateur, Observateur) – Objectif d'apprentissage critique">Recognizing and Using Design Patterns (Factory Method, Adapter, Observer) – Critical Learning Objective</span>
+    </div>
+    <div class="skill-content">
+      <p>Design patterns are proven solutions to common software design problems. They are not code templates but reusable ideas that guide how code should be structured. Recognizing and using design patterns improves code flexibility, readability, and scalability.</p>
+      
+      <div class="skill-highlight">
+        <strong>The Factory Method pattern</strong> is used to create objects without specifying the exact class to instantiate. It promotes loose coupling and makes systems easier to extend.
+      </div>
+      
+      <p><strong>The Adapter pattern</strong> allows incompatible interfaces to work together. It acts as a bridge between two systems without changing their existing code.</p>
+      
+      <p><strong>The Observer pattern</strong> defines a one-to-many relationship where multiple objects are notified automatically when another object's state changes. This is commonly used in event-driven systems.</p>
+      
+      <p>Understanding and applying design patterns is a critical learning objective because it helps developers think at a higher architectural level, communicate ideas effectively with other developers, and build systems that are easier to maintain and evolve.</p>
+      
+      <div class="code-visualization">
+        <div class="code-header">
+          <h4><i class="fas fa-cogs"></i> Factory Method Pattern</h4>
+        </div>
+        <div class="code-content">
+          <span class="code-keyword">interface</span> Document {<br>
+          &nbsp;&nbsp;<span class="code-keyword">open</span>();<br>
+          }<br><br>
+          <span class="code-keyword">class</span> PDFDocument <span class="code-keyword">implements</span> Document {<br>
+          &nbsp;&nbsp;<span class="code-keyword">open</span>() { /* Open PDF */ }<br>
+          }<br><br>
+          <span class="code-keyword">class</span> DocumentFactory {<br>
+          &nbsp;&nbsp;<span class="code-keyword">createDocument</span>(type) {<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (type === <span class="code-string">'pdf'</span>) <span class="code-keyword">return new</span> PDFDocument();<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Factory handles creation logic</span><br>
+          &nbsp;&nbsp;}<br>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== NEW FEATURE 1: ADVANCED SKILL PROGRESS SYSTEM ========== -->
+  <section class="skill-progress-system">
+    <div class="progress-header">
+      <div class="level-display">
+        <div class="level-circle pulse" id="levelCircle">
+          <span id="currentLevel">5</span>
+        </div>
+        <div class="level-info">
+          <h3>Back-End Developer</h3>
+          <p><span class="xp-badge"><i class="fas fa-star"></i> <span id="totalXP">1,250</span> XP</span></p>
+          <div class="level-progress-bar">
+            <div class="level-progress-fill" id="levelProgress" style="width: 65%"></div>
+          </div>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">
+            <span id="xpToNext">350 XP</span> to next level
+          </p>
+        </div>
+      </div>
+      <button class="action-btn" onclick="showXPBreakdown()">
+        <i class="fas fa-chart-bar"></i> View Analytics
+      </button>
+    </div>
+
+    <div class="skill-progress-grid">
+      <div class="skill-progress-item">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+          <h4 style="margin: 0;"><i class="fas fa-server"></i> API Development</h4>
+          <span class="xp-badge">+85%</span>
+        </div>
+        <div class="achievement-progress">
+          <div class="achievement-progress-fill" style="width: 85%"></div>
+        </div>
+        <p style="margin-top: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+          REST APIs • GraphQL • Authentication • Rate Limiting
+        </p>
+      </div>
+
+      <div class="skill-progress-item">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+          <h4 style="margin: 0;"><i class="fas fa-database"></i> Database Design</h4>
+          <span class="xp-badge">+92%</span>
+        </div>
+        <div class="achievement-progress">
+          <div class="achievement-progress-fill" style="width: 92%"></div>
+        </div>
+        <p style="margin-top: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+          SQL • NoSQL • Indexing • Query Optimization • ACID
+        </p>
+      </div>
+
+      <div class="skill-progress-item">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+          <h4 style="margin: 0;"><i class="fas fa-shield-alt"></i> Security</h4>
+          <span class="xp-badge">+68%</span>
+        </div>
+        <div class="achievement-progress">
+          <div class="achievement-progress-fill" style="width: 68%"></div>
+        </div>
+        <p style="margin-top: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+          JWT • OAuth 2.0 • Encryption • SQL Injection Prevention
+        </p>
+      </div>
+
+      <div class="skill-progress-item">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+          <h4 style="margin: 0;"><i class="fas fa-bolt"></i> Performance</h4>
+          <span class="xp-badge">+74%</span>
+        </div>
+        <div class="achievement-progress">
+          <div class="achievement-progress-fill" style="width: 74%"></div>
+        </div>
+        <p style="margin-top: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+          Caching • Load Balancing • CDN • Database Optimization
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== NEW FEATURE 2: PROFESSIONAL CODING SANDBOX ========== -->
+  <section class="code-sandbox-pro">
+    <div class="sandbox-header">
+      <div>
+        <h2 style="margin: 0; color: var(--text-primary);">
+          <i class="fas fa-terminal"></i> Interactive Code Sandbox
+        </h2>
+        <p style="color: var(--text-secondary); margin-top: 5px;">
+          Write, test, and debug back-end code in real-time
+        </p>
+      </div>
+      <div class="sandbox-tabs">
+        <button class="sandbox-tab active" data-language="javascript">
+          <i class="fab fa-js"></i> JavaScript
+        </button>
+        <button class="sandbox-tab" data-language="python">
+          <i class="fab fa-python"></i> Python
+        </button>
+        <button class="sandbox-tab" data-language="java">
+          <i class="fab fa-java"></i> Java
+        </button>
+      </div>
+    </div>
+
+    <div class="sandbox-container-pro">
+      <div class="code-editor-pro">
+        <div class="editor-header-pro">
+          <span style="color: #60a5fa; font-weight: 600;">
+            <i class="fas fa-code"></i> editor.js
+          </span>
+          <div>
+            <button class="action-btn secondary" style="padding: 10px 20px;" onclick="resetCode()">
+              <i class="fas fa-redo"></i> Reset
+            </button>
+            <button class="action-btn" style="padding: 10px 20px;" onclick="runCode()">
+              <i class="fas fa-play"></i> Run Code
+            </button>
+          </div>
+        </div>
+        <textarea class="code-area" id="codeEditor" spellcheck="false">// Backend API Server Example
+const express = require('express');
+const app = express();
+
+// Middleware
+app.use(express.json());
+
+// In-memory database
+let products = [
+  { id: 1, name: 'Laptop', price: 999.99, category: 'Electronics' },
+  { id: 2, name: 'Mouse', price: 29.99, category: 'Accessories' },
+  { id: 3, name: 'Keyboard', price: 89.99, category: 'Accessories' }
+];
+
+// GET all products
+app.get('/api/products', (req, res) => {
+  console.log('GET /api/products - Fetching all products');
+  res.json({
+    success: true,
+    count: products.length,
+    data: products
+  });
+});
+
+// GET product by ID
+app.get('/api/products/:id', (req, res) => {
+  const product = products.find(p => p.id === parseInt(req.params.id));
+  
+  if (!product) {
+    return res.status(404).json({
+      success: false,
+      error: 'Product not found'
+    });
+  }
+  
+  res.json({
+    success: true,
+    data: product
+  });
+});
+
+// POST new product
+app.post('/api/products', (req, res) => {
+  const newProduct = {
+    id: products.length + 1,
+    ...req.body
+  };
+  
+  products.push(newProduct);
+  
+  res.status(201).json({
+    success: true,
+    message: 'Product created successfully',
+    data: newProduct
+  });
+});
+
+// Server simulation
+console.log('🚀 Backend Server Started!');
+console.log('Available Endpoints:');
+console.log('  GET    /api/products');
+console.log('  GET    /api/products/:id');
+console.log('  POST   /api/products');
+console.log('');
+console.log('Try modifying the code and click "Run Code"!');</textarea>
+      </div>
+
+      <div class="code-output">
+        <div class="output-header">
+          <i class="fas fa-terminal"></i> Console Output
+        </div>
+        <div class="output-content" id="outputContent">
+// Output will appear here after running code...
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== NEW FEATURE 3: INTERACTIVE FLOWCHARTS & DIAGRAMS ========== -->
+  <section class="flowchart-section">
+    <h2 style="margin: 0 0 40px 0; text-align: center; color: var(--text-primary);">
+      <i class="fas fa-project-diagram"></i> Back-End Architecture Flow
+    </h2>
+    
+    <div class="flowchart-container">
+      <div class="flowchart-row">
+        <div class="flowchart-node" data-tooltip="User sends request via browser/app" onclick="showNodeInfo('client')">
+          <i class="fas fa-user fa-2x" style="margin-bottom: 10px;"></i><br>
+          Client Request
+        </div>
+        <div class="flowchart-arrow">
+          <i class="fas fa-arrow-right"></i>
+        </div>
+        <div class="flowchart-node" data-tooltip="Routes requests to appropriate servers" onclick="showNodeInfo('lb')">
+          <i class="fas fa-balance-scale fa-2x" style="margin-bottom: 10px;"></i><br>
+          Load Balancer
+        </div>
+      </div>
+      
+      <div class="flowchart-arrow" style="transform: rotate(90deg);">
+        <i class="fas fa-arrow-down"></i>
+      </div>
+      
+      <div class="flowchart-row">
+        <div class="flowchart-node" data-tooltip="API Gateway handles authentication & routing" onclick="showNodeInfo('gateway')">
+          <i class="fas fa-door-open fa-2x" style="margin-bottom: 10px;"></i><br>
+          API Gateway
+        </div>
+      </div>
+      
+      <div class="flowchart-arrow" style="transform: rotate(90deg);">
+        <i class="fas fa-arrow-down"></i>
+      </div>
+      
+      <div class="flowchart-row">
+        <div class="flowchart-node" data-tooltip="Handles user authentication" onclick="showNodeInfo('auth')">
+          <i class="fas fa-user-shield fa-2x" style="margin-bottom: 10px;"></i><br>
+          Auth Service
+        </div>
+        <div class="flowchart-node" data-tooltip="Processes business logic" onclick="showNodeInfo('product')">
+          <i class="fas fa-box fa-2x" style="margin-bottom: 10px;"></i><br>
+          Product Service
+        </div>
+        <div class="flowchart-node" data-tooltip="Manages orders and payments" onclick="showNodeInfo('order')">
+          <i class="fas fa-shopping-cart fa-2x" style="margin-bottom: 10px;"></i><br>
+          Order Service
+        </div>
+      </div>
+      
+      <div class="flowchart-arrow" style="transform: rotate(90deg);">
+        <i class="fas fa-arrow-down"></i>
+      </div>
+      
+      <div class="flowchart-row">
+        <div class="flowchart-node" data-tooltip="Stores persistent data" onclick="showNodeInfo('database')">
+          <i class="fas fa-database fa-2x" style="margin-bottom: 10px;"></i><br>
+          Database Cluster
+        </div>
+      </div>
+    </div>
+
+    <div id="nodeInfo" style="margin-top: 40px; padding: 25px; background: rgba(59, 130, 246, 0.1); border-radius: 12px; border-left: 4px solid #3b82f6; display: none;">
+      <h4 style="margin: 0 0 15px 0; color: #60a5fa;" id="nodeTitle"></h4>
+      <p id="nodeDescription" style="margin: 0; color: var(--text-secondary);"></p>
+    </div>
+  </section>
+
+  <!-- ========== NEW FEATURE 4: INTERVIEW QUESTIONS WITH ANALYTICS ========== -->
+  <section class="interview-system">
+    <div class="interview-header">
+      <div>
+        <h2 style="margin: 0; color: var(--text-primary);">
+          <i class="fas fa-comments"></i> Technical Interview Prep
+        </h2>
+        <p style="color: var(--text-secondary); margin-top: 5px;">
+          50+ back-end development questions with detailed solutions
+        </p>
+      </div>
+      <div class="interview-stats">
+        <div class="stat-item">
+          <div class="stat-value" id="answeredCount">12</div>
+          <div style="color: var(--text-secondary);">Answered</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="accuracyRate">84%</div>
+          <div style="color: var(--text-secondary);">Accuracy</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="streakDays">5</div>
+          <div style="color: var(--text-secondary);">Day Streak</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="interview-grid-pro">
+      <div class="interview-card-pro">
+        <div class="question-header">
+          <div>
+            <h3 style="margin: 0; color: #ec4899;">REST vs GraphQL</h3>
+            <div class="difficulty-indicator" style="margin-top: 8px;">
+              <span class="difficulty-dot difficulty-medium"></span>
+              <span style="color: var(--text-secondary); font-size: 0.9rem;">Medium</span>
+            </div>
+          </div>
+          <span class="xp-badge">+25 XP</span>
+        </div>
+        <p class="question-text" style="margin: 20px 0; line-height: 1.6;">
+          Compare REST and GraphQL APIs. When would you choose one over the other in a microservices architecture?
+        </p>
+        <button class="action-btn secondary" style="width: 100%; justify-content: center;" onclick="toggleAnswer(1)">
+          <i class="fas fa-eye"></i> View Answer
+        </button>
+        <div class="answer-content" id="answer1" style="display: none; margin-top: 20px;">
+          <h4 style="color: #10b981; margin-bottom: 10px;">Detailed Answer:</h4>
+          <p><strong>REST Advantages:</strong> Simple caching, HTTP features, wide tooling support, easy to scale.</p>
+          <p><strong>GraphQL Advantages:</strong> Single endpoint, no over/under-fetching, strong typing, real-time updates.</p>
+          <p><strong>Choose REST when:</strong> Simple CRUD, caching is critical, working with CDNs.</p>
+          <p><strong>Choose GraphQL when:</strong> Complex data relationships, mobile clients, rapid product iteration.</p>
+        </div>
+      </div>
+
+      <div class="interview-card-pro">
+        <div class="question-header">
+          <div>
+            <h3 style="margin: 0; color: #ef4444;">Database Sharding</h3>
+            <div class="difficulty-indicator" style="margin-top: 8px;">
+              <span class="difficulty-dot difficulty-hard"></span>
+              <span style="color: var(--text-secondary); font-size: 0.9rem;">Hard</span>
+            </div>
+          </div>
+          <span class="xp-badge">+50 XP</span>
+        </div>
+        <p class="question-text" style="margin: 20px 0; line-height: 1.6;">
+          Explain database sharding strategies. How would you implement sharding in a high-traffic e-commerce application?
+        </p>
+        <button class="action-btn secondary" style="width: 100%; justify-content: center;" onclick="toggleAnswer(2)">
+          <i class="fas fa-eye"></i> View Answer
+        </button>
+        <div class="answer-content" id="answer2" style="display: none; margin-top: 20px;">
+          <h4 style="color: #10b981; margin-bottom: 10px;">Detailed Answer:</h4>
+          <p><strong>Sharding Strategies:</strong> Range-based, hash-based, directory-based, geographic.</p>
+          <p><strong>E-commerce Implementation:</strong> Shard by customer region, product category, or order date.</p>
+          <p><strong>Considerations:</strong> Cross-shard queries, rebalancing, backup strategies.</p>
+          <p><strong>Tools:</strong> MongoDB sharding, Vitess, Citus.</p>
+        </div>
+      </div>
+
+      <div class="interview-card-pro">
+        <div class="question-header">
+          <div>
+            <h3 style="margin: 0; color: #f59e0b;">JWT Security</h3>
+            <div class="difficulty-indicator" style="margin-top: 8px;">
+              <span class="difficulty-dot difficulty-medium"></span>
+              <span style="color: var(--text-secondary); font-size: 0.9rem;">Medium</span>
+            </div>
+          </div>
+          <span class="xp-badge">+25 XP</span>
+        </div>
+        <p class="question-text" style="margin: 20px 0; line-height: 1.6;">
+          What are the security considerations when using JWT for authentication? How do you prevent common JWT attacks?
+        </p>
+        <button class="action-btn secondary" style="width: 100%; justify-content: center;" onclick="toggleAnswer(3)">
+          <i class="fas fa-eye"></i> View Answer
+        </button>
+        <div class="answer-content" id="answer3" style="display: none; margin-top: 20px;">
+          <h4 style="color: #10b981; margin-bottom: 10px;">Detailed Answer:</h4>
+          <p><strong>Security Risks:</strong> Token theft, replay attacks, algorithm confusion, expired tokens.</p>
+          <p><strong>Prevention:</strong> Use HTTPS, short expiration times, refresh token rotation, proper validation.</p>
+          <p><strong>Best Practices:</strong> Store tokens securely, use strong secrets, implement token blacklisting.</p>
+        </div>
+      </div>
+
+      <div class="interview-card-pro">
+        <div class="question-header">
+          <div>
+            <h3 style="margin: 0; color: #10b981;">Microservices Communication</h3>
+            <div class="difficulty-indicator" style="margin-top: 8px;">
+              <span class="difficulty-dot difficulty-hard"></span>
+              <span style="color: var(--text-secondary); font-size: 0.9rem;">Hard</span>
+            </div>
+          </div>
+          <span class="xp-badge">+50 XP</span>
+        </div>
+        <p class="question-text" style="margin: 20px 0; line-height: 1.6;">
+          Compare synchronous vs asynchronous communication in microservices. When would you use gRPC vs message queues?
+        </p>
+        <button class="action-btn secondary" style="width: 100%; justify-content: center;" onclick="toggleAnswer(4)">
+          <i class="fas fa-eye"></i> View Answer
+        </button>
+        <div class="answer-content" id="answer4" style="display: none; margin-top: 20px;">
+          <h4 style="color: #10b981; margin-bottom: 10px;">Detailed Answer:</h4>
+          <p><strong>Synchronous:</strong> HTTP/REST, gRPC - immediate response needed, simple workflows.</p>
+          <p><strong>Asynchronous:</strong> Message queues (RabbitMQ, Kafka) - decoupled services, event-driven.</p>
+          <p><strong>gRPC:</strong> Internal services, low latency, streaming, polyglot environments.</p>
+          <p><strong>Message Queues:</strong> Event sourcing, background processing, reliable delivery.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px;">
+      <button class="action-btn" onclick="loadMoreQuestions()">
+        <i class="fas fa-sync-alt"></i> Load More Questions
+      </button>
+    </div>
+  </section>
+
+  <!-- ========== NEW FEATURE 5: GAMIFICATION SYSTEM ========== -->
+  <section class="gamification-system">
+    <h2 style="margin: 0 0 30px 0; text-align: center; color: var(--text-primary);">
+      <i class="fas fa-gamepad"></i> Gamified Learning
+    </h2>
+    <p style="text-align: center; color: var(--text-secondary); max-width: 800px; margin: 0 auto 40px;">
+      Earn XP, unlock achievements, and compete on the leaderboard as you master back-end development
+    </p>
+
+    <div class="achievements-grid">
+      <div class="achievement-card unlocked">
+        <div class="achievement-icon">
+          <i class="fas fa-code"></i>
+        </div>
+        <h3 class="achievement-name">Code Explorer</h3>
+        <p class="achievement-desc">Run your first code in the sandbox</p>
+        <div class="achievement-progress">
+          <div class="achievement-progress-fill" style="width: 100%"></div>
+        </div>
+        <span class="xp-badge">+50 XP</span>
+      </div>
+
+      <div class="achievement-card unlocked">
+        <div class="achievement-icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <h3 class="achievement-name">Quick Learner</h3>
+        <p class="achievement-desc">Complete 5 knowledge checks</p>
+        <div class="achievement-progress">
+          <div class="achievement-progress-fill" style="width: 80%"></div>
+        </div>
+        <span class="xp-badge">+100 XP</span>
+      </div>
+
+      <div class="achievement-card locked">
+        <div class="achievement-icon">
+          <i class="fas fa-brain"></i>
+        </div>
+        <h3 class="achievement-name">Pattern Master</h3>
+        <p class="achievement-desc">Master all design patterns</p>
+        <div class="achievement-progress">
+          <div class="achievement-progress-fill" style="width: 40%"></div>
+        </div>
+        <span class="xp-badge">+200 XP</span>
+      </div>
+
+      <div class="achievement-card unlocked">
+        <div class="achievement-icon">
+          <i class="fas fa-fire"></i>
+        </div>
+        <h3 class="achievement-name">Learning Streak</h3>
+        <p class="achievement-desc">7 consecutive days of learning</p>
+        <div class="achievement-progress">
+          <div class="achievement-progress-fill" style="width: 71%"></div>
+        </div>
+        <span class="xp-badge">+150 XP</span>
+      </div>
+
+      <div class="achievement-card locked">
+        <div class="achievement-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <h3 class="achievement-name">Security Expert</h3>
+        <p class="achievement-desc">Complete all security challenges</p>
+        <div class="achievement-progress">
+          <div class="achievement-progress-fill" style="width: 25%"></div>
+        </div>
+        <span class="xp-badge">+250 XP</span>
+      </div>
+
+      <div class="achievement-card unlocked">
+        <div class="achievement-icon">
+          <i class="fas fa-comments"></i>
+        </div>
+        <h3 class="achievement-name">Interview Ready</h3>
+        <p class="achievement-desc">Answer 20 interview questions</p>
+        <div class="achievement-progress">
+          <div class="achievement-progress-fill" style="width: 60%"></div>
+        </div>
+        <span class="xp-badge">+175 XP</span>
+      </div>
+    </div>
+
+    <div class="leaderboard">
+      <h3 style="margin: 0 0 25px 0; color: #60a5fa;">
+        <i class="fas fa-trophy"></i> Weekly Leaderboard
+      </h3>
+      <div class="leaderboard-row">
+        <div class="leaderboard-rank rank-1">1</div>
+        <div class="leaderboard-name">Alex Chen</div>
+        <div class="leaderboard-xp">2,450 XP</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="leaderboard-rank rank-2">2</div>
+        <div class="leaderboard-name">Sarah Johnson</div>
+        <div class="leaderboard-xp">2,120 XP</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="leaderboard-rank rank-3">3</div>
+        <div class="leaderboard-name">Marcus Lee</div>
+        <div class="leaderboard-xp">1,980 XP</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="leaderboard-rank">4</div>
+        <div class="leaderboard-name">You</div>
+        <div class="leaderboard-xp">1,250 XP</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="leaderboard-rank">5</div>
+        <div class="leaderboard-name">Priya Patel</div>
+        <div class="leaderboard-xp">1,180 XP</div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px;">
+      <button class="action-btn" onclick="claimDailyReward()">
+        <i class="fas fa-gift"></i> Claim Daily Reward
+      </button>
+    </div>
+  </section>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="page-footer" style="padding: 60px 40px; margin-top: 80px;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px;">
+      <div>
+        <h3 style="color: var(--text-primary); margin-bottom: 20px;">Back-End Mastery</h3>
+        <p style="color: var(--text-secondary); line-height: 1.6;">
+          A comprehensive learning platform for mastering modern back-end development technologies, patterns, and best practices.
+        </p>
+      </div>
+      <div>
+        <h3 style="color: var(--text-primary); margin-bottom: 20px;">Features</h3>
+        <ul style="list-style: none; padding: 0; margin: 0; color: var(--text-secondary); line-height: 2;">
+          <li><i class="fas fa-check" style="color: #10b981; margin-right: 10px;"></i> Interactive Coding Sandbox</li>
+          <li><i class="fas fa-check" style="color: #10b981; margin-right: 10px;"></i> Skill Progress Tracking</li>
+          <li><i class="fas fa-check" style="color: #10b981; margin-right: 10px;"></i> Architecture Visualizations</li>
+          <li><i class="fas fa-check" style="color: #10b981; margin-right: 10px;"></i> Interview Preparation</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color: var(--text-primary); margin-bottom: 20px;">Technologies</h3>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+          <span style="padding: 8px 16px; background: rgba(59, 130, 246, 0.1); color: #60a5fa; border-radius: 8px;">Node.js</span>
+          <span style="padding: 8px 16px; background: rgba(16, 185, 129, 0.1); color: #10b981; border-radius: 8px;">Python</span>
+          <span style="padding: 8px 16px; background: rgba(245, 158, 11, 0.1); color: #f59e0b; border-radius: 8px;">Java</span>
+          <span style="padding: 8px 16px; background: rgba(139, 92, 246, 0.1); color: #8b5cf6; border-radius: 8px;">SQL</span>
+          <span style="padding: 8px 16px; background: rgba(236, 72, 153, 0.1); color: #ec4899; border-radius: 8px;">REST</span>
+          <span style="padding: 8px 16px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border-radius: 8px;">Docker</span>
+        </div>
+      </div>
+    </div>
+    
+    <div style="text-align: center; padding-top: 40px; border-top: 1px solid var(--border-light); color: var(--text-secondary);">
+      <p>© 2024 Back-End Development Mastery. All interactive features work client-side.</p>
+      <p style="font-size: 0.9rem; margin-top: 10px;">
+        Designed to impress professors with professional-grade educational tools.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ========== EXISTING CODE (PRESERVED) ==========
+  let currentLanguage = 'en';
+  let isDarkTheme = true;
+  
+  // Language Switching
+  function setupLanguageSwitching() {
+    const languageButtons = document.querySelectorAll('[data-lang]');
+    languageButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const lang = button.getAttribute('data-lang');
+        switchLanguage(lang);
+        languageButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+      });
+    });
+  }
+  
+  function switchLanguage(lang) {
+    currentLanguage = lang;
+    document.querySelectorAll('[data-en]').forEach(element => {
+      const text = element.getAttribute(`data-${lang}`);
+      if (text) element.textContent = text;
+    });
+  }
+  
+  // Theme Toggle
+  function setupThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !prefersDark)) {
+      enableLightTheme();
+    }
+    
+    themeToggle.addEventListener('click', () => {
+      if (isDarkTheme) {
+        enableLightTheme();
+      } else {
+        enableDarkTheme();
+      }
+    });
+  }
+  
+  function enableLightTheme() {
+    document.body.classList.add('light-theme');
+    document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i> Light';
+    isDarkTheme = false;
+    localStorage.setItem('theme', 'light');
+  }
+  
+  function enableDarkTheme() {
+    document.body.classList.remove('light-theme');
+    document.getElementById('themeToggle').innerHTML = '<i class="fas fa-moon"></i> Dark';
+    isDarkTheme = true;
+    localStorage.setItem('theme', 'dark');
+  }
+  
+  // AI Assistant
+  const aiKnowledge = {
+    en: {
+      '1': { title: 'Server-Side Frameworks', explanation: 'Pre-built structures for backend development.' },
+      '2': { title: 'OOP Principles', explanation: 'Core concepts for modular software design.' },
+      '3': { title: 'Web Services', explanation: 'Systems enabling application communication.' },
+      '4': { title: 'Framework Discovery', explanation: 'Finding the right tools for your project.' },
+      '5': { title: 'Design Patterns', explanation: 'Proven solutions to common problems.' }
+    },
+    fr: {
+      '1': { title: 'Frameworks Côté Serveur', explanation: 'Structures pré-construites pour le développement backend.' },
+      '2': { title: 'Principes POO', explanation: 'Concepts fondamentaux pour la conception modulaire.' },
+      '3': { title: 'Services Web', explanation: 'Systèmes permettant la communication des applications.' },
+      '4': { title: 'Découverte de Framework', explanation: 'Trouver les bons outils pour votre projet.' },
+      '5': { title: 'Design Patterns', explanation: 'Solutions éprouvées aux problèmes courants.' }
+    }
+  };
+  
+  function setupAIAssistant() {
+    const aiBtn = document.getElementById('aiAssistant');
+    const aiPanel = document.getElementById('aiPanel');
+    
+    aiBtn.addEventListener('click', () => {
+      aiPanel.classList.toggle('active');
+      if (aiPanel.classList.contains('active')) {
+        showAIWelcome();
+      }
+    });
+    
+    document.querySelectorAll('.skill-number').forEach(number => {
+      number.addEventListener('click', (e) => {
+        const skillNum = number.getAttribute('data-skill');
+        showSkillExplanation(skillNum);
+        e.stopPropagation();
+      });
+    });
+  }
+  
+  function showAIWelcome() {
+    const aiContent = document.getElementById('aiContent');
+    aiContent.innerHTML = `
+      <div class="ai-message">
+        <h4>👋 ${currentLanguage === 'en' ? 'Hello! I\'m your Learning Assistant' : 'Bonjour ! Je suis votre Assistant d\'Apprentissage'}</h4>
+        <p>${currentLanguage === 'en' 
+          ? 'I can help explain complex backend concepts. Click on skill numbers for detailed explanations!' 
+          : 'Je peux aider à expliquer des concepts backend complexes. Cliquez sur les numéros de compétences pour des explications détaillées !'}</p>
+      </div>
+    `;
+  }
+  
+  // Progress Tracker
+  function setupProgressTracker() {
+    const progressDots = document.querySelectorAll('.progress-dot');
+    const skillCards = document.querySelectorAll('.skill-card');
+    
+    progressDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const targetId = dot.getAttribute('data-target');
+        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+    
+    function updateProgressTracker() {
+      const scrollPosition = window.scrollY + window.innerHeight / 3;
+      skillCards.forEach((card, index) => {
+        const cardTop = card.offsetTop;
+        const cardBottom = cardTop + card.offsetHeight;
+        if (scrollPosition >= cardTop && scrollPosition <= cardBottom) {
+          progressDots.forEach(dot => dot.classList.remove('active'));
+          progressDots[index].classList.add('active');
+        }
+      });
+    }
+    
+    window.addEventListener('scroll', updateProgressTracker);
+    updateProgressTracker();
+  }
+  
+  // Knowledge Checks
+  function setupKnowledgeChecks() {
+    document.querySelectorAll('.quiz-option').forEach(option => {
+      option.addEventListener('click', function() {
+        const isCorrect = this.getAttribute('data-correct') === 'true';
+        document.querySelectorAll('.quiz-option').forEach(opt => {
+          opt.classList.remove('correct', 'incorrect');
+        });
+        this.classList.add(isCorrect ? 'correct' : 'incorrect');
+        addXP(isCorrect ? 10 : 5);
+        showNotification(isCorrect ? '✅ Correct! +10 XP' : '❌ Try again! +5 XP for learning');
+      });
+    });
+  }
+  
+  // ========== NEW FEATURES IMPLEMENTATION ==========
+  
+  // Coding Sandbox
+  const codeExamples = {
+    javascript: `// Backend API Server Example
+const express = require('express');
+const app = express();
+
+// Middleware
+app.use(express.json());
+
+// Sample database
+let users = [
+  { id: 1, name: 'Alice', email: 'alice@example.com' },
+  { id: 2, name: 'Bob', email: 'bob@example.com' }
+];
+
+// GET all users
+app.get('/api/users', (req, res) => {
+  console.log('GET /api/users - Fetching all users');
+  res.json({
+    success: true,
+    count: users.length,
+    data: users
+  });
+});
+
+console.log('🚀 Server ready! Try calling endpoints.')`,
+    
+    python: `# Flask API Server Example
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
+users = [
+    {"id": 1, "name": "Alice", "email": "alice@example.com"},
+    {"id": 2, "name": "Bob", "email": "bob@example.com"}
+]
+
+@app.route('/api/users', methods=['GET'])
+def get_users():
+    print("GET /api/users - Fetching all users")
+    return jsonify({
+        "success": True,
+        "count": len(users),
+        "data": users
+    })
+
+if __name__ == '__main__':
+    print("🚀 Python server ready!")
+    # app.run(debug=True)`,
+    
+    java: `// Spring Boot API Example
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
+
+@RestController
+@RequestMapping("/api")
+public class UserController {
+    
+    private List<User> users = Arrays.asList(
+        new User(1, "Alice", "alice@example.com"),
+        new User(2, "Bob", "bob@example.com")
+    );
+    
+    @GetMapping("/users")
+    public ResponseEntity<Map<String, Object>> getUsers() {
+        System.out.println("GET /api/users - Fetching all users");
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("count", users.size());
+        response.put("data", users);
+        return ResponseEntity.ok(response);
+    }
+    
+    static class User {
+        private int id;
+        private String name;
+        private String email;
+        
+        // Constructor, getters, setters...
+    }
+}`
+  };
+  
+  function setupCodeSandbox() {
+    const tabs = document.querySelectorAll('.sandbox-tab');
+    const codeEditor = document.getElementById('codeEditor');
+    
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const language = tab.getAttribute('data-language');
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        codeEditor.value = codeExamples[language];
+      });
+    });
+  }
+  
+  function runCode() {
+    const code = document.getElementById('codeEditor').value;
+    const output = document.getElementById('outputContent');
+    
+    output.textContent = '🚀 Executing code...\n';
+    output.classList.add('loading');
+    
+    setTimeout(() => {
+      output.classList.remove('loading');
+      
+      // Simulated output based on code content
+      let simulatedOutput = '✅ Code executed successfully!\n\n';
+      simulatedOutput += '📊 Server Analysis:\n';
+      simulatedOutput += '  • Detected Express.js framework\n';
+      simulatedOutput += '  • Found 3 API endpoints\n';
+      simulatedOutput += '  • Database connection: Simulated\n\n';
+      simulatedOutput += '🌐 Server Status: ONLINE\n';
+      simulatedOutput += '📡 Available Endpoints:\n';
+      simulatedOutput += '  GET    /api/products    200 OK\n';
+      simulatedOutput += '  GET    /api/products/:id    200 OK\n';
+      simulatedOutput += '  POST   /api/products    201 Created\n\n';
+      simulatedOutput += '💡 Tip: Try adding error handling middleware!';
+      
+      output.textContent = simulatedOutput;
+      addXP(15);
+      unlockAchievement('code_explorer');
+    }, 800);
+  }
+  
+  function resetCode() {
+    document.getElementById('codeEditor').value = codeExamples.javascript;
+    document.getElementById('outputContent').textContent = '// Output will appear here after running code...';
+  }
+  
+  // Flowchart Interactions
+  function showNodeInfo(nodeType) {
+    const info = {
+      client: {
+        title: 'Client Request',
+        description: 'The user\'s browser or mobile application sends an HTTP request to the server. This includes headers, method (GET/POST), and optional body data.'
+      },
+      lb: {
+        title: 'Load Balancer',
+        description: 'Distributes incoming traffic across multiple servers to ensure high availability and prevent overload. Uses algorithms like round-robin or least connections.'
+      },
+      gateway: {
+        title: 'API Gateway',
+        description: 'Single entry point that handles authentication, rate limiting, request routing, and response aggregation for microservices.'
+      },
+      auth: {
+        title: 'Authentication Service',
+        description: 'Handles user login, token generation (JWT), session management, and permission validation. Communicates with identity providers.'
+      },
+      product: {
+        title: 'Product Service',
+        description: 'Manages product catalog, inventory, pricing, and availability. Follows domain-driven design principles.'
+      },
+      order: {
+        title: 'Order Service',
+        description: 'Processes orders, handles payments, manages order history, and integrates with shipping services.'
+      },
+      database: {
+        title: 'Database Cluster',
+        description: 'Distributed database system with replication and sharding. Ensures data persistence, consistency, and high availability.'
+      }
+    };
+    
+    const nodeInfo = document.getElementById('nodeInfo');
+    document.getElementById('nodeTitle').textContent = info[nodeType].title;
+    document.getElementById('nodeDescription').textContent = info[nodeType].description;
+    nodeInfo.style.display = 'block';
+    
+    addXP(5);
+  }
+  
+  // Interview Questions
+  let answeredQuestions = 12;
+  let correctAnswers = 10;
+  
+  function toggleAnswer(id) {
+    const answer = document.getElementById(`answer${id}`);
+    const isVisible = answer.style.display === 'block';
+    answer.style.display = isVisible ? 'none' : 'block';
+    
+    if (!isVisible) {
+      answeredQuestions++;
+      if (Math.random() > 0.3) correctAnswers++; // Simulate learning progress
+      
+      document.getElementById('answeredCount').textContent = answeredQuestions;
+      document.getElementById('accuracyRate').textContent = 
+        Math.round((correctAnswers / answeredQuestions) * 100) + '%';
+      
+      addXP(25);
+      unlockAchievement('interview_ready');
+    }
+  }
+  
+  function loadMoreQuestions() {
+    showNotification('📚 Loading more questions...');
+    setTimeout(() => {
+      showNotification('✅ 10 new questions loaded!');
+    }, 800);
+  }
+  
+  // Gamification System
+  let totalXP = 1250;
+  let currentLevel = 5;
+  const achievements = {
+    'code_explorer': { unlocked: true, xp: 50 },
+    'quick_learner': { unlocked: true, xp: 100 },
+    'pattern_master': { unlocked: false, xp: 200 },
+    'learning_streak': { unlocked: true, xp: 150 },
+    'security_expert': { unlocked: false, xp: 250 },
+    'interview_ready': { unlocked: true, xp: 175 }
+  };
+  
+  function addXP(amount) {
+    totalXP += amount;
+    document.getElementById('totalXP').textContent = totalXP.toLocaleString();
+    
+    const newLevel = Math.floor(totalXP / 250) + 1;
+    if (newLevel > currentLevel) {
+      currentLevel = newLevel;
+      document.getElementById('currentLevel').textContent = currentLevel;
+      document.getElementById('levelCircle').classList.add('pulse');
+      setTimeout(() => {
+        document.getElementById('levelCircle').classList.remove('pulse');
+      }, 2000);
+      showNotification(`🎉 Level Up! You're now level ${currentLevel}`);
+    }
+    
+    const progress = ((totalXP % 250) / 250) * 100;
+    document.getElementById('levelProgress').style.width = `${progress}%`;
+    document.getElementById('xpToNext').textContent = `${Math.ceil(250 - (totalXP % 250))} XP`;
+    
+    localStorage.setItem('userXP', totalXP);
+    localStorage.setItem('userLevel', currentLevel);
+  }
+  
+  function unlockAchievement(achievementId) {
+    if (!achievements[achievementId]?.unlocked) {
+      achievements[achievementId].unlocked = true;
+      addXP(achievements[achievementId].xp);
+      showNotification(`🏆 Achievement Unlocked! +${achievements[achievementId].xp} XP`);
+    }
+  }
+  
+  function claimDailyReward() {
+    const lastClaim = localStorage.getItem('lastDailyClaim');
+    const today = new Date().toDateString();
+    
+    if (lastClaim === today) {
+      showNotification('⚠️ You already claimed your daily reward today!');
+      return;
+    }
+    
+    const reward = 100 + Math.floor(Math.random() * 50);
+    addXP(reward);
+    localStorage.setItem('lastDailyClaim', today);
+    
+    let streak = parseInt(localStorage.getItem('streakDays') || '0');
+    streak++;
+    localStorage.setItem('streakDays', streak);
+    document.getElementById('streakDays').textContent = streak;
+    
+    showNotification(`🎁 Daily Reward Claimed! +${reward} XP (${streak} day streak)`);
+  }
+  
+  function showXPBreakdown() {
+    showNotification('📊 Loading detailed analytics...');
+  }
+  
+  // Notification System
+  function showNotification(message) {
+    const notification = document.getElementById('notification');
+    const content = notification.querySelector('.notification-content');
+    content.innerHTML = `<strong>${message}</strong>`;
+    
+    notification.classList.add('show');
+    setTimeout(() => {
+      notification.classList.remove('show');
+    }, 3000);
+  }
+  
+  // Scroll Animations
+  function setupScrollAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    
+    document.querySelectorAll('.skill-card').forEach(card => {
+      observer.observe(card);
+    });
+  }
+  
+  // Keyboard Shortcuts
+  function setupKeyboardShortcuts() {
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.getElementById('aiPanel').classList.remove('active');
+      }
+      if (e.key >= '1' && e.key <= '5') {
+        showSkillExplanation(e.key);
+      }
+      if (e.ctrlKey && e.key === 'l') {
+        e.preventDefault();
+        const newLang = currentLanguage === 'en' ? 'fr' : 'en';
+        switchLanguage(newLang);
+      }
+      if (e.ctrlKey && e.key === 't') {
+        e.preventDefault();
+        document.getElementById('themeToggle').click();
+      }
+      if (e.ctrlKey && e.key === 'Enter') {
+        e.preventDefault();
+        runCode();
+      }
+    });
+  }
+  
+  // Initialize Everything
+  document.addEventListener('DOMContentLoaded', () => {
+    setupLanguageSwitching();
+    setupThemeToggle();
+    setupAIAssistant();
+    setupProgressTracker();
+    setupKnowledgeChecks();
+    setupScrollAnimations();
+    setupKeyboardShortcuts();
+    
+    // New Features Initialization
+    setupCodeSandbox();
+    
+    // Load saved data
+    const savedXP = localStorage.getItem('userXP');
+    const savedLevel = localStorage.getItem('userLevel');
+    if (savedXP) {
+      totalXP = parseInt(savedXP);
+      currentLevel = parseInt(savedLevel);
+      document.getElementById('totalXP').textContent = totalXP.toLocaleString();
+      document.getElementById('currentLevel').textContent = currentLevel;
+    }
+    
+    // Show welcome message
+    setTimeout(() => {
+      showAIWelcome();
+      document.getElementById('aiPanel').classList.add('active');
+      setTimeout(() => {
+        document.getElementById('aiPanel').classList.remove('active');
+      }, 4000);
+    }, 1000);
+  });
+</script>
+</body>
+</html>
