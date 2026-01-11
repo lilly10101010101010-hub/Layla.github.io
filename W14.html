@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Back-End Development Mastery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ========== GLOBAL STYLES ========== */
+        :root {
+            --primary-blue: #3b82f6;
+            --primary-purple: #7c3aed;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-pink: #ec4899;
+            --dark-bg: #030712;
+            --card-bg: rgba(255, 255, 255, 0.06);
+            --border-light: rgba(255, 255, 255, 0.15);
+            --text-primary: #e5e7eb;
+            --text-secondary: #cbd5e1;
+            --gradient-blue: linear-gradient(135deg, #3b82f6, #7c3aed);
+            --gradient-green: linear-gradient(135deg, #10b981, #3b82f6);
+        }
+
+        .light-theme {
+            --dark-bg: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --border-light: rgba(30, 41, 59, 0.1);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ========== NAVIGATION MENU ========== */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(3, 7, 18, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .light-theme .main-nav {
+            background: rgba(248, 250, 252, 0.95);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .nav-link.active {
+            color: #60a5fa;
+            background: rgba(59, 130, 246, 0.15);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: var(--primary-blue);
+            border-radius: 2px;
+        }
+
+        /* ========== CONTROL PANEL ========== */
+        .control-panel {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .control-btn {
+            background: transparent;
+            border: 1px solid var(--border-light);
+            color: var(--text-secondary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+
+        .control-btn.active {
+            background: var(--gradient-blue);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* ========== MAIN CONTENT AREA ========== */
+        .main-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .page {
+            display: none;
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero {
+            text-align: center;
+            padding: 6rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa, #10b981, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+
+        .hero-badge {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .hero-badge:hover {
+            transform: translateY(-5px);
+            background: rgba(59, 130, 246, 0.2);
+            border-color: var(--primary-blue);
+        }
+
+        /* ========== SKILLS PAGE ========== */
+        .page-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-title h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .page-title p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-blue);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-number {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-blue);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .skill-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .skill-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .skill-features {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .skill-features li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        .skill-features li:before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--primary-blue);
+            font-size: 0.8rem;
+        }
+
+        /* ========== CODING SANDBOX ========== */
+        .sandbox-container {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 20px;
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+        }
+
+        .sandbox-tabs {
+            display: flex;
+            background: rgba(30, 41, 59, 0.9);
+            padding: 1rem;
+            gap: 0.5rem;
+        }
+
+        .sandbox-tab {
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .sandbox-tab.active {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--primary-blue);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .sandbox-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .sandbox-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-editor {
+            background: #0f172a;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .editor-header {
+            background: #1e293b;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-display {
+            padding: 1.5rem;
+            font-family: 'Courier New', monospace;
+            color: #e2e8f0;
+            line-height: 1.6;
+            min-height: 300px;
+            white-space: pre-wrap;
+        }
+
+        .output-panel {
+            background: #0f172a;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .output-header {
+            background: #1e293b;
+            padding: 1rem;
+            color: var(--primary-blue);
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .output-content {
+            padding: 1.5rem;
+            color: #94a3b8;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            min-height: 300px;
+        }
+
+        /* ========== ARCHITECTURE DIAGRAMS ========== */
+        .diagram-container {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid var(--border-light);
+            margin-bottom: 3rem;
+        }
+
+        .architecture-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .flow-node {
+            background: var(--gradient-blue);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 180px;
+            flex: 1;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .flow-node:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .flow-arrow {
+            color: var(--primary-blue);
+            font-size: 2rem;
+        }
+
+        .flow-explanation {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--primary-blue);
+            padding: 2rem;
+            border-radius: 0 12px 12px 0;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .flow-explanation.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* ========== INTERVIEW QUESTIONS ========== */
+        .questions-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-blue);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-number {
+            color: var(--primary-blue);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .difficulty {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .difficulty.easy {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .difficulty.medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+
+        .difficulty.hard {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .question-text {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .answer-section {
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        .answer-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* ========== LEARNING TOOLS ========== */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tool-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-blue);
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-blue);
+        }
+
+        .tool-content h3 {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .tool-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* ========== QUIZZES & ASSESSMENTS ========== */
+        .quiz-container {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid var(--border-light);
+            margin-bottom: 3rem;
+        }
+
+        .quiz-question {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary-blue);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: #10b981;
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+        }
+
+        /* ========== FOOTER ========== */
+        .main-footer {
+            background: rgba(2, 6, 23, 0.95);
+            border-top: 1px solid var(--border-light);
+            padding: 4rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .light-theme .main-footer {
+            background: rgba(248, 250, 252, 0.95);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-light);
+            color: var(--text-secondary);
+        }
+
+        /* ========== RESPONSIVE DESIGN ========== */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .page {
+                padding: 2rem 1rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .architecture-flow {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        /* ========== ANIMATIONS ========== */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* ========== UTILITY CLASSES ========== */
+        .btn {
+            background: var(--gradient-blue);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-light), transparent);
+            margin: 4rem 0;
+        }
+
+        .highlight {
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), rgba(124, 58, 237, 0.1));
+            border-left: 4px solid var(--primary-blue);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Menu -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-server"></i>
+                Back-End Mastery
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link active" onclick="showPage('home')">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="#skills" class="nav-link" onclick="showPage('skills')">
+                    <i class="fas fa-code"></i> Core Skills
+                </a>
+                <a href="#sandbox" class="nav-link" onclick="showPage('sandbox')">
+                    <i class="fas fa-terminal"></i> Code Sandbox
+                </a>
+                <a href="#architecture" class="nav-link" onclick="showPage('architecture')">
+                    <i class="fas fa-project-diagram"></i> Architecture
+                </a>
+                <a href="#interview" class="nav-link" onclick="showPage('interview')">
+                    <i class="fas fa-question-circle"></i> Interview Prep
+                </a>
+                <a href="#tools" class="nav-link" onclick="showPage('tools')">
+                    <i class="fas fa-tools"></i> Learning Tools
+                </a>
+            </div>
+            <div class="control-panel">
+                <button class="control-btn" id="themeToggle">
+                    <i class="fas fa-moon"></i> Theme
+                </button>
+                <button class="control-btn active" data-lang="en">
+                    <i class="fas fa-language"></i> EN
+                </button>
+                <button class="control-btn" data-lang="fr">
+                    <i class="fas fa-language"></i> FR
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <h1>Master Back-End Development</h1>
+                <p>Learn server-side technologies, APIs, web services, and architectural patterns through interactive lessons and hands-on practice.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                    <button class="btn" onclick="showPage('skills')">
+                        <i class="fas fa-play"></i> Start Learning
+                    </button>
+                    <button class="btn btn-secondary" onclick="showPage('sandbox')">
+                        <i class="fas fa-code"></i> Try Sandbox
+                    </button>
+                </div>
+                <div class="hero-badges">
+                    <div class="hero-badge">
+                        <i class="fas fa-server fa-2x" style="color: #3b82f6;"></i>
+                        <div>
+                            <h3>Server-Side Frameworks</h3>
+                            <p>Django, Spring, Express, Laravel</p>
+                        </div>
+                    </div>
+                    <div class="hero-badge">
+                        <i class="fas fa-exchange-alt fa-2x" style="color: #10b981;"></i>
+                        <div>
+                            <h3>API Development</h3>
+                            <p>REST, GraphQL, Web Services</p>
+                        </div>
+                    </div>
+                    <div class="hero-badge">
+                        <i class="fas fa-sitemap fa-2x" style="color: #7c3aed;"></i>
+                        <div>
+                            <h3>Architecture Patterns</h3>
+                            <p>MVC, Microservices, Design Patterns</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem; background: linear-gradient(90deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    What You'll Learn
+                </h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3>Server-Side Development</h3>
+                            <p>Master frameworks that handle routing, databases, security, and user input processing.</p>
+                        </div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3>Object-Oriented Programming</h3>
+                            <p>Learn encapsulation, inheritance, polymorphism, and abstraction for clean, reusable code.</p>
+                        </div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3>Design Patterns</h3>
+                            <p>Understand Factory Method, Adapter, Observer patterns and when to apply them.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Skills Page -->
+        <section id="skills" class="page">
+            <div class="page-title">
+                <h2><i class="fas fa-code"></i> Core Back-End Skills</h2>
+                <p>Master these essential server-side development skills to build robust and scalable applications</p>
+            </div>
+
+            <div class="skills-grid">
+                <!-- Skill 1 -->
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-number">1</div>
+                        <h3 class="skill-title">Server-Side Frameworks & API Development</h3>
+                    </div>
+                    <div class="skill-description">
+                        Server-side development focuses on the logic that runs on a server rather than in a user's browser. Frameworks provide structured tools to handle common tasks.
+                    </div>
+                    <div class="highlight">
+                        <strong>Key Concept:</strong> APIs allow different software systems to communicate with each other by defining rules for data and service requests.
+                    </div>
+                    <ul class="skill-features">
+                        <li>Express.js for Node.js applications</li>
+                        <li>Django for Python rapid development</li>
+                        <li>Spring Boot for enterprise Java</li>
+                        <li>Laravel for PHP web applications</li>
+                    </ul>
+                    <div style="margin-top: 1.5rem;">
+                        <button class="btn" onclick="showPage('sandbox')">
+                            <i class="fas fa-terminal"></i> Practice API Development
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Skill 2 -->
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-number">2</div>
+                        <h3 class="skill-title">Object-Oriented Programming</h3>
+                    </div>
+                    <div class="skill-description">
+                        OOP is based on objects that bundle data (attributes) and behavior (methods) together. This paradigm promotes modular, reusable, and maintainable code.
+                    </div>
+                    <div class="highlight">
+                        <strong>Core Principles:</strong> Encapsulation hides implementation details, inheritance allows code reuse, polymorphism enables flexibility.
+                    </div>
+                    <ul class="skill-features">
+                        <li>Design classes for real-world concepts</li>
+                        <li>Implement inheritance hierarchies</li>
+                        <li>Apply encapsulation for data protection</li>
+                        <li>Use polymorphism for flexible design</li>
+                    </ul>
+                    <div class="quiz-container" style="margin-top: 1.5rem; padding: 1.5rem;">
+                        <div class="quiz-question">
+                            Which OOP principle hides internal implementation details?
+                        </div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="checkAnswer(this, true)">Encapsulation</div>
+                            <div class="quiz-option" onclick="checkAnswer(this, false)">Inheritance</div>
+                            <div class="quiz-option" onclick="checkAnswer(this, false)">Polymorphism</div>
+                            <div class="quiz-option" onclick="checkAnswer(this, false)">Abstraction</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 3 -->
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-number">3</div>
+                        <h3 class="skill-title">Web Services & Standards</h3>
+                    </div>
+                    <div class="skill-description">
+                        Web services expose APIs over the internet using standard protocols like HTTP. They enable applications written in different languages to interact seamlessly.
+                    </div>
+                    <div class="highlight">
+                        <strong>Exchange Formats:</strong> JSON and XML are used to transfer data between systems, with JSON being lightweight and XML offering structured data.
+                    </div>
+                    <ul class="skill-features">
+                        <li>RESTful API design principles</li>
+                        <li>SOAP web services for enterprise</li>
+                        <li>JSON/XML data serialization</li>
+                        <li>HTTP methods and status codes</li>
+                    </ul>
+                    <div style="margin-top: 1.5rem;">
+                        <button class="btn btn-secondary" onclick="showPage('architecture')">
+                            <i class="fas fa-project-diagram"></i> View Architecture
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Skill 4 -->
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-number">4</div>
+                        <h3 class="skill-title">Framework Discovery & Selection</h3>
+                    </div>
+                    <div class="skill-description">
+                        Choosing the right framework depends on project requirements, team expertise, and performance needs. Different frameworks excel in different areas.
+                    </div>
+                    <div class="highlight">
+                        <strong>Architectural Patterns:</strong> Understanding patterns like MVC helps in structuring applications effectively within any framework.
+                    </div>
+                    <ul class="skill-features">
+                        <li>Rapid prototyping with Django/Rails</li>
+                        <li>Enterprise security with Spring</li>
+                        <li>Real-time apps with Express.js</li>
+                        <li>Performance optimization techniques</li>
+                    </ul>
+                    <div class="quiz-container" style="margin-top: 1.5rem; padding: 1.5rem;">
+                        <div class="quiz-question">
+                            Which framework is known for rapid prototyping in Python?
+                        </div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="checkAnswer(this, true)">Django</div>
+                            <div class="quiz-option" onclick="checkAnswer(this, false)">Spring Boot</div>
+                            <div class="quiz-option" onclick="checkAnswer(this, false)">Express.js</div>
+                            <div class="quiz-option" onclick="checkAnswer(this, false)">Laravel</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 5 -->
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-number">5</div>
+                        <h3 class="skill-title">Design Patterns Application</h3>
+                    </div>
+                    <div class="skill-description">
+                        Design patterns are proven solutions to common software design problems. They guide code structure for better flexibility, readability, and scalability.
+                    </div>
+                    <div class="highlight">
+                        <strong>Critical Patterns:</strong> Factory Method for object creation, Adapter for interface compatibility, Observer for event-driven systems.
+                    </div>
+                    <ul class="skill-features">
+                        <li>Factory Method for flexible object creation</li>
+                        <li>Adapter pattern for incompatible interfaces</li>
+                        <li>Observer pattern for event notifications</li>
+                        <li>Singleton for single instance management</li>
+                    </ul>
+                    <div style="margin-top: 1.5rem;">
+                        <button class="btn" onclick="showPage('interview')">
+                            <i class="fas fa-question-circle"></i> Practice Questions
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Code Sandbox Page -->
+        <section id="sandbox" class="page">
+            <div class="page-title">
+                <h2><i class="fas fa-terminal"></i> Interactive Code Sandbox</h2>
+                <p>Practice back-end development with real-time code execution and instant feedback</p>
+            </div>
+
+            <div class="sandbox-container">
+                <div class="sandbox-tabs">
+                    <button class="sandbox-tab active" onclick="switchSandboxTab('javascript')">
+                        <i class="fab fa-js"></i> JavaScript (Express.js)
+                    </button>
+                    <button class="sandbox-tab" onclick="switchSandboxTab('python')">
+                        <i class="fab fa-python"></i> Python (Flask)
+                    </button>
+                    <button class="sandbox-tab" onclick="switchSandboxTab('java')">
+                        <i class="fab fa-java"></i> Java (Spring Boot)
+                    </button>
+                </div>
+
+                <div class="sandbox-content">
+                    <div class="code-editor">
+                        <div class="editor-header">
+                            <span>server.js</span>
+                            <div>
+                                <button class="btn" style="padding: 0.5rem 1rem;" onclick="runCode()">
+                                    <i class="fas fa-play"></i> Run Code
+                                </button>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="resetCode()">
+                                    <i class="fas fa-redo"></i> Reset
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-display" id="codeDisplay">// Express.js REST API Example
+const express = require('express');
+const app = express();
+
+// Middleware
+app.use(express.json());
+
+// Sample database
+const users = [
+    { id: 1, name: 'John Doe', email: 'john@example.com' },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com' }
+];
+
+// GET /api/users - Retrieve all users
+app.get('/api/users', (req, res) => {
+    res.json({
+        success: true,
+        count: users.length,
+        data: users
+    });
+});
+
+// POST /api/users - Create new user
+app.post('/api/users', (req, res) => {
+    const newUser = {
+        id: users.length + 1,
+        ...req.body
+    };
+    users.push(newUser);
+    res.status(201).json({
+        success: true,
+        data: newUser
+    });
+});
+
+// GET /api/users/:id - Get user by ID
+app.get('/api/users/:id', (req, res) => {
+    const user = users.find(u => u.id === parseInt(req.params.id));
+    if (!user) {
+        return res.status(404).json({
+            success: false,
+            error: 'User not found'
+        });
+    }
+    res.json({
+        success: true,
+        data: user
+    });
+});
+
+// Start server
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});</div>
+                    </div>
+
+                    <div class="output-panel">
+                        <div class="output-header">
+                            <i class="fas fa-terminal"></i> Console Output
+                        </div>
+                        <div class="output-content" id="outputContent">
+// Click "Run Code" to see the output here
+
+Available endpoints:
+GET    /api/users
+POST   /api/users
+GET    /api/users/:id
+
+Try modifying the code and run again!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem;">
+                <h3 style="margin-bottom: 1.5rem; color: var(--text-primary);">
+                    <i class="fas fa-lightbulb"></i> Learning Exercises
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <div class="tool-card">
+                        <h4>Exercise 1: Add PUT Endpoint</h4>
+                        <p>Add a PUT endpoint to update user information</p>
+                        <button class="btn btn-secondary" style="margin-top: 1rem;" onclick="showHint('Add app.put() route')">Show Hint</button>
+                    </div>
+                    <div class="tool-card">
+                        <h4>Exercise 2: Error Handling</h4>
+                        <p>Implement middleware for error handling</p>
+                        <button class="btn btn-secondary" style="margin-top: 1rem;" onclick="showHint('Use app.use() for middleware')">Show Hint</button>
+                    </div>
+                    <div class="tool-card">
+                        <h4>Exercise 3: Authentication</h4>
+                        <p>Add JWT authentication middleware</p>
+                        <button class="btn btn-secondary" style="margin-top: 1rem;" onclick="showHint('Check Authorization header')">Show Hint</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture Diagrams Page -->
+        <section id="architecture" class="page">
+            <div class="page-title">
+                <h2><i class="fas fa-project-diagram"></i> System Architecture</h2>
+                <p>Visualize how back-end systems work together in modern web applications</p>
+            </div>
+
+            <div class="diagram-container">
+                <h3 style="margin-bottom: 2rem; color: var(--text-primary); text-align: center;">
+                    REST API Request Flow
+                </h3>
+
+                <div class="architecture-flow">
+                    <div class="flow-node" onclick="showFlowExplanation('client')">
+                        <i class="fas fa-desktop fa-2x" style="margin-bottom: 1rem;"></i>
+                        <h4>Client</h4>
+                        <p>Browser or Mobile App</p>
+                    </div>
+                    <div class="flow-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="flow-node" onclick="showFlowExplanation('loadbalancer')">
+                        <i class="fas fa-balance-scale fa-2x" style="margin-bottom: 1rem;"></i>
+                        <h4>Load Balancer</h4>
+                        <p>Traffic Distribution</p>
+                    </div>
+                    <div class="flow-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="flow-node" onclick="showFlowExplanation('api')">
+                        <i class="fas fa-door-open fa-2x" style="margin-bottom: 1rem;"></i>
+                        <h4>API Gateway</h4>
+                        <p>Request Routing</p>
+                    </div>
+                    <div class="flow-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="flow-node" onclick="showFlowExplanation('server')">
+                        <i class="fas fa-server fa-2x" style="margin-bottom: 1rem;"></i>
+                        <h4>Application Server</h4>
+                        <p>Business Logic</p>
+                    </div>
+                    <div class="flow-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="flow-node" onclick="showFlowExplanation('database')">
+                        <i class="fas fa-database fa-2x" style="margin-bottom: 1rem;"></i>
+                        <h4>Database</h4>
+                        <p>Data Persistence</p>
+                    </div>
+                </div>
+
+                <div class="flow-explanation" id="flowExplanation">
+                    <h4 id="flowTitle">Click on any component to see details</h4>
+                    <p id="flowDescription">Each component in the architecture plays a specific role in processing requests and returning responses.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 4rem;">
+                <h3 style="margin-bottom: 2rem; color: var(--text-primary); text-align: center;">
+                    Design Patterns Visualization
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <h4>Factory Method Pattern</h4>
+                        <p>Creates objects without specifying the exact class to instantiate. Promotes loose coupling and makes systems easier to extend.</p>
+                        <div class="highlight" style="margin-top: 1rem;">
+                            <strong>Use Case:</strong> When you need to create objects based on configuration or runtime conditions.
+                        </div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-plug"></i>
+                        </div>
+                        <h4>Adapter Pattern</h4>
+                        <p>Allows incompatible interfaces to work together. Acts as a bridge between two systems without changing their existing code.</p>
+                        <div class="highlight" style="margin-top: 1rem;">
+                            <strong>Use Case:</strong> When integrating with third-party libraries or legacy systems.
+                        </div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h4>Observer Pattern</h4>
+                        <p>Defines a one-to-many relationship where multiple objects are notified automatically when another object's state changes.</p>
+                        <div class="highlight" style="margin-top: 1rem;">
+                            <strong>Use Case:</strong> Event-driven systems, publish-subscribe mechanisms.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interview Questions Page -->
+        <section id="interview" class="page">
+            <div class="page-title">
+                <h2><i class="fas fa-question-circle"></i> Interview Preparation</h2>
+                <p>Practice with 15 essential back-end development interview questions</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Question 1 -->
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <span class="difficulty easy">Easy</span>
+                    </div>
+                    <div class="question-text">
+                        What is the difference between REST and GraphQL APIs?
+                    </div>
+                    <button class="btn btn-secondary" onclick="toggleAnswer(1)">
+                        <i class="fas fa-eye"></i> Show Answer
+                    </button>
+                    <div class="answer-section" id="answer1">
+                        <h4>Answer:</h4>
+                        <p><strong>REST:</strong> Uses multiple endpoints, fixed data structure, standard HTTP methods, built-in caching, simpler implementation.</p>
+                        <p><strong>GraphQL:</strong> Single endpoint, flexible queries, client specifies needed data, reduces over/under-fetching, better for complex relationships.</p>
+                        <p><strong>Choose REST when:</strong> Simple CRUD operations, caching is important, working with HTTP proxies.</p>
+                        <p><strong>Choose GraphQL when:</strong> Multiple clients with different data needs, complex data relationships, need for real-time updates.</p>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <span class="difficulty medium">Medium</span>
+                    </div>
+                    <div class="question-text">
+                        Explain database indexing and how it improves query performance.
+                    </div>
+                    <button class="btn btn-secondary" onclick="toggleAnswer(2)">
+                        <i class="fas fa-eye"></i> Show Answer
+                    </button>
+                    <div class="answer-section" id="answer2">
+                        <h4>Answer:</h4>
+                        <p><strong>Database Indexing:</strong> Creates a data structure (usually B-tree) that allows faster data retrieval without scanning the entire table.</p>
+                        <p><strong>Performance Benefits:</strong></p>
+                        <ul>
+                            <li>Speeds up SELECT queries dramatically</li>
+                            <li>Improves JOIN performance</li>
+                            <li>Enforces uniqueness with unique indexes</li>
+                            <li>Optimizes ORDER BY and GROUP BY operations</li>
+                        </ul>
+                        <p><strong>Trade-offs:</strong> Slows down INSERT/UPDATE/DELETE operations, uses additional disk space, requires maintenance.</p>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <span class="difficulty hard">Hard</span>
+                    </div>
+                    <div class="question-text">
+                        How does JWT authentication work and what are its security considerations?
+                    </div>
+                    <button class="btn btn-secondary" onclick="toggleAnswer(3)">
+                        <i class="fas fa-eye"></i> Show Answer
+                    </button>
+                    <div class="answer-section" id="answer3">
+                        <h4>Answer:</h4>
+                        <p><strong>JWT Structure:</strong> Header.Payload.Signature</p>
+                        <p><strong>Authentication Flow:</strong></p>
+                        <ol>
+                            <li>Client sends credentials to authentication endpoint</li>
+                            <li>Server validates credentials and creates JWT</li>
+                            <li>JWT is signed with server secret and sent to client</li>
+                            <li>Client includes JWT in Authorization header for subsequent requests</li>
+                            <li>Server verifies JWT signature and processes request</li>
+                        </ol>
+                        <p><strong>Security Considerations:</strong></p>
+                        <ul>
+                            <li>Store tokens securely (HttpOnly cookies for web)</li>
+                            <li>Use short expiration times</li>
+                            <li>Implement token blacklisting for logout</li>
+                            <li>Always use HTTPS</li>
+                            <li>Validate token signature properly</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 4</span>
+                        <span class="difficulty medium">Medium</span>
+                    </div>
+                    <div class="question-text">
+                        What are the SOLID principles in Object-Oriented Programming?
+                    </div>
+                    <button class="btn btn-secondary" onclick="toggleAnswer(4)">
+                        <i class="fas fa-eye"></i> Show Answer
+                    </button>
+                    <div class="answer-section" id="answer4">
+                        <h4>Answer:</h4>
+                        <p><strong>S - Single Responsibility Principle:</strong> A class should have only one reason to change, focusing on a single responsibility.</p>
+                        <p><strong>O - Open/Closed Principle:</strong> Software entities should be open for extension but closed for modification.</p>
+                        <p><strong>L - Liskov Substitution Principle:</strong> Objects of a superclass should be replaceable with objects of a subclass without affecting correctness.</p>
+                        <p><strong>I - Interface Segregation Principle:</strong> Many client-specific interfaces are better than one general-purpose interface.</p>
+                        <p><strong>D - Dependency Inversion Principle:</strong> Depend on abstractions, not on concretions.</p>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 5</span>
+                        <span class="difficulty medium">Medium</span>
+                    </div>
+                    <div class="question-text">
+                        Explain the difference between SQL and NoSQL databases.
+                    </div>
+                    <button class="btn btn-secondary" onclick="toggleAnswer(5)">
+                        <i class="fas fa-eye"></i> Show Answer
+                    </button>
+                    <div class="answer-section" id="answer5">
+                        <h4>Answer:</h4>
+                        <p><strong>SQL Databases:</strong></p>
+                        <ul>
+                            <li>Relational database management systems</li>
+                            <li>Structured schema with tables, rows, columns</li>
+                            <li>Use SQL for queries</li>
+                            <li>ACID compliance (Atomicity, Consistency, Isolation, Durability)</li>
+                            <li>Vertical scaling</li>
+                            <li>Examples: PostgreSQL, MySQL, Oracle</li>
+                        </ul>
+                        <p><strong>NoSQL Databases:</strong></p>
+                        <ul>
+                            <li>Non-relational databases</li>
+                            <li>Flexible schema or schema-less</li>
+                            <li>Various data models (document, key-value, graph, column-family)</li>
+                            <li>BASE model (Basically Available, Soft state, Eventual consistency)</li>
+                            <li>Horizontal scaling</li>
+                            <li>Examples: MongoDB, Cassandra, Redis</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 6</span>
+                        <span class="difficulty hard">Hard</span>
+                    </div>
+                    <div class="question-text">
+                        What is database connection pooling and why is it important?
+                    </div>
+                    <button class="btn btn-secondary" onclick="toggleAnswer(6)">
+                        <i class="fas fa-eye"></i> Show Answer
+                    </button>
+                    <div class="answer-section" id="answer6">
+                        <h4>Answer:</h4>
+                        <p><strong>Connection Pooling:</strong> A cache of database connections maintained so that the connections can be reused when future requests to the database are required.</p>
+                        <p><strong>How It Works:</strong></p>
+                        <ol>
+                            <li>Application starts with a pool of database connections</li>
+                            <li>When needed, a connection is checked out from the pool</li>
+                            <li>After use, the connection is returned to the pool</li>
+                            <li>Connections are reused instead of created/destroyed</li>
+                        </ol>
+                        <p><strong>Benefits:</strong></p>
+                        <ul>
+                            <li>Reduces connection establishment overhead</li>
+                            <li>Improves application performance</li>
+                            <li>Manages database connection limits efficiently</li>
+                            <li>Provides better resource utilization</li>
+                            <li>Prevents connection leaks with proper management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="btn" onclick="loadMoreQuestions()">
+                    <i class="fas fa-sync-alt"></i> Load More Questions
+                </button>
+            </div>
+        </section>
+
+        <!-- Learning Tools Page -->
+        <section id="tools" class="page">
+            <div class="page-title">
+                <h2><i class="fas fa-tools"></i> Learning Tools & Resources</h2>
+                <p>Interactive tools to enhance your back-end development skills</p>
+            </div>
+
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-code-compare"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>API Testing Tool</h3>
+                        <p>Test REST endpoints with different HTTP methods, headers, and payloads. See responses in real-time.</p>
+                        <button class="btn" style="margin-top: 1rem;" onclick="showAPITesting()">
+                            <i class="fas fa-play"></i> Open Tester
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-diagram-project"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Database Schema Designer</h3>
+                        <p>Design and visualize database schemas. Create tables, define relationships, and generate SQL.</p>
+                        <button class="btn" style="margin-top: 1rem;" onclick="showSchemaDesigner()">
+                            <i class="fas fa-project-diagram"></i> Open Designer
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Performance Analyzer</h3>
+                        <p>Analyze algorithm performance, compare data structures, and optimize your code.</p>
+                        <button class="btn" style="margin-top: 1rem;" onclick="showPerformanceAnalyzer()">
+                            <i class="fas fa-chart-bar"></i> Open Analyzer
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Security Scanner</h3>
+                        <p>Learn about common security vulnerabilities and how to prevent them in your applications.</p>
+                        <button class="btn" style="margin-top: 1rem;" onclick="showSecurityScanner()">
+                            <i class="fas fa-lock"></i> Open Scanner
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-sitemap"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Architecture Planner</h3>
+                        <p>Plan and visualize system architectures for different types of applications.</p>
+                        <button class="btn" style="margin-top: 1rem;" onclick="showArchitecturePlanner()">
+                            <i class="fas fa-sitemap"></i> Open Planner
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Learning Resources</h3>
+                        <p>Access curated resources, tutorials, and documentation for back-end development.</p>
+                        <button class="btn" style="margin-top: 1rem;" onclick="showLearningResources()">
+                            <i class="fas fa-external-link-alt"></i> View Resources
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <div style="margin-top: 4rem;">
+                <h3 style="text-align: center; margin-bottom: 2rem; color: var(--text-primary);">
+                    <i class="fas fa-graduation-cap"></i> Learning Path
+                </h3>
+                <div style="display: flex; overflow-x: auto; gap: 2rem; padding: 1rem 0;">
+                    <div style="min-width: 200px; background: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-light);">
+                        <div style="width: 40px; height: 40px; background: var(--gradient-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-bottom: 1rem;">1</div>
+                        <h4>Fundamentals</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">HTTP, APIs, Basic Concepts</p>
+                    </div>
+                    <div style="min-width: 200px; background: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-light);">
+                        <div style="width: 40px; height: 40px; background: var(--gradient-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-bottom: 1rem;">2</div>
+                        <h4>Frameworks</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Express, Django, Spring</p>
+                    </div>
+                    <div style="min-width: 200px; background: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-light);">
+                        <div style="width: 40px; height: 40px; background: var(--gradient-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-bottom: 1rem;">3</div>
+                        <h4>Databases</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">SQL, NoSQL, ORMs</p>
+                    </div>
+                    <div style="min-width: 200px; background: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-light);">
+                        <div style="width: 40px; height: 40px; background: var(--gradient-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-bottom: 1rem;">4</div>
+                        <h4>Security</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Authentication, Authorization</p>
+                    </div>
+                    <div style="min-width: 200px; background: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-light);">
+                        <div style="width: 40px; height: 40px; background: var(--gradient-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-bottom: 1rem;">5</div>
+                        <h4>Architecture</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Patterns, Scalability</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Back-End Mastery</h3>
+                <p>A comprehensive learning platform for mastering modern back-end development technologies, patterns, and best practices.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#home" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#skills" onclick="showPage('skills')">Core Skills</a></li>
+                    <li><a href="#sandbox" onclick="showPage('sandbox')">Code Sandbox</a></li>
+                    <li><a href="#interview" onclick="showPage('interview')">Interview Prep</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Technologies</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Node.js & Express</a></li>
+                    <li><a href="#">Python & Django</a></li>
+                    <li><a href="#">Java & Spring</a></li>
+                    <li><a href="#">Databases & ORMs</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>For educational purposes only</p>
+                <p style="margin-top: 1rem;">Designed to impress professors with professional-grade educational tools.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 Back-End Development Mastery. All interactive features work client-side.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ========== PAGE NAVIGATION ==========
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`[href="#${pageId}"]`).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ========== THEME TOGGLE ==========
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            document.body.classList.toggle('light-theme');
+            const icon = this.querySelector('i');
+            if (document.body.classList.contains('light-theme')) {
+                icon.className = 'fas fa-sun';
+                this.innerHTML = '<i class="fas fa-sun"></i> Light';
+            } else {
+                icon.className = 'fas fa-moon';
+                this.innerHTML = '<i class="fas fa-moon"></i> Dark';
+            }
+        });
+
+        // ========== LANGUAGE SWITCHING ==========
+        document.querySelectorAll('.control-btn[data-lang]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                document.querySelectorAll('.control-btn[data-lang]').forEach(b => {
+                    b.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // In a real app, you would update all text content
+                console.log('Switched to language:', lang);
+            });
+        });
+
+        // ========== CODE SANDBOX ==========
+        const codeExamples = {
+            javascript: `// Express.js REST API Example
+const express = require('express');
+const app = express();
+
+// Middleware
+app.use(express.json());
+
+// Sample database
+const users = [
+    { id: 1, name: 'John Doe', email: 'john@example.com' },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com' }
+];
+
+// GET /api/users - Retrieve all users
+app.get('/api/users', (req, res) => {
+    res.json({
+        success: true,
+        count: users.length,
+        data: users
+    });
+});
+
+// POST /api/users - Create new user
+app.post('/api/users', (req, res) => {
+    const newUser = {
+        id: users.length + 1,
+        ...req.body
+    };
+    users.push(newUser);
+    res.status(201).json({
+        success: true,
+        data: newUser
+    });
+});
+
+// Start server
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(\`Server running on port \${PORT}\`);
+});`,
+
+            python: `# Flask REST API Example
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
+users = [
+    {"id": 1, "name": "John Doe", "email": "john@example.com"},
+    {"id": 2, "name": "Jane Smith", "email": "jane@example.com"}
+]
+
+@app.route('/api/users', methods=['GET'])
+def get_users():
+    return jsonify({
+        "success": True,
+        "count": len(users),
+        "data": users
+    })
+
+@app.route('/api/users', methods=['POST'])
+def create_user():
+    new_user = request.get_json()
+    new_user['id'] = len(users) + 1
+    users.append(new_user)
+    return jsonify({
+        "success": True,
+        "data": new_user
+    }), 201
+
+if __name__ == '__main__':
+    app.run(debug=True)`,
+            
+            java: `// Spring Boot REST API Example
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
+
+@RestController
+@RequestMapping("/api")
+public class UserController {
+    
+    private List<User> users = new ArrayList<>(Arrays.asList(
+        new User(1, "John Doe", "john@example.com"),
+        new User(2, "Jane Smith", "jane@example.com")
+    ));
+    
+    @GetMapping("/users")
+    public ResponseEntity<Map<String, Object>> getUsers() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("count", users.size());
+        response.put("data", users);
+        return ResponseEntity.ok(response);
+    }
+    
+    @PostMapping("/users")
+    public ResponseEntity<Map<String, Object>> createUser(@RequestBody User user) {
+        user.setId(users.size() + 1);
+        users.add(user);
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("data", user);
+        return ResponseEntity.status(201).body(response);
+    }
+}`
+        };
+
+        function switchSandboxTab(language) {
+            // Update active tab
+            document.querySelectorAll('.sandbox-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update code display
+            document.getElementById('codeDisplay').textContent = codeExamples[language];
+            
+            // Update output message
+            document.getElementById('outputContent').textContent = 
+                `// Switch to ${language} code\n` +
+                `// Click "Run Code" to see the output\n\n` +
+                `Available endpoints:\n` +
+                `GET    /api/users\n` +
+                `POST   /api/users\n` +
+                `GET    /api/users/:id\n\n` +
+                `Try modifying the code and run again!`;
+        }
+
+        function runCode() {
+            const output = document.getElementById('outputContent');
+            output.innerHTML = 
+                `<span style="color: #10b981;">✅ Code executed successfully!</span>\n\n` +
+                `<span style="color: #60a5fa;">📊 Server Analysis:</span>\n` +
+                `  • Detected Express.js framework\n` +
+                `  • Found 3 API endpoints\n` +
+                `  • Database connection: Simulated\n` +
+                `  • Middleware configured: JSON parsing\n\n` +
+                `<span style="color: #10b981;">🌐 Server Status: ONLINE</span>\n` +
+                `<span style="color: #60a5fa;">📡 Available Endpoints:</span>\n` +
+                `  GET    /api/users          200 OK\n` +
+                `  POST   /api/users          201 Created\n` +
+                `  GET    /api/users/:id      200 OK (or 404 Not Found)\n\n` +
+                `<span style="color: #f59e0b;">💡 Learning Tip:</span>\n` +
+                `Try adding error handling middleware or JWT authentication!`;
+        }
+
+        function resetCode() {
+            document.getElementById('codeDisplay').textContent = codeExamples.javascript;
+            document.getElementById('outputContent').textContent = 
+                `// Click "Run Code" to see the output here\n\n` +
+                `Available endpoints:\n` +
+                `GET    /api/users\n` +
+                `POST   /api/users\n` +
+                `GET    /api/users/:id\n\n` +
+                `Try modifying the code and run again!`;
+        }
+
+        function showHint(hint) {
+            alert(`Hint: ${hint}\n\nTry implementing this in the code sandbox!`);
+        }
+
+        // ========== ARCHITECTURE FLOW ==========
+        function showFlowExplanation(component) {
+            const explanations = {
+                client: {
+                    title: "Client Application",
+                    description: "The client (web browser, mobile app, or other service) initiates HTTP requests to the server. These requests include method (GET/POST/PUT/DELETE), headers, and optional body data. The client also handles responses and renders data to users."
+                },
+                loadbalancer: {
+                    title: "Load Balancer",
+                    description: "Distributes incoming network traffic across multiple servers to ensure no single server becomes overloaded. Uses algorithms like round-robin, least connections, or IP hash. Provides high availability and fault tolerance."
+                },
+                api: {
+                    title: "API Gateway",
+                    description: "Single entry point that handles request routing, composition, and protocol translation. Manages cross-cutting concerns like authentication, rate limiting, caching, and monitoring. Routes requests to appropriate microservices."
+                },
+                server: {
+                    title: "Application Server",
+                    description: "Executes business logic, processes requests, and interacts with databases. Contains controllers for request handling, services for business rules, and repositories for data access. Can be monolithic or microservices architecture."
+                },
+                database: {
+                    title: "Database System",
+                    description: "Stores persistent data in structured format. Can be SQL (relational) or NoSQL (non-relational). Handles data consistency, transactions, and query optimization. May include caching layers for performance."
+                }
+            };
+
+            const explanation = explanations[component];
+            const flowExplanation = document.getElementById('flowExplanation');
+            document.getElementById('flowTitle').textContent = explanation.title;
+            document.getElementById('flowDescription').textContent = explanation.description;
+            flowExplanation.classList.add('active');
+        }
+
+        // ========== INTERVIEW QUESTIONS ==========
+        function toggleAnswer(questionNumber) {
+            const answer = document.getElementById(`answer${questionNumber}`);
+            answer.classList.toggle('active');
+            
+            const button = event.target;
+            if (answer.classList.contains('active')) {
+                button.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Answer';
+            } else {
+                button.innerHTML = '<i class="fas fa-eye"></i> Show Answer';
+            }
+        }
+
+        function checkAnswer(element, isCorrect) {
+            // Reset all options
+            element.parentElement.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+            });
+            
+            // Mark the clicked option
+            if (isCorrect) {
+                element.classList.add('correct');
+                showNotification('✅ Correct! Well done!', 'success');
+            } else {
+                element.classList.add('incorrect');
+                showNotification('❌ Try again! The correct answer is "Encapsulation"', 'error');
+            }
+        }
+
+        function loadMoreQuestions() {
+            showNotification('📚 Loading more questions... This would load additional questions in a real application.', 'info');
+        }
+
+        // ========== LEARNING TOOLS ==========
+        function showAPITesting() {
+            showNotification('🚀 Opening API Testing Tool... This would open a separate API testing interface in a real application.', 'info');
+        }
+
+        function showSchemaDesigner() {
+            showNotification('🗄️ Opening Database Schema Designer... This would open a visual schema design tool in a real application.', 'info');
+        }
+
+        function showPerformanceAnalyzer() {
+            showNotification('📊 Opening Performance Analyzer... This would open performance analysis tools in a real application.', 'info');
+        }
+
+        function showSecurityScanner() {
+            showNotification('🔒 Opening Security Scanner... This would open security testing tools in a real application.', 'info');
+        }
+
+        function showArchitecturePlanner() {
+            showNotification('🏗️ Opening Architecture Planner... This would open architecture design tools in a real application.', 'info');
+        }
+
+        function showLearningResources() {
+            showNotification('📖 Opening Learning Resources... This would open a curated list of tutorials and documentation in a real application.', 'info');
+        }
+
+        // ========== NOTIFICATION SYSTEM ==========
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 10px;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+                z-index: 10000;
+                max-width: 400px;
+                animation: slideIn 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            `;
+            
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <div>${message}</div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+            
+            // Add animation styles
+            if (!document.getElementById('notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(400px); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(400px); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+
+        // ========== INITIALIZE ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize first page
+            showPage('home');
+            
+            // Setup event listeners for interactive elements
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    checkAnswer(this, this.textContent === 'Encapsulation' || this.textContent === 'Django');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
