@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Web Development Course</title>
+    <style>
+        :root {
+            --bg-color: #050510; /* Deep Black/Blue */
+            --card-bg: #101025; 
+            --primary-blue: #00f2ff; /* Cyan/Blue */
+            --primary-mauve: #d46aff; /* Mauve/Purple */
+            --text-color: #e0e0e0;
+            --code-bg: #1e1e3f;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color), #0a0a20);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.8;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 2px solid var(--primary-mauve);
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: var(--primary-mauve);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(212, 106, 255, 0.5);
+        }
+
+        h2 {
+            color: var(--primary-blue);
+            border-left: 4px solid var(--primary-mauve);
+            padding-left: 15px;
+            margin-top: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* --- NEW: High-Visibility AI Buttons --- */
+        .ai-term {
+            background: rgba(212, 106, 255, 0.15);
+            border: 1px solid var(--primary-mauve);
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 6px;
+            cursor: help; /* Change cursor to question mark */
+            font-weight: bold;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px rgba(212, 106, 255, 0.2);
+        }
+
+        /* Add the robot icon automatically */
+        .ai-term::after {
+            content: " 🤖";
+            font-size: 0.8em;
+        }
+
+        .ai-term:hover {
+            background: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: #000;
+            box-shadow: 0 0 15px var(--primary-blue);
+            transform: translateY(-2px); /* Lifts up slightly */
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(212, 106, 255, 0.1);
+        }
+
+        /* Quiz Section */
+        .quiz-box {
+            background: rgba(0, 242, 255, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 25px;
+            border-left: 3px solid var(--primary-blue);
+        }
+
+        .options label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        
+        .options label:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+            display: none;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .correct { background: rgba(0, 255, 136, 0.2); color: #00ff88; border: 1px solid #00ff88; }
+        .wrong { background: rgba(255, 85, 85, 0.2); color: #ff5555; border: 1px solid #ff5555; }
+
+        /* Coding Challenge Section */
+        .code-challenge {
+            background: #000;
+            border-radius: 8px;
+            margin-top: 25px;
+            overflow: hidden;
+            border: 1px solid #333;
+            box-shadow: inset 0 0 20px rgba(0,0,0,1);
+        }
+
+        .code-header {
+            background: linear-gradient(90deg, var(--primary-mauve), #8a2be2);
+            color: #fff;
+            padding: 8px 15px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .code-editor {
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            color: #ccc;
+            background: var(--code-bg);
+            font-size: 0.95rem;
+        }
+
+        input.code-input {
+            background: #000;
+            border: 1px solid var(--primary-blue);
+            color: var(--primary-blue);
+            font-family: inherit;
+            padding: 4px 8px;
+            border-radius: 4px;
+            width: 120px;
+            font-weight: bold;
+            outline: none;
+        }
+        
+        input.code-input:focus {
+            box-shadow: 0 0 10px var(--primary-blue);
+        }
+
+        .run-btn {
+            background: var(--primary-blue);
+            border: none;
+            padding: 10px 20px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 15px 15px 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .run-btn:hover {
+            background: #fff;
+            box-shadow: 0 0 15px #fff;
+        }
+
+        .console-output {
+            background: #0a0a0a;
+            color: #00ff88;
+            padding: 15px;
+            font-family: monospace;
+            min-height: 20px;
+            border-top: 1px solid #333;
+        }
+
+        /* AI Modal */
+        #ai-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            border: 2px solid var(--primary-blue);
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 242, 255, 0.2);
+            text-align: left;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        
+        .close-btn:hover { color: var(--primary-mauve); }
+
+        .ai-avatar {
+            font-size: 50px;
+            margin-bottom: 15px;
+            text-align: center;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Instruction Banner */
+        .instruction-banner {
+            background: linear-gradient(90deg, rgba(212, 106, 255, 0.1), rgba(0, 242, 255, 0.1));
+            border: 1px solid var(--primary-blue);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Web Strategy & Development</h1>
+            <p style="color: var(--primary-blue); font-size: 1.2rem;">Interactive Learning System</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="instruction-banner">
+            <div style="font-size: 30px;">💡</div>
+            <div>
+                <strong>Interactive Mode Active:</strong><br>
+                Look for the glowing chips like this: <span class="ai-term" onclick="alert('Yes! Just like this.')">Example Term</span><br>
+                Click them to activate the AI Assistant for real-life examples!
+            </div>
+        </div>
+
+        <div class="section-card" id="section1">
+            <h2>1. Strategic Response to Complex Problems</h2>
+            <p>Designing a strategic response requires a structured approach. Complex problems involve <span class="ai-term" onclick="explain('stakeholders')">stakeholders</span>, uncertainty, and interdependent factors. A relevant response begins with <strong>problem understanding</strong> (research, data analysis) to define root causes. <span class="ai-term" onclick="explain('codesign')">Co-design</span> emphasizes collaboration between designers, developers, and users. We use frameworks like <span class="ai-term" onclick="explain('agile')">Agile methodologies</span> to prototype and refine.</p>
+            
+            <div class="quiz-box">
+                <strong>Q: What is the first step in a relevant strategic response?</strong>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="wrong"> Immediately writing code</label>
+                    <label><input type="radio" name="q1" value="correct"> Problem understanding & research</label>
+                    <label><input type="radio" name="q1" value="wrong"> Selling the product</label>
+                </div>
+                <div class="feedback" id="f1"></div>
+            </div>
+
+            <div class="code-challenge">
+                <div class="code-header">JAVASCRIPT: STRATEGY OBJECT</div>
+                <div class="code-editor">
+                    // Define the strategy approach<br>
+                    let strategy = {<br>
+                    &nbsp;&nbsp;method: "Co-design",<br>
+                    &nbsp;&nbsp;focus: "<input type="text" class="code-input" id="code1" placeholder="root causes">"<br>
+                    };<br>
+                    console.log("Strategy Focus: " + strategy.focus);
+                </div>
+                <button class="run-btn" onclick="runCode(1, 'root causes')">Run Code</button>
+                <div class="console-output" id="out1">// Output will appear here...</div>
+            </div>
+        </div>
+
+        <div class="section-card" id="section2">
+            <h2>2. Entrepreneurship in the Digital Sector</h2>
+            <p>Digital entrepreneurship focuses on creating value through technology (SaaS, mobile apps). Objectives include <span class="ai-term" onclick="explain('scalability')">scalability</span>, innovation, and competitiveness. However, it presents issues like <span class="ai-term" onclick="explain('cybersecurity')">cybersecurity risks</span>, IP protection, and data privacy. Success requires technical competence and ethical awareness.</p>
+
+            <div class="quiz-box">
+                <strong>Q: Which of the following is a major professional issue in this sector?</strong>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="wrong"> Too much paper usage</label>
+                    <label><input type="radio" name="q2" value="correct"> Data privacy & Cybersecurity</label>
+                    <label><input type="radio" name="q2" value="wrong"> Slow technology growth</label>
+                </div>
+                <div class="feedback" id="f2"></div>
+            </div>
+
+            <div class="code-challenge">
+                <div class="code-header">JAVASCRIPT: CALCULATE VALUE</div>
+                <div class="code-editor">
+                    let users = 1000;<br>
+                    let techMultiplier = 5;<br>
+                    // Calculate scalability value<br>
+                    let value = users <input type="text" class="code-input" id="code2" placeholder="*"> techMultiplier;<br>
+                    console.log("Business Value: " + value);
+                </div>
+                <button class="run-btn" onclick="runCode(2, '*')">Run Code</button>
+                <div class="console-output" id="out2">// Output will appear here...</div>
+            </div>
+        </div>
+
+        <div class="section-card" id="section3">
+            <h2>3. The SAE Framework</h2>
+            <p>The SAE framework stands for <strong>Understanding, Designing, Developing, Interacting</strong>.
+            <ul>
+                <li><strong>Understanding:</strong> Analyzing user needs and cultural differences.</li>
+                <li><strong>Designing:</strong> Creating <span class="ai-term" onclick="explain('wireframes')">wireframes</span> and architecture.</li>
+                <li><strong>Developing:</strong> Coding with APIs and databases.</li>
+                <li><strong>Interacting:</strong> Ensuring effective communication via <span class="ai-term" onclick="explain('ui')">intuitive interfaces</span>.</li>
+            </ul>
+            </p>
+
+            <div class="quiz-box">
+                <strong>Q: What does the 'D' in SAE stand for regarding technical implementation?</strong>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="wrong"> Drawing</label>
+                    <label><input type="radio" name="q3" value="correct"> Developing</label>
+                    <label><input type="radio" name="q3" value="wrong"> Dreaming</label>
+                </div>
+                <div class="feedback" id="f3"></div>
+            </div>
+
+            <div class="code-challenge">
+                <div class="code-header">HTML/JS: SAE PHASES</div>
+                <div class="code-editor">
+                    let phases = ["Understanding", "Designing", "<input type="text" class="code-input" id="code3" placeholder="Developing">", "Interacting"];<br>
+                    console.log("Phase 3 is: " + phases[2]);
+                </div>
+                <button class="run-btn" onclick="runCode(3, 'Developing')">Run Code</button>
+                <div class="console-output" id="out3">// Output will appear here...</div>
+            </div>
+        </div>
+
+        <div class="section-card" id="section4">
+            <h2>4. High-Quality User Experience (UX)</h2>
+            <p>UX starts with <span class="ai-term" onclick="explain('personas')">user research</span> and usability testing. Key principles are simplicity, consistency, and accessibility. A strong UX ensures users complete tasks with minimal cognitive effort. This involves optimizing navigation and reducing loading times.</p>
+
+            <div class="quiz-box">
+                <strong>Q: What plays a critical role in refining UX over time?</strong>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="correct"> Continuous user testing</label>
+                    <label><input type="radio" name="q4" value="wrong"> Increasing prices</label>
+                    <label><input type="radio" name="q4" value="wrong"> Making the logo bigger</label>
+                </div>
+                <div class="feedback" id="f4"></div>
+            </div>
+
+            <div class="code-challenge">
+                <div class="code-header">CSS: RESPONSIVENESS</div>
+                <div class="code-editor">
+                    /* Make the design responsive */<br>
+                    @media (max-width: 600px) {<br>
+                    &nbsp;&nbsp;body { font-size: <input type="text" class="code-input" id="code4" placeholder="14px">; }<br>
+                    }<br>
+                    console.log("Mobile font size set.");
+                </div>
+                <button class="run-btn" onclick="runCode(4, '14px')">Run Code</button>
+                <div class="console-output" id="out4">// Output will appear here...</div>
+            </div>
+        </div>
+
+        <div class="section-card" id="section5">
+            <h2>5. Develop a Web Application</h2>
+            <p>Development is a multi-phase process: planning, design, development, testing, deployment, and maintenance. It starts with defining <span class="ai-term" onclick="explain('requirements')">functional requirements</span>. Testing ensures reliability before deployment. Post-launch requires updates and monitoring.</p>
+
+            <div class="quiz-box">
+                <strong>Q: What happens immediately after the development phase?</strong>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="wrong"> Planning</label>
+                    <label><input type="radio" name="q5" value="correct"> Testing</label>
+                    <label><input type="radio" name="q5" value="wrong"> Retirement</label>
+                </div>
+                <div class="feedback" id="f5"></div>
+            </div>
+
+            <div class="code-challenge">
+                <div class="code-header">JS: FUNCTION DEFINITION</div>
+                <div class="code-editor">
+                    function deployApp() {<br>
+                    &nbsp;&nbsp;let status = "<input type="text" class="code-input" id="code5" placeholder="deployed">";<br>
+                    &nbsp;&nbsp;return status;<br>
+                    }<br>
+                    console.log("App is " + deployApp());
+                </div>
+                <button class="run-btn" onclick="runCode(5, 'deployed')">Run Code</button>
+                <div class="console-output" id="out5">// Output will appear here...</div>
+            </div>
+        </div>
+
+        <div class="section-card" id="section6">
+            <h2>6. Server-Side & Client-Side Tools</h2>
+            <p>Modern apps separate <span class="ai-term" onclick="explain('clientside')">Client-side</span> (HTML, CSS, React) and <span class="ai-term" onclick="explain('serverside')">Server-side</span> (Node.js, PHP). Client-side handles the UI; Server-side manages business logic and databases. <span class="ai-term" onclick="explain('api')">APIs</span> connect them.</p>
+
+            <div class="quiz-box">
+                <strong>Q: Which side manages business logic and databases?</strong>
+                <div class="options">
+                    <label><input type="radio" name="q6" value="correct"> Server-side</label>
+                    <label><input type="radio" name="q6" value="wrong"> Client-side</label>
+                    <label><input type="radio" name="q6" value="wrong"> Monitor-side</label>
+                </div>
+                <div class="feedback" id="f6"></div>
+            </div>
+
+            <div class="code-challenge">
+                <div class="code-header">NODE.JS (Server)</div>
+                <div class="code-editor">
+                    const http = require('http');<br>
+                    // Create the server<br>
+                    const server = http.<input type="text" class="code-input" id="code6" placeholder="createServer">((req, res) => {<br>
+                    &nbsp;&nbsp;res.end('Hello World');<br>
+                    });<br>
+                    console.log("Server function defined.");
+                </div>
+                <button class="run-btn" onclick="runCode(6, 'createServer')">Run Code</button>
+                <div class="console-output" id="out6">// Output will appear here...</div>
+            </div>
+        </div>
+
+        <div class="section-card" id="section7">
+            <h2>7. Back Office & Data Manipulation</h2>
+            <p>A <span class="ai-term" onclick="explain('backoffice')">back office</span> allows admins to CRUD (Create, Read, Update, Delete) data. It supports analytics and automation. A "rich client interface" provides dashboards and real-time updates. Role-based access control (RBAC) ensures security.</p>
+
+            <div class="quiz-box">
+                <strong>Q: What does CRUD stand for?</strong>
+                <div class="options">
+                    <label><input type="radio" name="q7" value="correct"> Create, Read, Update, Delete</label>
+                    <label><input type="radio" name="q7" value="wrong"> Copy, Run, Undo, Done</label>
+                    <label><input type="radio" name="q7" value="wrong"> Connect, Read, Upload, Download</label>
+                </div>
+                <div class="feedback" id="f7"></div>
+            </div>
+
+            <div class="code-challenge">
+                <div class="code-header">SQL: DATA UPDATE</div>
+                <div class="code-editor">
+                    UPDATE users<br>
+                    SET role = 'admin'<br>
+                    WHERE id = <input type="text" class="code-input" id="code7" placeholder="1">;<br>
+                    console.log("User 1 role updated to admin.");
+                </div>
+                <button class="run-btn" onclick="runCode(7, '1')">Run Code</button>
+                <div class="console-output" id="out7">// Output will appear here...</div>
+            </div>
+        </div>
+
+        <div class="section-card" id="section8">
+            <h2>8. Ergonomic UX for Admins & Users</h2>
+            <p>Ergonomic design reduces effort and fatigue. For end-users: intuitive navigation. For admins: efficient workflows. We must follow accessibility standards like <span class="ai-term" onclick="explain('wcag')">WCAG</span> to ensure the site is usable by people with disabilities.</p>
+
+            <div class="quiz-box">
+                <strong>Q: Who benefits from an ergonomic UX?</strong>
+                <div class="options">
+                    <label><input type="radio" name="q8" value="wrong"> Only the developers</label>
+                    <label><input type="radio" name="q8" value="correct"> Both end-users and administrators</label>
+                    <label><input type="radio" name="q8" value="wrong"> Only the robots</label>
+                </div>
+                <div class="feedback" id="f8"></div>
+            </div>
+
+            <div class="code-challenge">
+                <div class="code-header">CSS: ACCESSIBILITY</div>
+                <div class="code-editor">
+                    /* High contrast for accessibility */<br>
+                    button {<br>
+                    &nbsp;&nbsp;background: #000;<br>
+                    &nbsp;&nbsp;color: <input type="text" class="code-input" id="code8" placeholder="#FFF">;<br>
+                    }<br>
+                    console.log("Contrast ratio set to maximum.");
+                </div>
+                <button class="run-btn" onclick="runCode(8, '#FFF')">Run Code</button>
+                <div class="console-output" id="out8">// Output will appear here...</div>
+            </div>
+        </div>
+
+        <div class="section-card" id="section9">
+            <h2>9. Security and Performance</h2>
+            <p>Security includes authentication, encryption, and protection against attacks like <span class="ai-term" onclick="explain('sqlinjection')">SQL Injection</span> and XSS. Performance optimization involves caching, code efficiency, and reliable hosting to ensure high availability.</p>
+
+            <div class="quiz-box">
+                <strong>Q: Which of the following is a common web security attack?</strong>
+                <div class="options">
+                    <label><input type="radio" name="q9" value="correct"> SQL Injection</label>
+                    <label><input type="radio" name="q9" value="wrong"> HTML Injection</label>
+                    <label><input type="radio" name="q9" value="wrong"> CSS Overflow</label>
+                </div>
+                <div class="feedback" id="f9"></div>
+            </div>
+
+            <div class="code-challenge">
+                <div class="code-header">JS: SECURITY CHECK</div>
+                <div class="code-editor">
+                    function sanitizeInput(input) {<br>
+                    &nbsp;&nbsp;if (input.includes("<script>")) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return "<input type="text" class="code-input" id="code9" placeholder="Blocked">";<br>
+                    &nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;return "Safe";<br>
+                    }<br>
+                    console.log("Malicious input is: " + sanitizeInput("<script>"));
+                </div>
+                <button class="run-btn" onclick="runCode(9, 'Blocked')">Run Code</button>
+                <div class="console-output" id="out9">// Output will appear here...</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="ai-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="ai-avatar">🤖</div>
+            <h3 id="ai-title" style="color: var(--primary-blue); border-bottom: 1px solid #333; padding-bottom: 10px;">AI Explanation</h3>
+            <p id="ai-text" style="line-height: 1.8;">Loading explanation...</p>
+            
+            <div style="background: rgba(212, 106, 255, 0.1); padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-mauve);">
+                <p style="font-size: 0.9em; color: var(--primary-mauve); margin: 0 0 5px 0;"><strong>💡 Real Life Example:</strong></p>
+                <p id="ai-example" style="font-style: italic; color: #fff; margin: 0;"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. QUIZ LOGIC ---
+        const radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', function() {
+                const feedbackId = this.name.replace('q', 'f');
+                const feedbackEl = document.getElementById(feedbackId);
+                
+                feedbackEl.style.display = 'block';
+                if (this.value === 'correct') {
+                    feedbackEl.textContent = "Correct! ✅";
+                    feedbackEl.className = "feedback correct";
+                } else {
+                    feedbackEl.textContent = "Incorrect, try again. ❌";
+                    feedbackEl.className = "feedback wrong";
+                }
+            });
+        });
+
+        // --- 2. CODE EXECUTION LOGIC ---
+        function runCode(id, expected) {
+            const input = document.getElementById('code' + id).value;
+            const outputDiv = document.getElementById('out' + id);
+            
+            // Normalize strings for comparison (ignore case)
+            if (input.trim().toLowerCase() === expected.toLowerCase()) {
+                outputDiv.style.color = "#00ff88";
+                outputDiv.innerHTML = "> Code compiled successfully.<br>> Result: " + getResult(id, input);
+            } else {
+                outputDiv.style.color = "#ff5555";
+                outputDiv.innerHTML = "> Syntax Error or Incorrect Value.<br>> Expected: " + expected;
+            }
+        }
+
+        function getResult(id, input) {
+            // Simulated outputs for the demo
+            if(id === 1) return "Strategy Focus set to: " + input;
+            if(id === 2) return "Business Value: " + (1000 * 5);
+            if(id === 3) return "Phase 3 is: Developing";
+            if(id === 4) return "Mobile font size set.";
+            if(id === 5) return "App is deployed";
+            if(id === 6) return "Server function defined.";
+            if(id === 7) return "User 1 role updated to admin.";
+            if(id === 8) return "Contrast ratio set to maximum.";
+            if(id === 9) return "Malicious input is: Blocked";
+            return "Done.";
+        }
+
+        // --- 3. AI EXPLANATION ENGINE (MOCK DB) ---
+        const aiDatabase = {
+            'stakeholders': {
+                def: "People or groups who have an interest in the project or are affected by it.",
+                ex: "In a university app, stakeholders include students, professors, admin staff, and the IT department."
+            },
+            'codesign': {
+                def: "A design approach where all stakeholders (including users) help design the solution.",
+                ex: "Sitting down with a doctor to sketch a medical app interface instead of guessing what they need."
+            },
+            'agile': {
+                def: "A project management method involving small, iterative steps called sprints.",
+                ex: "Instead of building a whole car at once, you build a skateboard, then a bike, then a car, testing each one."
+            },
+            'scalability': {
+                def: "The ability of a system to handle growing amounts of work or users.",
+                ex: "Netflix works just as well whether 100 people are watching or 100 million people are watching."
+            },
+            'cybersecurity': {
+                def: "Protection of internet-connected systems from cyberattacks.",
+                ex: "Using Two-Factor Authentication (2FA) so hackers can't access your bank account even if they have your password."
+            },
+            'wireframes': {
+                def: "A visual guide that represents the skeletal framework of a website.",
+                ex: "Like a blueprint for a house before you add the paint and furniture."
+            },
+            'ui': {
+                def: "User Interface - the point of human-computer interaction.",
+                ex: "The screen, buttons, and icons you touch on your iPhone."
+            },
+            'personas': {
+                def: "Fictional characters created to represent different user types.",
+                ex: "'Busy Bob', a 40-year-old manager who needs to check reports in 5 seconds on his phone."
+            },
+            'requirements': {
+                def: "Specific behaviors or functions the system must support.",
+                ex: "Functional: 'The system must email a receipt'. Non-Functional: 'The email must arrive within 2 seconds'."
+            },
+            'clientside': {
+                def: "Everything that happens on the user's computer (browser).",
+                ex: "When you hover over a button and it changes color instantly."
+            },
+            'serverside': {
+                def: "Everything that happens on the web server.",
+                ex: "When you log in, the server checks your password against the database."
+            },
+            'api': {
+                def: "Application Programming Interface - allows two apps to talk to each other.",
+                ex: "A travel site (Expedia) using an airline's API to show you real-time ticket prices."
+            },
+            'backoffice': {
+                def: "The administration area of a website, not seen by public users.",
+                ex: "The dashboard where an Amazon seller uploads new products and checks sales."
+            },
+            'wcag': {
+                def: "Web Content Accessibility Guidelines - standards to make web content more accessible.",
+                ex: "Adding text descriptions (Alt text) to images so blind users with screen readers know what the image is."
+            },
+            'sqlinjection': {
+                def: "A code injection technique used to attack data-driven applications.",
+                ex: "Entering a command into a login box that tricks the database into revealing all user passwords."
+            }
+        };
+
+        function explain(term) {
+            const modal = document.getElementById('ai-modal');
+            const title = document.getElementById('ai-title');
+            const text = document.getElementById('ai-text');
+            const example = document.getElementById('ai-example');
+
+            if (aiDatabase[term]) {
+                title.innerText = "AI Explains: " + term.toUpperCase();
+                text.innerText = aiDatabase[term].def;
+                example.innerText = aiDatabase[term].ex;
+            } else {
+                title.innerText = "AI Error";
+                text.innerText = "I'm sorry, I don't have data on this term yet.";
+                example.innerText = "";
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('ai-modal').style.display = 'none';
+        }
+
+        // Close modal if clicking outside box
+        window.onclick = function(event) {
+            const modal = document.getElementById('ai-modal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
