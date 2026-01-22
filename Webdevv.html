@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Web Development</title>
+    <style>
+        /* --- THEME SETTINGS --- */
+        :root {
+            --bg-dark: #050510;
+            --card-dark: #121225;
+            --neon-blue: #00f2ff;
+            --neon-mauve: #d46aff;
+            --text-main: #e0e0e0;
+            --success: #00ff88;
+            --error: #ff4444;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* --- HEADER --- */
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--neon-mauve);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        h1 { color: var(--neon-mauve); margin: 0; font-size: 2.5rem; }
+        p.subtitle { color: var(--neon-blue); margin-top: 5px; }
+
+        /* --- CARDS --- */
+        .section {
+            background: var(--card-dark);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        h2 { color: var(--neon-blue); border-left: 5px solid var(--neon-mauve); padding-left: 15px; }
+
+        /* --- AI BUTTONS (GLOWING CHIPS) --- */
+        .ai-btn {
+            background: linear-gradient(45deg, #2a0a3d, #0a2a3d);
+            border: 1px solid var(--neon-mauve);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9em;
+            display: inline-block;
+            margin: 0 2px;
+            box-shadow: 0 0 5px var(--neon-mauve);
+            transition: 0.2s;
+        }
+        .ai-btn:hover {
+            background: var(--neon-blue);
+            color: black;
+            transform: scale(1.1);
+        }
+        .ai-btn::after { content: " 🤖"; }
+
+        /* --- QUIZ STYLES --- */
+        .quiz-container {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid var(--neon-blue);
+        }
+        .quiz-option {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background: #000;
+            cursor: pointer;
+            border: 1px solid #444;
+            border-radius: 5px;
+        }
+        .quiz-option:hover { background: #222; }
+        
+        /* Quiz Result Text */
+        .quiz-result {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 10px;
+            padding: 10px;
+            display: none; /* Hidden by default */
+        }
+        .res-correct { color: var(--bg-dark); background: var(--success); }
+        .res-wrong { color: white; background: var(--error); }
+
+        /* --- CODE EDITOR STYLES --- */
+        .code-box {
+            background: black;
+            border: 1px solid #555;
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .code-header {
+            background: var(--neon-mauve);
+            color: black;
+            font-weight: bold;
+            padding: 5px 15px;
+        }
+        .code-area {
+            font-family: monospace;
+            padding: 15px;
+            color: #ccc;
+        }
+        input.code-input {
+            background: #222;
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 5px;
+            border-radius: 4px;
+            width: 150px;
+            font-weight: bold;
+        }
+        .run-btn {
+            background: var(--neon-blue);
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 15px 15px 15px;
+            display: block;
+        }
+        .run-btn:hover { background: white; }
+        
+        .console-log {
+            background: #0a0a0a;
+            color: white;
+            padding: 10px;
+            border-top: 1px solid #333;
+            font-family: monospace;
+            min-height: 30px;
+        }
+
+        /* --- AI MODAL (POPUP) --- */
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-box {
+            background: var(--card-dark);
+            border: 2px solid var(--neon-mauve);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 0 30px var(--neon-mauve);
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px; right: 15px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div style="max-width: 800px; margin: 0 auto;">
+        <h1>Strategic Web Course</h1>
+        <p class="subtitle">Black, Blue & Mauve Theme | Interactive AI & Code</p>
+    </div>
+</header>
+
+<div style="max-width: 900px; margin: 0 auto;">
+
+    <div class="section">
+        <h2>1. Strategic Response to Complex Problems</h2>
+        <p>
+            Designing a strategic response requires a structured approach. Complex problems involve 
+            <span class="ai-btn" onclick="openAI('stakeholders')">stakeholders</span>, 
+            uncertainty, and interdependent factors. A relevant response begins with 
+            <strong>problem understanding</strong> to define root causes. 
+            <span class="ai-btn" onclick="openAI('codesign')">Co-design</span> 
+            emphasizes collaboration. We use frameworks like 
+            <span class="ai-btn" onclick="openAI('agile')">Agile methodologies</span>.
+        </p>
+
+        <div class="quiz-container">
+            <strong>Q: What is the first step in a strategic response?</strong>
+            <div class="quiz-option" onclick="checkQuiz(1, false)">A. Writing Code Immediately</div>
+            <div class="quiz-option" onclick="checkQuiz(1, true)">B. Problem Understanding & Research</div>
+            <div class="quiz-option" onclick="checkQuiz(1, false)">C. Selling the product</div>
+            <div id="q1-result" class="quiz-result"></div>
+        </div>
+
+        <div class="code-box">
+            <div class="code-header">JAVASCRIPT CHALLENGE</div>
+            <div class="code-area">
+                let strategy = {<br>
+                &nbsp;&nbsp;focus: "<input type="text" class="code-input" id="c1" placeholder="Type answer here">"<br>
+                };
+            </div>
+            <button class="run-btn" onclick="runCode(1, 'root causes', 'Strategy focused on Root Causes')">RUN CODE</button>
+            <div class="console-log" id="log1">// Console waiting...</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. Entrepreneurship in the Digital Sector</h2>
+        <p>
+            Digital entrepreneurship focuses on creating value through technology. Objectives include 
+            <span class="ai-btn" onclick="openAI('scalability')">scalability</span> and innovation. 
+            However, it presents issues like 
+            <span class="ai-btn" onclick="openAI('cybersecurity')">cybersecurity risks</span>, 
+            IP protection, and data privacy. Success requires ethical awareness.
+        </p>
+
+        <div class="quiz-container">
+            <strong>Q: Which is a major professional issue in this sector?</strong>
+            <div class="quiz-option" onclick="checkQuiz(2, true)">A. Cybersecurity Risks</div>
+            <div class="quiz-option" onclick="checkQuiz(2, false)">B. Paper Shortages</div>
+            <div class="quiz-option" onclick="checkQuiz(2, false)">C. Slow Internet</div>
+            <div id="q2-result" class="quiz-result"></div>
+        </div>
+
+        <div class="code-box">
+            <div class="code-header">MATH CALCULATION</div>
+            <div class="code-area">
+                let users = 1000;<br>
+                // Calculate growth (Multiply using *)<br>
+                let growth = users <input type="text" class="code-input" id="c2" placeholder="symbol"> 5;
+            </div>
+            <button class="run-btn" onclick="runCode(2, '*', 'Growth Calculated: 5000 users')">RUN CODE</button>
+            <div class="console-log" id="log2">// Console waiting...</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>3. The SAE Framework</h2>
+        <p>
+            The SAE framework stands for Understanding, Designing, Developing, Interacting.
+            Designing involves <span class="ai-btn" onclick="openAI('wireframes')">wireframes</span>.
+            Interacting ensures effective communication via <span class="ai-btn" onclick="openAI('ui')">intuitive interfaces</span>.
+        </p>
+
+        <div class="quiz-container">
+            <strong>Q: What does the 'D' stand for in SAE regarding code?</strong>
+            <div class="quiz-option" onclick="checkQuiz(3, false)">A. Drawing</div>
+            <div class="quiz-option" onclick="checkQuiz(3, true)">B. Developing</div>
+            <div class="quiz-option" onclick="checkQuiz(3, false)">C. Dreaming</div>
+            <div id="q3-result" class="quiz-result"></div>
+        </div>
+
+        <div class="code-box">
+            <div class="code-header">ARRAY CHALLENGE</div>
+            <div class="code-area">
+                let sae = ["Understand", "Design", "<input type="text" class="code-input" id="c3" placeholder="missing step">"];
+            </div>
+            <button class="run-btn" onclick="runCode(3, 'Developing', 'SAE Phase 3 set to Developing')">RUN CODE</button>
+            <div class="console-log" id="log3">// Console waiting...</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>4. High-Quality User Experience (UX)</h2>
+        <p>
+            UX starts with <span class="ai-btn" onclick="openAI('personas')">user research</span>. 
+            Key principles are simplicity and consistency. A strong UX ensures users complete tasks with minimal effort.
+        </p>
+
+        <div class="quiz-container">
+            <strong>Q: What improves UX over time?</strong>
+            <div class="quiz-option" onclick="checkQuiz(4, false)">A. Ignoring feedback</div>
+            <div class="quiz-option" onclick="checkQuiz(4, true)">B. Continuous User Testing</div>
+            <div class="quiz-option" onclick="checkQuiz(4, false)">C. More colors</div>
+            <div id="q4-result" class="quiz-result"></div>
+        </div>
+
+        <div class="code-box">
+            <div class="code-header">CSS CHALLENGE</div>
+            <div class="code-area">
+                /* Set font size for mobile */<br>
+                body { font-size: <input type="text" class="code-input" id="c4" placeholder="14px">; }
+            </div>
+            <button class="run-btn" onclick="runCode(4, '14px', 'CSS Applied: Font size is now 14px')">RUN CODE</button>
+            <div class="console-log" id="log4">// Console waiting...</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>5. Develop a Web Application</h2>
+        <p>
+            Development includes planning, design, development, testing, and deployment. 
+            It starts with defining <span class="ai-btn" onclick="openAI('requirements')">functional requirements</span>.
+        </p>
+
+        <div class="quiz-container">
+            <strong>Q: What happens immediately after development?</strong>
+            <div class="quiz-option" onclick="checkQuiz(5, true)">A. Testing</div>
+            <div class="quiz-option" onclick="checkQuiz(5, false)">B. Deletion</div>
+            <div class="quiz-option" onclick="checkQuiz(5, false)">C. Marketing</div>
+            <div id="q5-result" class="quiz-result"></div>
+        </div>
+
+        <div class="code-box">
+            <div class="code-header">FUNCTION CHALLENGE</div>
+            <div class="code-area">
+                function deploy() {<br>
+                &nbsp;&nbsp;return "<input type="text" class="code-input" id="c5" placeholder="status">";<br>
+                }
+            </div>
+            <button class="run-btn" onclick="runCode(5, 'success', 'System Status: Success')">RUN CODE</button>
+            <div class="console-log" id="log5">// Console waiting...</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>6. Server-Side & Client-Side Tools</h2>
+        <p>
+            <span class="ai-btn" onclick="openAI('clientside')">Client-side</span> handles UI. 
+            <span class="ai-btn" onclick="openAI('serverside')">Server-side</span> handles logic. 
+            <span class="ai-btn" onclick="openAI('api')">APIs</span> connect them.
+        </p>
+
+        <div class="quiz-container">
+            <strong>Q: Which side manages the database?</strong>
+            <div class="quiz-option" onclick="checkQuiz(6, false)">A. Client-side</div>
+            <div class="quiz-option" onclick="checkQuiz(6, true)">B. Server-side</div>
+            <div id="q6-result" class="quiz-result"></div>
+        </div>
+
+        <div class="code-box">
+            <div class="code-header">NODE.JS SERVER</div>
+            <div class="code-area">
+                const http = require('http');<br>
+                const server = http.<input type="text" class="code-input" id="c6" placeholder="command">();
+            </div>
+            <button class="run-btn" onclick="runCode(6, 'createServer', 'Server created on Port 8080')">RUN CODE</button>
+            <div class="console-log" id="log6">// Console waiting...</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>7. Back Office & Data</h2>
+        <p>
+            A <span class="ai-btn" onclick="openAI('backoffice')">back office</span> allows admins to CRUD data. 
+            Role-based access control (RBAC) ensures security.
+        </p>
+
+        <div class="quiz-container">
+            <strong>Q: What does CRUD stand for?</strong>
+            <div class="quiz-option" onclick="checkQuiz(7, true)">A. Create, Read, Update, Delete</div>
+            <div class="quiz-option" onclick="checkQuiz(7, false)">B. Copy, Run, Undo, Done</div>
+            <div id="q7-result" class="quiz-result"></div>
+        </div>
+
+        <div class="code-box">
+            <div class="code-header">SQL CHALLENGE</div>
+            <div class="code-area">
+                UPDATE users SET role = 'admin' WHERE id = <input type="text" class="code-input" id="c7" placeholder="ID">;
+            </div>
+            <button class="run-btn" onclick="runCode(7, '1', 'Database Updated: User 1 is now Admin')">RUN CODE</button>
+            <div class="console-log" id="log7">// Console waiting...</div>
+        </div>
+    </div>
+
+     <div class="section">
+        <h2>8. Ergonomic UX</h2>
+        <p>
+            Ergonomic design reduces fatigue. We must follow 
+            <span class="ai-btn" onclick="openAI('wcag')">WCAG</span> standards for accessibility.
+        </p>
+
+        <div class="quiz-container">
+            <strong>Q: Who is ergonomic UX for?</strong>
+            <div class="quiz-option" onclick="checkQuiz(8, true)">A. Both Admins and Users</div>
+            <div class="quiz-option" onclick="checkQuiz(8, false)">B. Only Robots</div>
+            <div id="q8-result" class="quiz-result"></div>
+        </div>
+
+        <div class="code-box">
+            <div class="code-header">ACCESSIBILITY CODE</div>
+            <div class="code-area">
+                /* High contrast text color */<br>
+                color: <input type="text" class="code-input" id="c8" placeholder="Hex Code">;
+            </div>
+            <button class="run-btn" onclick="runCode(8, '#FFF', 'Contrast Ratio passed (AAA Standard)')">RUN CODE</button>
+            <div class="console-log" id="log8">// Console waiting...</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>9. Security & Performance</h2>
+        <p>
+            Security protects against <span class="ai-btn" onclick="openAI('sqlinjection')">SQL Injection</span>. 
+            Performance involves caching and efficient code.
+        </p>
+
+        <div class="quiz-container">
+            <strong>Q: What is a common web attack?</strong>
+            <div class="quiz-option" onclick="checkQuiz(9, true)">A. SQL Injection</div>
+            <div class="quiz-option" onclick="checkQuiz(9, false)">B. HTML Paint</div>
+            <div id="q9-result" class="quiz-result"></div>
+        </div>
+
+        <div class="code-box">
+            <div class="code-header">SECURITY CHECK</div>
+            <div class="code-area">
+                if (input.includes("script")) { <br>
+                &nbsp;&nbsp;return "<input type="text" class="code-input" id="c9" placeholder="Action">";<br>
+                }
+            </div>
+            <button class="run-btn" onclick="runCode(9, 'Block', 'Attack Blocked Successfully.')">RUN CODE</button>
+            <div class="console-log" id="log9">// Console waiting...</div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-overlay" id="aiModal">
+    <div class="modal-box">
+        <span class="close-btn" onclick="closeAI()">&times;</span>
+        <h2 id="aiTitle" style="margin-top:0">AI Explanation</h2>
+        <p id="aiDesc">...</p>
+        <div style="background: #333; padding: 10px; border-radius: 5px; margin-top:15px;">
+            <strong style="color: var(--neon-blue);">Example:</strong>
+            <p id="aiEx" style="margin: 5px 0 0 0; font-style: italic; color: #fff;"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- 1. AI DATASET ---
+    const aiData = {
+        'stakeholders': { 
+            desc: "People interested in or affected by the project.", 
+            ex: "Students and Professors are stakeholders in a University App." 
+        },
+        'codesign': { 
+            desc: "Designing WITH the users, not just FOR them.", 
+            ex: "Sitting with a doctor to design a hospital app." 
+        },
+        'agile': { 
+            desc: "Building software in small steps (sprints).", 
+            ex: "Building a skateboard, then a bike, then a car." 
+        },
+        'scalability': { 
+            desc: "Can the system handle 1 million users?", 
+            ex: "Facebook works for 10 people or 10 billion people." 
+        },
+        'cybersecurity': { 
+            desc: "Protecting systems from hackers.", 
+            ex: "Using 2-Factor Authentication (2FA)." 
+        },
+        'wireframes': { 
+            desc: "A blueprint/sketch of the website.", 
+            ex: "Drawing the layout on a napkin before coding." 
+        },
+        'ui': { 
+            desc: "The buttons and screens you actually touch.", 
+            ex: "The 'Like' button on Instagram." 
+        },
+        'personas': { 
+            desc: "Fictional characters representing users.", 
+            ex: "'Student Sam', who needs to check grades quickly." 
+        },
+        'requirements': { 
+            desc: "What the software MUST do.", 
+            ex: "The app must send an email receipt." 
+        },
+        'clientside': { 
+            desc: "Code running on your browser (Chrome/Safari).", 
+            ex: "Animations and menus." 
+        },
+        'serverside': { 
+            desc: "Code running on the company's computer.", 
+            ex: "Saving passwords in the database." 
+        },
+        'api': { 
+            desc: "Allows two apps to talk to each other.", 
+            ex: "Uber app using Google Maps API for directions." 
+        },
+        'backoffice': { 
+            desc: "Admin panel for managing the site.", 
+            ex: "Where the shop owner adds new products." 
+        },
+        'wcag': { 
+            desc: "Rules to make sites accessible to disabled users.", 
+            ex: "Screen readers for the blind." 
+        },
+        'sqlinjection': { 
+            desc: "Hacking a database by typing code into a form.", 
+            ex: "Typing a command into the login box to steal passwords." 
+        }
+    };
+
+    // --- 2. AI FUNCTIONS ---
+    function openAI(key) {
+        const modal = document.getElementById('aiModal');
+        const data = aiData[key];
+        
+        if(data) {
+            document.getElementById('aiTitle').innerText = key.toUpperCase();
+            document.getElementById('aiDesc').innerText = data.desc;
+            document.getElementById('aiEx').innerText = data.ex;
+            modal.style.display = 'flex'; // Shows the popup
+        } else {
+            alert("AI definition not found.");
+        }
+    }
+
+    function closeAI() {
+        document.getElementById('aiModal').style.display = 'none';
+    }
+
+    // --- 3. QUIZ LOGIC (FIXED) ---
+    function checkQuiz(qNum, isCorrect) {
+        const resultDiv = document.getElementById('q' + qNum + '-result');
+        resultDiv.style.display = 'block';
+
+        if (isCorrect) {
+            resultDiv.innerText = "✅ CORRECT!";
+            resultDiv.className = "quiz-result res-correct";
+        } else {
+            resultDiv.innerText = "❌ WRONG ANSWER. Try again.";
+            resultDiv.className = "quiz-result res-wrong";
+        }
+    }
+
+    // --- 4. CODE RUNNER LOGIC (FIXED) ---
+    function runCode(id, expectedAnswer, successMessage) {
+        const input = document.getElementById('c' + id).value.trim();
+        const log = document.getElementById('log' + id);
+
+        // Case insensitive check
+        if (input.toLowerCase() === expectedAnswer.toLowerCase()) {
+            log.style.color = "#00ff88"; // Green
+            log.innerHTML = "> Compiling...<br>> " + successMessage;
+        } else {
+            log.style.color = "#ff4444"; // Red
+            log.innerHTML = "> ❌ ERROR: Code Implementation Failed.<br>> Expected: " + expectedAnswer;
+        }
+    }
+</script>
+
+</body>
+</html>
