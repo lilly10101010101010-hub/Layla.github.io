@@ -1,0 +1,325 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Framework - SAE Methodology</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background: #f8fafc; color: #1e293b; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        header { background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%); color: white; padding: 3rem 0; text-align: center; border-radius: 0 0 20px 20px; margin-bottom: 3rem; }
+        h1 { font-size: 2.8rem; margin-bottom: 1rem; font-weight: 700; }
+        .subtitle { font-size: 1.2rem; opacity: 0.9; max-width: 800px; margin: 0 auto; }
+        .module { background: white; border-radius: 12px; padding: 2.5rem; margin-bottom: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border-left: 5px solid #3b82f6; }
+        h2 { color: #1e40af; margin-bottom: 1.5rem; font-size: 1.8rem; display: flex; align-items: center; gap: 10px; }
+        h2::before { content: attr(data-number); background: #3b82f6; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+        .content { margin-bottom: 2rem; }
+        .question { background: #f1f5f9; padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0; border-left: 4px solid #6366f1; }
+        .question h3 { color: #4f46e5; margin-bottom: 0.5rem; }
+        .code-section { background: #0f172a; color: #e2e8f0; padding: 2rem; border-radius: 10px; margin: 2rem 0; font-family: 'Consolas', monospace; overflow-x: auto; }
+        .fill-blank { background: #fef3c7; border: 2px dashed #f59e0b; padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0; }
+        .fill-input { padding: 0.75rem; border: 2px solid #3b82f6; border-radius: 6px; width: 200px; margin: 0 10px; }
+        .btn { background: #3b82f6; color: white; border: none; padding: 0.8rem 1.8rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: background 0.3s; }
+        .btn:hover { background: #2563eb; }
+        .explanation-tool { background: #ecfdf5; border: 1px solid #10b981; padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem; display: none; }
+        .explanation-tool.show { display: block; }
+        .tool-toggle { color: #10b981; background: none; border: none; cursor: pointer; font-size: 0.95rem; display: flex; align-items: center; gap: 5px; margin-top: 1rem; }
+        .output { background: #dbeafe; padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem; display: none; }
+        .output.show { display: block; }
+        footer { text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #cbd5e1; color: #64748b; }
+        .module-nav { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
+        .nav-btn { background: #e0e7ff; color: #3730a3; padding: 0.8rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+        .nav-btn:hover { background: #3730a3; color: white; }
+        .correct { color: #10b981; font-weight: 600; }
+        .incorrect { color: #ef4444; }
+        @media (max-width: 768px) { .container { padding: 1.5rem; } h1 { font-size: 2.2rem; } .module { padding: 1.8rem; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Web Application Development Framework</h1>
+            <p class="subtitle">A professional educational resource integrating SAE methodology, strategic design, and full-stack implementation principles for college-level comprehension.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="module-nav">
+            <a href="#module1" class="nav-btn">1. Strategic Response</a>
+            <a href="#module2" class="nav-btn">2. Digital Entrepreneurship</a>
+            <a href="#module3" class="nav-btn">3. SAE Framework</a>
+            <a href="#module4" class="nav-btn">4. UX Development</a>
+            <a href="#module5" class="nav-btn">5. Development Process</a>
+            <a href="#module6" class="nav-btn">6. Client/Server Tools</a>
+            <a href="#module7" class="nav-btn">7. Back Office</a>
+            <a href="#module8" class="nav-btn">8. Ergonomic UX</a>
+            <a href="#module9" class="nav-btn">9. Security & Performance</a>
+        </div>
+
+        <div class="module" id="module1">
+            <h2 data-number="1">Design or Co-design a Relevant Strategic Response to a Complex Problem</h2>
+            <div class="content">
+                <p>Designing or co-designing a strategic response to a complex problem requires a structured, user-centered, and collaborative approach. Complex problems are typically characterized by multiple stakeholders, uncertainty, evolving requirements, and interdependent factors such as technology, business constraints, and user needs. A relevant strategic response begins with problem understanding, which involves research, data analysis, and stakeholder interviews to clearly define the root causes rather than just symptoms.</p>
+                <p>Co-design emphasizes collaboration between designers, developers, users, and decision-makers. This approach ensures that solutions are realistic, inclusive, and aligned with real user expectations. Strategic responses often use frameworks such as design thinking, systems thinking, and agile methodologies to prototype, test, and refine ideas iteratively. The final strategy should balance innovation, feasibility, scalability, and long-term sustainability while remaining adaptable to change.</p>
+            </div>
+            <div class="question">
+                <h3>Question: What are two key characteristics of complex problems mentioned in the text?</h3>
+                <div class="fill-blank">
+                    <p>Complete the statement: Complex problems involve ______________ and ______________ factors.</p>
+                    <input type="text" class="fill-input" id="q1a" placeholder="First characteristic">
+                    <input type="text" class="fill-input" id="q1b" placeholder="Second characteristic">
+                    <button class="btn" onclick="checkAnswer(1)">Verify Answer</button>
+                    <div class="output" id="output1"></div>
+                </div>
+            </div>
+            <button class="tool-toggle" onclick="toggleExplanation(1)">📘 Request Conceptual Explanation</button>
+            <div class="explanation-tool" id="explain1">
+                <p><strong>Conceptual Explanation:</strong> This module introduces the systematic approach to addressing ill-defined problems with no single solution. It distinguishes between traditional design (expert-led) and co-design (participatory), highlighting the importance of stakeholder integration. The underlying theory combines soft systems methodology with iterative prototyping, emphasizing root cause analysis over symptomatic treatment.</p>
+            </div>
+        </div>
+
+        <div class="module" id="module2">
+            <h2 data-number="2">Entrepreneurship in the Digital Sector: Objectives and Professional Issues</h2>
+            <div class="content">
+                <p>Entrepreneurship in the digital sector focuses on creating value through technology-driven products and services such as web platforms, mobile applications, SaaS solutions, and digital marketplaces. The primary objectives include innovation, market competitiveness, scalability, and customer-centric value creation. Digital entrepreneurs aim to leverage emerging technologies to solve real-world problems more efficiently than traditional models.</p>
+                <p>However, this sector also presents professional issues, including rapid technological change, cybersecurity risks, intellectual property protection, and ethical responsibilities such as data privacy and algorithmic transparency. Entrepreneurs must also manage challenges related to funding, regulatory compliance across countries, talent acquisition, and maintaining sustainable business models. Success in the digital sector requires both technical competence and strong strategic, managerial, and ethical awareness.</p>
+            </div>
+            <div class="question">
+                <h3>Question: Identify one objective and one professional issue in digital entrepreneurship.</h3>
+                <div class="fill-blank">
+                    <p>Objective: <input type="text" class="fill-input" id="q2a" placeholder="e.g., innovation"><br><br>
+                    Professional Issue: <input type="text" class="fill-input" id="q2b" placeholder="e.g., cybersecurity"></p>
+                    <button class="btn" onclick="checkAnswer(2)">Verify Answer</button>
+                    <div class="output" id="output2"></div>
+                </div>
+            </div>
+            <button class="tool-toggle" onclick="toggleExplanation(2)">📘 Request Conceptual Explanation</button>
+            <div class="explanation-tool" id="explain2">
+                <p><strong>Conceptual Explanation:</strong> This section examines digital entrepreneurship through the lens of the Lean Startup methodology and technology adoption lifecycles. It contrasts value creation (objectives) with risk management (issues), framing entrepreneurship as a balance between opportunity exploitation and ethical/operational constraints. The dual focus on scalability and sustainability reflects contemporary business model canvas thinking.</p>
+            </div>
+        </div>
+
+        <div class="module" id="module3">
+            <h2 data-number="3">Implement and Combine Associate Skills with SAE (Understanding, Designing, Developing, Interacting) to Develop a Web Application in an International Context</h2>
+            <div class="content">
+                <p>The SAE framework (Understanding, Designing, Developing, Interacting) provides a holistic approach to web application development.</p>
+                <p>• Understanding involves analyzing user needs, business objectives, cultural differences, and legal constraints in an international context.</p>
+                <p>• Designing translates insights into system architecture, user journeys, wireframes, and interface designs that are culturally adaptable and accessible.</p>
+                <p>• Developing focuses on implementing the technical solution using appropriate programming languages, frameworks, APIs, and databases.</p>
+                <p>• Interacting ensures effective communication between users and the system through intuitive interfaces and meaningful feedback.</p>
+                <p>Combining these stages with associate skills such as teamwork, problem-solving, communication, and project management enables the creation of robust web applications that work effectively across different markets, languages, and user expectations.</p>
+            </div>
+            <div class="code-section">
+                // SAE Framework Implementation Example<br>
+                const saeFramework = {<br>
+                &nbsp;&nbsp;understanding: function(context) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return analyzeNeeds(context);<br>
+                &nbsp;&nbsp;},<br>
+                &nbsp;&nbsp;designing: function(insights) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return createArchitecture(insights);<br>
+                &nbsp;&nbsp;},<br>
+                &nbsp;&nbsp;developing: function(design) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return implementSolution(design);<br>
+                &nbsp;&nbsp;},<br>
+                &nbsp;&nbsp;interacting: function(system) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return optimizeInteraction(system);<br>
+                &nbsp;&nbsp;}<br>
+                };<br><br>
+                // International context consideration<br>
+                const internationalDevelopment = saeFramework.understanding("global market");
+            </div>
+            <div class="question">
+                <h3>Question: In the SAE framework, which phase focuses on "culturally adaptable interface designs"?</h3>
+                <div class="fill-blank">
+                    <p>Answer: <input type="text" class="fill-input" id="q3" placeholder="Enter phase name">
+                    <button class="btn" onclick="checkAnswer(3)">Verify Answer</button>
+                    <div class="output" id="output3"></div>
+                </div>
+            </div>
+            <button class="tool-toggle" onclick="toggleExplanation(3)">📘 Request Conceptual Explanation</button>
+            <div class="explanation-tool" id="explain3">
+                <p><strong>Conceptual Explanation:</strong> SAE represents a sequential yet iterative development epistemology. Understanding corresponds to requirements engineering, Designing to software architecture, Developing to implementation, and Interacting to HCI principles. The international dimension introduces Hofstede's cultural dimensions theory into the design process, requiring localization beyond mere translation.</p>
+            </div>
+        </div>
+
+        <div class="module" id="module4">
+            <h2 data-number="4">Developing a Web Application or Service with a High-Quality User Experience</h2>
+            <div class="content">
+                <p>A high-quality user experience (UX) is essential for user satisfaction, engagement, and retention. UX development starts with user research, including personas, user journeys, and usability testing. Key UX principles include simplicity, consistency, accessibility, responsiveness, and clarity.</p>
+                <p>A strong UX design ensures that users can complete tasks efficiently with minimal cognitive effort. This involves optimizing navigation, reducing loading times, providing clear feedback, and designing for multiple devices and screen sizes. Continuous user testing and data-driven improvements play a critical role in refining the experience over time, ensuring the application remains aligned with evolving user needs.</p>
+            </div>
+            <div class="question">
+                <h3>Question: List two key UX principles mentioned.</h3>
+                <div class="fill-blank">
+                    <p>1. <input type="text" class="fill-input" id="q4a" placeholder="First principle"><br><br>
+                    2. <input type="text" class="fill-input" id="q4b" placeholder="Second principle"></p>
+                    <button class="btn" onclick="checkAnswer(4)">Verify Answer</button>
+                    <div class="output" id="output4"></div>
+                </div>
+            </div>
+            <button class="tool-toggle" onclick="toggleExplanation(4)">📘 Request Conceptual Explanation</button>
+            <div class="explanation-tool" id="explain4">
+                <p><strong>Conceptual Explanation:</strong> This module operationalizes Nielsen's 10 usability heuristics within web contexts. It emphasizes the lifecycle from formative research (personas) to summative evaluation (usability testing). The cognitive effort minimization principle draws from Hick-Hyman Law and Fitts's Law, while responsiveness addresses the RAIL performance model.</p>
+            </div>
+        </div>
+
+        <div class="module" id="module5">
+            <h2 data-number="5">Develop a Web Application or Service</h2>
+            <div class="content">
+                <p>Developing a web application or service is a multi-phase process that includes planning, design, development, testing, deployment, and maintenance. It begins with defining functional and non-functional requirements, followed by selecting appropriate technologies and architectural patterns.</p>
+                <p>The development phase involves writing clean, modular, and scalable code while integrating third-party services when needed. Testing ensures reliability, performance, and security before deployment. After launch, continuous monitoring, updates, and user feedback integration are necessary to maintain relevance and quality.</p>
+            </div>
+        </div>
+
+        <div class="module" id="module6">
+            <h2 data-number="6">Design and Develop a Web Application or Service Using Server-Side and Client-Side Development Tools</h2>
+            <div class="content">
+                <p>Modern web applications rely on a clear separation between client-side and server-side development. Client-side tools (such as HTML, CSS, JavaScript, and frameworks like React or Vue) focus on user interface, interactivity, and responsiveness. Server-side tools (such as Node.js, PHP, Python, or Java) manage business logic, databases, authentication, and data processing.</p>
+                <p>This architecture enables better scalability, maintainability, and performance. APIs are often used to allow seamless communication between the front-end and back-end, supporting modular development and easier integration with external systems.</p>
+            </div>
+            <div class="code-section">
+                // Client-Side (React example)<br>
+                function UserInterface() {<br>
+                &nbsp;&nbsp;const [data, setData] = useState(null);<br>
+                &nbsp;&nbsp;useEffect(() => {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;fetch('/api/data') // Communicating with server-side<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.then(res => res.json())<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.then(setData);<br>
+                &nbsp;&nbsp;}, []);<br>
+                &nbsp;&nbsp;return &lt;div&gt;{data}&lt;/div&gt;;<br>
+                }<br><br>
+                // Server-Side (Node.js/Express example)<br>
+                app.get('/api/data', (req, res) => {<br>
+                &nbsp;&nbsp;database.query('SELECT * FROM table', (result) => {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;res.json(result); // API response<br>
+                &nbsp;&nbsp;});<br>
+                });
+            </div>
+        </div>
+
+        <div class="module" id="module7">
+            <h2 data-number="7">Set Up a Back Office for Data Manipulation and Processing with a Rich Client Interface</h2>
+            <div class="content">
+                <p>A back office is a critical component for managing application data, users, and system operations. It allows administrators to create, read, update, and delete data efficiently while ensuring data integrity and consistency. The back office should support reporting, analytics, and automation of routine processes.</p>
+                <p>A rich client interface enhances productivity by providing dashboards, filters, real-time updates, and visual data representations. Role-based access control ensures that different users have appropriate permissions, reducing risks and improving operational efficiency.</p>
+            </div>
+        </div>
+
+        <div class="module" id="module8">
+            <h2 data-number="8">Design and Implement an Ergonomic User Experience for End-Users and Site Administrators</h2>
+            <div class="content">
+                <p>Ergonomic UX design focuses on reducing effort, errors, and fatigue for both end-users and administrators. For end-users, this means intuitive navigation, clear content hierarchy, and minimal steps to complete tasks. For administrators, it involves efficient workflows, logical information organization, and powerful management tools.</p>
+                <p>Consistency, accessibility standards (such as WCAG), and responsive design principles are essential. An ergonomic experience improves satisfaction, productivity, and long-term adoption of the system.</p>
+            </div>
+        </div>
+
+        <div class="module" id="module9">
+            <h2 data-number="9">Ensure the Security and Performance of the Application and Its Hosting</h2>
+            <div class="content">
+                <p>Security and performance are fundamental to the success of any web application. Security measures include secure authentication, encryption, protection against common attacks (such as SQL injection and XSS), regular updates, and compliance with data protection regulations. Performance optimization involves efficient code, caching strategies, optimized databases, and scalable hosting solutions.</p>
+                <p>Reliable hosting infrastructure, monitoring tools, and backup systems ensure high availability and resilience. Together, strong security and performance practices protect user trust, maintain system stability, and support future growth.</p>
+            </div>
+            <div class="code-section">
+                // Security example: SQL injection protection<br>
+                const sql = 'SELECT * FROM users WHERE id = ?';<br>
+                db.execute(sql, [userId]); // Parameterized query<br><br>
+                // Performance example: Caching implementation<br>
+                const cache = new Map();<br>
+                function getCachedData(key) {<br>
+                &nbsp;&nbsp;if (cache.has(key)) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return cache.get(key); // Return cached<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;const data = fetchFromDatabase(key);<br>
+                &nbsp;&nbsp;cache.set(key, data); // Store in cache<br>
+                &nbsp;&nbsp;return data;<br>
+                }
+            </div>
+            <div class="question">
+                <h3>Question: Name one security threat and one performance strategy mentioned.</h3>
+                <div class="fill-blank">
+                    <p>Security: <input type="text" class="fill-input" id="q9a" placeholder="e.g., SQL injection"><br><br>
+                    Performance: <input type="text" class="fill-input" id="q9b" placeholder="e.g., caching"></p>
+                    <button class="btn" onclick="checkAnswer(9)">Verify Answer</button>
+                    <div class="output" id="output9"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Educational Resource for College-Level Web Development Curriculum | Integrating SAE Framework & Professional Practices</p>
+        </div>
+    </footer>
+
+    <script>
+        const answers = {
+            1: { a: "multiple stakeholders", b: "interdependent" },
+            2: { a: "innovation", b: "cybersecurity" },
+            3: "designing",
+            4: { a: "simplicity", b: "consistency" },
+            9: { a: "sql injection", b: "caching" }
+        };
+
+        function checkAnswer(module) {
+            const output = document.getElementById(`output${module}`);
+            output.classList.add('show');
+            
+            if (module === 3) {
+                const userAnswer = document.getElementById('q3').value.toLowerCase().trim();
+                if (userAnswer === answers[3]) {
+                    output.innerHTML = `<p class="correct">✓ Correct. The Designing phase specifically addresses cultural adaptability in interface design.</p>`;
+                    runCodeExample();
+                } else {
+                    output.innerHTML = `<p class="incorrect">✗ Please review the SAE framework phases. The correct phase is "Designing".</p>`;
+                }
+                return;
+            }
+
+            const ansA = document.getElementById(`q${module}a`).value.toLowerCase().trim();
+            const ansB = document.getElementById(`q${module}b`).value.toLowerCase().trim();
+            
+            if (module === 1 || module === 2 || module === 4 || module === 9) {
+                const correctA = answers[module].a;
+                const correctB = answers[module].b;
+                const isCorrect = ansA.includes(correctA) || correctA.includes(ansA);
+                const isCorrect2 = ansB.includes(correctB) || correctB.includes(ansB);
+                
+                if (isCorrect && isCorrect2) {
+                    output.innerHTML = `<p class="correct">✓ Correct. These are valid elements from the module content.</p>`;
+                    if (module === 9) runSecurityCode();
+                } else {
+                    output.innerHTML = `<p class="incorrect">✗ Please review the module content. Acceptable answers include: "${answers[module].a}" and "${answers[module].b}".</p>`;
+                }
+            }
+        }
+
+        function toggleExplanation(module) {
+            const exp = document.getElementById(`explain${module}`);
+            exp.classList.toggle('show');
+        }
+
+        function runCodeExample() {
+            alert("SAE framework code executed. In a full implementation, this would demonstrate the international context analysis phase.");
+        }
+
+        function runSecurityCode() {
+            alert("Security and performance code verified. Parameterized queries and caching strategies are now active in this educational context.");
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-btn').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+```
