@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Master Framework | SAE Educational Platform</title>
+    <style>
+        :root {
+            --primary-blue: #1a237e;
+            --accent-blue: #2962ff;
+            --light-blue: #e3f2fd;
+            --dark-text: #1a1a1a;
+            --light-text: #f5f7fa;
+            --correct-green: #00c853;
+            --incorrect-red: #d32f2f;
+            --warning-yellow: #ffab00;
+            --gray-bg: #f8fafc;
+            --border-color: #e0e0e0;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e3f2fd 100%);
+            color: var(--dark-text);
+            min-height: 100vh;
+            line-height: 1.7;
+        }
+
+        /* 3D Navigation Panel */
+        .nav-3d {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 280px;
+            background: linear-gradient(180deg, var(--primary-blue) 0%, #0d47a1 100%);
+            padding: 2rem 1.5rem;
+            transform: perspective(1000px) rotateY(0deg);
+            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .nav-3d:hover {
+            transform: perspective(1000px) rotateY(-5deg);
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            text-align: center;
+            letter-spacing: -0.5px;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .nav-item {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+
+        .nav-item:hover::before {
+            left: 0;
+        }
+
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-weight: 600;
+            box-shadow: inset 3px 0 0 var(--accent-blue);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--accent-blue);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+
+        /* Floating Action Menu */
+        .action-menu {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: white;
+            border-radius: 50px;
+            padding: 0.75rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 999;
+        }
+
+        .action-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            background: transparent;
+            color: var(--primary-blue);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .action-btn:hover:not(.active) {
+            background: var(--light-blue);
+        }
+
+        /* Content Sections */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.6s ease-out;
+            padding: 4rem 6rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .module-number {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-blue), #304ffe);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            font-weight: 800;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 800px;
+        }
+
+        /* Content Cards */
+        .content-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .card-title::before {
+            content: '';
+            width: 6px;
+            height: 30px;
+            background: var(--accent-blue);
+            border-radius: 3px;
+        }
+
+        /* Interactive Question System */
+        .question-panel {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 6px solid var(--accent-blue);
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin: 2rem 0;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-title {
+            color: var(--primary-blue);
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .difficulty-badge {
+            background: var(--warning-yellow);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 1.2rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            margin: 1rem 0;
+            transition: var(--transition);
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(41, 98, 255, 0.1);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--accent-blue), #304ffe);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(41, 98, 255, 0.2);
+        }
+
+        /* Response System */
+        .response-feedback {
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-top: 1.5rem;
+            display: none;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .response-feedback.correct {
+            background: rgba(0, 200, 83, 0.1);
+            border: 2px solid var(--correct-green);
+            display: block;
+        }
+
+        .response-feedback.incorrect {
+            background: rgba(211, 47, 47, 0.1);
+            border: 2px solid var(--incorrect-red);
+            display: block;
+        }
+
+        .feedback-title {
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .feedback-title.correct { color: var(--correct-green); }
+        .feedback-title.incorrect { color: var(--incorrect-red); }
+
+        /* Code Execution Panel */
+        .code-executor {
+            background: #1e1e1e;
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+
+        .code-header {
+            background: #252526;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-title {
+            color: #cccccc;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .run-btn {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .run-btn:hover {
+            background: #1565c0;
+        }
+
+        .code-display {
+            padding: 1.5rem;
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Monaco', monospace;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .code-output {
+            background: #2d2d2d;
+            padding: 1.5rem;
+            border-top: 2px solid #3d3d3d;
+            color: #4ec9b0;
+            font-family: 'Consolas', monospace;
+            display: none;
+        }
+
+        .code-output.active {
+            display: block;
+        }
+
+        /* Explanation Overlay */
+        .explanation-overlay {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 400px;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            z-index: 1001;
+            display: none;
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+
+        .explanation-overlay.active {
+            display: block;
+            transform: translateY(0);
+        }
+
+        .explanation-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: white;
+            padding: 1.5rem;
+            border-radius: var(--radius) var(--radius) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .explanation-content {
+            padding: 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .close-explanation {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Progress Tracking */
+        .progress-tracker {
+            position: fixed;
+            bottom: 2rem;
+            left: 320px;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 998;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            transition: var(--transition);
+        }
+
+        .progress-dot.completed {
+            background: var(--correct-green);
+        }
+
+        .progress-dot.current {
+            background: var(--accent-blue);
+            transform: scale(1.3);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 1200px) {
+            .nav-3d {
+                width: 240px;
+            }
+            .main-content {
+                margin-left: 240px;
+            }
+            .page-section {
+                padding: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-3d {
+                width: 100%;
+                height: auto;
+                position: relative;
+                transform: none !important;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .action-menu {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin: 1rem;
+                justify-content: center;
+            }
+            .progress-tracker {
+                left: 1rem;
+                right: 1rem;
+                justify-content: center;
+            }
+            .explanation-overlay {
+                width: calc(100% - 2rem);
+                right: 1rem;
+                left: 1rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 3D Navigation Panel -->
+    <nav class="nav-3d">
+        <div class="logo">
+            <i class="fas fa-code"></i> SAE Framework
+        </div>
+        <div class="nav-menu">
+            <a href="#module1" class="nav-item active" data-module="1">
+                <i class="nav-icon fas fa-chess-knight"></i>
+                Strategic Response
+                <span class="nav-badge">1</span>
+            </a>
+            <a href="#module2" class="nav-item" data-module="2">
+                <i class="nav-icon fas fa-rocket"></i>
+                Digital Entrepreneurship
+                <span class="nav-badge">2</span>
+            </a>
+            <a href="#module3" class="nav-item" data-module="3">
+                <i class="nav-icon fas fa-sitemap"></i>
+                SAE Framework
+                <span class="nav-badge">3</span>
+            </a>
+            <a href="#module4" class="nav-item" data-module="4">
+                <i class="nav-icon fas fa-user-circle"></i>
+                UX Development
+                <span class="nav-badge">4</span>
+            </a>
+            <a href="#module5" class="nav-item" data-module="5">
+                <i class="nav-icon fas fa-cogs"></i>
+                Development Process
+                <span class="nav-badge">5</span>
+            </a>
+            <a href="#module6" class="nav-item" data-module="6">
+                <i class="nav-icon fas fa-code-branch"></i>
+                Client/Server Tools
+                <span class="nav-badge">6</span>
+            </a>
+            <a href="#module7" class="nav-item" data-module="7">
+                <i class="nav-icon fas fa-database"></i>
+                Back Office
+                <span class="nav-badge">7</span>
+            </a>
+            <a href="#module8" class="nav-item" data-module="8">
+                <i class="nav-icon fas fa-ergonomic"></i>
+                Ergonomic UX
+                <span class="nav-badge">8</span>
+            </a>
+            <a href="#module9" class="nav-item" data-module="9">
+                <i class="nav-icon fas fa-shield-alt"></i>
+                Security & Performance
+                <span class="nav-badge">9</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Floating Action Menu -->
+        <div class="action-menu">
+            <button class="action-btn active" data-view="lecture">
+                <i class="fas fa-book-open"></i> Lecture
+            </button>
+            <button class="action-btn" data-view="questions">
+                <i class="fas fa-question-circle"></i> Questions
+            </button>
+            <button class="action-btn" data-view="code">
+                <i class="fas fa-terminal"></i> Code Lab
+            </button>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <div class="progress-dot completed" data-module="1"></div>
+            <div class="progress-dot" data-module="2"></div>
+            <div class="progress-dot" data-module="3"></div>
+            <div class="progress-dot" data-module="4"></div>
+            <div class="progress-dot" data-module="5"></div>
+            <div class="progress-dot" data-module="6"></div>
+            <div class="progress-dot" data-module="7"></div>
+            <div class="progress-dot" data-module="8"></div>
+            <div class="progress-dot" data-module="9"></div>
+        </div>
+
+        <!-- Module 1: Strategic Response -->
+        <section id="module1" class="page-section active">
+            <div class="section-header">
+                <div class="module-number">MODULE 01</div>
+                <h1>Design or Co-design a Relevant Strategic Response to a Complex Problem</h1>
+                <p class="section-subtitle">Master structured approaches to addressing multi-faceted challenges through collaborative design methodologies</p>
+            </div>
+
+            <div class="content-card lecture-view">
+                <h2 class="card-title">Core Concept</h2>
+                <p>Designing or co-designing a strategic response to a complex problem requires a structured, user-centered, and collaborative approach. Complex problems are typically characterized by multiple stakeholders, uncertainty, evolving requirements, and interdependent factors such as technology, business constraints, and user needs.</p>
+                <p>A relevant strategic response begins with problem understanding, which involves research, data analysis, and stakeholder interviews to clearly define the root causes rather than just symptoms.</p>
+                <p>Co-design emphasizes collaboration between designers, developers, users, and decision-makers. This approach ensures that solutions are realistic, inclusive, and aligned with real user expectations. Strategic responses often use frameworks such as design thinking, systems thinking, and agile methodologies to prototype, test, and refine ideas iteratively.</p>
+                <p>The final strategy should balance innovation, feasibility, scalability, and long-term sustainability while remaining adaptable to change.</p>
+            </div>
+
+            <div class="content-card questions-view" style="display: none;">
+                <div class="question-panel">
+                    <div class="question-header">
+                        <div class="question-title">Question 1: Complex Problem Characteristics</div>
+                        <div class="difficulty-badge">Medium</div>
+                    </div>
+                    <p>Based on the lecture, complex problems are characterized by multiple stakeholders and what other key factor mentioned in the text?</p>
+                    <input type="text" class="answer-input" id="q1-input" placeholder="Enter the characteristic...">
+                    <button class="submit-btn" onclick="checkAnswer(1)">
+                        <i class="fas fa-check"></i> Verify Answer
+                    </button>
+                    <div id="q1-feedback" class="response-feedback"></div>
+                </div>
+
+                <div class="question-panel">
+                    <div class="question-header">
+                        <div class="question-title">Question 2: Co-design Collaboration</div>
+                        <div class="difficulty-badge">Easy</div>
+                    </div>
+                    <p>Who are the four key collaborators mentioned in co-design approaches?</p>
+                    <input type="text" class="answer-input" id="q2-input" placeholder="List the four collaborators...">
+                    <button class="submit-btn" onclick="checkAnswer(2)">
+                        <i class="fas fa-check"></i> Verify Answer
+                    </button>
+                    <div id="q2-feedback" class="response-feedback"></div>
+                </div>
+            </div>
+
+            <div class="content-card code-view" style="display: none;">
+                <div class="code-executor">
+                    <div class="code-header">
+                        <div class="code-title">
+                            <i class="fas fa-code"></i> Strategy Implementation Simulator
+                        </div>
+                        <button class="run-btn" onclick="runCode(1)">
+                            <i class="fas fa-play"></i> Execute Strategy
+                        </button>
+                    </div>
+                    <div class="code-display">
+                        // Complex Problem Analysis Framework<br>
+                        function analyzeComplexProblem(stakeholders, constraints) {<br>
+                        &nbsp;&nbsp;const rootCause = identifyRootCause(stakeholders);<br>
+                        &nbsp;&nbsp;const strategy = coDesignSolution(rootCause, constraints);<br>
+                        &nbsp;&nbsp;return validateStrategy(strategy);<br>
+                        }<br><br>
+                        // Co-design implementation<br>
+                        function coDesignSolution(rootCause, constraints) {<br>
+                        &nbsp;&nbsp;const prototypes = iterativePrototyping(rootCause);<br>
+                        &nbsp;&nbsp;const feedback = collectStakeholderFeedback(prototypes);<br>
+                        &nbsp;&nbsp;return refineBasedOnFeedback(feedback, constraints);<br>
+                        }
+                    </div>
+                    <div class="code-output" id="code-output-1"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Module 2: Digital Entrepreneurship -->
+        <section id="module2" class="page-section">
+            <div class="section-header">
+                <div class="module-number">MODULE 02</div>
+                <h1>Entrepreneurship in the Digital Sector: Objectives and Professional Issues</h1>
+                <p class="section-subtitle">Navigate the intersection of innovation, technology, and business ethics in digital ventures</p>
+            </div>
+
+            <div class="content-card lecture-view">
+                <h2 class="card-title">Core Concept</h2>
+                <p>Entrepreneurship in the digital sector focuses on creating value through technology-driven products and services such as web platforms, mobile applications, SaaS solutions, and digital marketplaces. The primary objectives include innovation, market competitiveness, scalability, and customer-centric value creation.</p>
+                <p>Digital entrepreneurs aim to leverage emerging technologies to solve real-world problems more efficiently than traditional models.</p>
+                <p>However, this sector also presents professional issues, including rapid technological change, cybersecurity risks, intellectual property protection, and ethical responsibilities such as data privacy and algorithmic transparency. Entrepreneurs must also manage challenges related to funding, regulatory compliance across countries, talent acquisition, and maintaining sustainable business models.</p>
+                <p>Success in the digital sector requires both technical competence and strong strategic, managerial, and ethical awareness.</p>
+            </div>
+
+            <div class="content-card questions-view" style="display: none;">
+                <div class="question-panel">
+                    <div class="question-header">
+                        <div class="question-title">Question 1: Digital Entrepreneurship Objectives</div>
+                        <div class="difficulty-badge">Easy</div>
+                    </div>
+                    <p>What are two primary objectives of digital entrepreneurship mentioned in the text?</p>
+                    <input type="text" class="answer-input" id="q3-input" placeholder="Enter first objective">
+                    <input type="text" class="answer-input" id="q4-input" placeholder="Enter second objective">
+                    <button class="submit-btn" onclick="checkAnswer(3)">
+                        <i class="fas fa-check"></i> Verify Answer
+                    </button>
+                    <div id="q3-feedback" class="response-feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Module 3: SAE Framework -->
+        <section id="module3" class="page-section">
+            <div class="section-header">
+                <div class="module-number">MODULE 03</div>
+                <h1>Implement SAE Framework for International Web Development</h1>
+                <p class="section-subtitle">Apply the Understanding-Designing-Developing-Interacting methodology across global contexts</p>
+            </div>
+
+            <div class="content-card lecture-view">
+                <h2 class="card-title">Core Concept</h2>
+                <p>The SAE framework (Understanding, Designing, Developing, Interacting) provides a holistic approach to web application development.</p>
+                <p>• Understanding involves analyzing user needs, business objectives, cultural differences, and legal constraints in an international context.</p>
+                <p>• Designing translates insights into system architecture, user journeys, wireframes, and interface designs that are culturally adaptable and accessible.</p>
+                <p>• Developing focuses on implementing the technical solution using appropriate programming languages, frameworks, APIs, and databases.</p>
+                <p>• Interacting ensures effective communication between users and the system through intuitive interfaces and meaningful feedback.</p>
+                <p>Combining these stages with associate skills such as teamwork, problem-solving, communication, and project management enables the creation of robust web applications that work effectively across different markets, languages, and user expectations.</p>
+            </div>
+        </section>
+
+        <!-- Module 4-9 would continue similarly -->
+
+        <!-- Explanation Overlay -->
+        <div class="explanation-overlay" id="explanationOverlay">
+            <div class="explanation-header">
+                <div>
+                    <h3 style="margin: 0; font-size: 1.2rem;">Concept Explanation</h3>
+                    <p style="opacity: 0.9; font-size: 0.9rem; margin-top: 0.25rem;">In-depth analysis of current concept</p>
+                </div>
+                <button class="close-explanation" onclick="closeExplanation()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="explanation-content" id="explanationContent">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Current module tracking
+        let currentModule = 1;
+        let currentView = 'lecture';
+
+        // Navigation functionality
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Update active nav item
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update module
+                currentModule = parseInt(this.dataset.module);
+                
+                // Hide all sections
+                document.querySelectorAll('.page-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show selected section
+                document.getElementById(`module${currentModule}`).classList.add('active');
+                
+                // Update progress tracker
+                updateProgressTracker();
+                
+                // Reset view to lecture
+                switchView('lecture');
+            });
+        });
+
+        // View switching
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const view = this.dataset.view;
+                switchView(view);
+            });
+        });
+
+        function switchView(view) {
+            currentView = view;
+            
+            // Update active button
+            document.querySelectorAll('.action-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.view === view) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Show/hide views in current module
+            const moduleSection = document.getElementById(`module${currentModule}`);
+            moduleSection.querySelectorAll('.lecture-view, .questions-view, .code-view').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            moduleSection.querySelector(`.${view}-view`).style.display = 'block';
+        }
+
+        // Answer checking system
+        const correctAnswers = {
+            1: ["interdependent factors", "evolving requirements", "uncertainty"],
+            2: ["designers", "developers", "users", "decision-makers"],
+            3: ["innovation", "market competitiveness", "scalability", "customer-centric value creation"]
+        };
+
+        function checkAnswer(questionNum) {
+            const input = document.getElementById(`q${questionNum}-input`);
+            const feedback = document.getElementById(`q${questionNum}-feedback`);
+            
+            if (!input) return;
+            
+            const userAnswer = input.value.toLowerCase().trim();
+            let correct = false;
+            
+            // Check for multiple possible correct answers
+            if (correctAnswers[questionNum]) {
+                correct = correctAnswers[questionNum].some(answer => 
+                    userAnswer.includes(answer.toLowerCase()) || 
+                    answer.toLowerCase().includes(userAnswer)
+                );
+            }
+            
+            // Display feedback
+            if (correct) {
+                feedback.className = 'response-feedback correct';
+                feedback.innerHTML = `
+                    <div class="feedback-title correct">
+                        <i class="fas fa-check-circle"></i> Correct Answer
+                    </div>
+                    <p>Your understanding is accurate. This concept is essential for mastering strategic response design.</p>
+                `;
+                
+                // Mark progress
+                markModuleProgress(currentModule);
+            } else {
+                feedback.className = 'response-feedback incorrect';
+                feedback.innerHTML = `
+                    <div class="feedback-title incorrect">
+                        <i class="fas fa-times-circle"></i> Incorrect Answer
+                    </div>
+                    <p>Please review the lecture material. Consider re-reading the section on complex problem characteristics.</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
+                        <i class="fas fa-lightbulb"></i> Hint: Look for terms describing the nature of complex problems
+                    </p>
+                `;
+            }
+            
+            feedback.style.display = 'block';
+        }
+
+        // Code execution
+        function runCode(moduleNum) {
+            const output = document.getElementById(`code-output-${moduleNum}`);
+            
+            if (moduleNum === 1) {
+                output.innerHTML = `
+                    Executing complex problem analysis...<br>
+                    ✓ Root cause identification complete<br>
+                    ✓ Stakeholder mapping generated<br>
+                    ✓ Co-design session simulated with 4 participant groups<br>
+                    ✓ Iterative prototyping cycle initiated<br>
+                    <br>
+                    <strong>Result:</strong> Strategic response framework validated with 87% stakeholder alignment
+                `;
+            }
+            
+            output.classList.add('active');
+        }
+
+        // Explanation system
+        function showExplanation(concept) {
+            const explanations = {
+                "co-design": "Co-design represents a paradigm shift from expert-driven to participatory design. It operationalizes the principle that those affected by a system should participate in its creation, leading to higher adoption rates and more effective solutions.",
+                "complex-problems": "Complex problems exhibit emergence, where system behavior cannot be predicted from individual components. They require abductive reasoning and systems thinking approaches rather than linear problem-solving.",
+                "sae-framework": "The SAE framework extends traditional software development lifecycles by emphasizing continuous interaction and international contextualization at every stage."
+            };
+            
+            document.getElementById('explanationContent').innerHTML = `
+                <h4>${concept.charAt(0).toUpperCase() + concept.slice(1)}</h4>
+                <p>${explanations[concept] || 'Detailed explanation not available for this concept.'}</p>
+                <div style="margin-top: 1rem; padding: 1rem; background: #f5f5f5; border-radius: 8px;">
+                    <small><strong>Academic Reference:</strong> This explanation draws from peer-reviewed literature in Human-Computer Interaction and Systems Engineering journals.</small>
+                </div>
+            `;
+            
+            document.getElementById('explanationOverlay').classList.add('active');
+        }
+
+        function closeExplanation() {
+            document.getElementById('explanationOverlay').classList.remove('active');
+        }
+
+        // Progress tracking
+        function updateProgressTracker() {
+            document.querySelectorAll('.progress-dot').forEach((dot, index) => {
+                dot.classList.remove('completed', 'current');
+                if (index + 1 < currentModule) {
+                    dot.classList.add('completed');
+                } else if (index + 1 === currentModule) {
+                    dot.classList.add('current');
+                }
+            });
+        }
+
+        function markModuleProgress(module) {
+            const dot = document.querySelector(`.progress-dot[data-module="${module}"]`);
+            if (dot) {
+                dot.classList.add('completed');
+            }
+        }
+
+        // Initialize
+        updateProgressTracker();
+        
+        // Auto-show explanations for difficult concepts
+        setTimeout(() => {
+            showExplanation('co-design');
+        }, 3000);
+    </script>
+</body>
+</html>
