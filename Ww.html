@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STRAT.OS | Strategic Engineering</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=JetBrains+Mono&display=swap');
+        
+        :root { --accent: #00ffcc; --bg: #050505; }
+        body { background-color: var(--bg); color: white; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        
+        /* Clear Street Visuals */
+        #hero-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0; }
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.02); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            backdrop-filter: blur(10px);
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover { border-color: var(--accent); background: rgba(255, 255, 255, 0.05); }
+        
+        /* Sidebar Menu */
+        #side-menu {
+            position: fixed; right: -320px; top: 0; width: 320px; height: 100%;
+            background: rgba(5, 5, 5, 0.98); border-left: 1px solid rgba(255,255,255,0.1);
+            z-index: 1000; transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        #side-menu.open { right: 0; }
+        
+        /* Code Input Styling */
+        .code-gap {
+            background: rgba(0, 255, 204, 0.1); border-bottom: 1px solid var(--accent);
+            color: var(--accent); font-family: 'JetBrains Mono'; outline: none; padding: 0 5px;
+        }
+
+        .correct { color: #00ffcc !important; border-color: #00ffcc !important; }
+        .wrong { color: #ff4444 !important; border-color: #ff4444 !important; }
+    </style>
+</head>
+<body>
+
+    <button onclick="toggleMenu()" class="fixed top-8 right-8 z-[1100] p-4 bg-white rounded-full mix-blend-difference">
+        <div id="menu-icon" class="w-6 h-0.5 bg-black mb-1.5 transition"></div>
+        <div id="menu-icon-2" class="w-6 h-0.5 bg-black transition"></div>
+    </button>
+
+    <nav id="side-menu" class="p-12 flex flex-col justify-center gap-6">
+        <p class="text-[10px] tracking-[0.3em] text-gray-500 uppercase">Navigation</p>
+        <a href="#home" onclick="toggleMenu()" class="text-3xl font-bold hover:text-[#00ffcc]">Home</a>
+        <a href="#theory" onclick="toggleMenu()" class="text-3xl font-bold hover:text-[#00ffcc]">Theory</a>
+        <a href="#quiz" onclick="toggleMenu()" class="text-3xl font-bold hover:text-[#00ffcc]">Assessment</a>
+        <a href="#lab" onclick="toggleMenu()" class="text-3xl font-bold hover:text-[#00ffcc]">Dev Lab</a>
+    </nav>
+
+    <section id="home" class="relative h-screen flex items-center px-[10%] overflow-hidden">
+        <div id="hero-canvas"></div>
+        <div class="relative z-10 pointer-events-none">
+            <h1 class="text-[12vw] font-bold leading-[0.85] tracking-tighter">STRAT<br><span class="opacity-30">OS_</span></h1>
+            <p class="mt-8 text-xs uppercase tracking-[0.5em] text-gray-400">Complex Problem Architecture & Digital Innovation</p>
+        </div>
+    </section>
+
+    <section id="theory" class="py-32 px-[10%]">
+        <h2 class="text-5xl font-bold mb-20 tracking-tighter">Theory & Frameworks</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="theory-grid">
+            </div>
+    </section>
+
+    <section id="quiz" class="py-32 px-[10%] bg-[#080808]">
+        <div class="max-w-4xl">
+            <h2 class="text-5xl font-bold mb-4 tracking-tighter">Assessment</h2>
+            <p class="text-gray-500 mb-16">Select the single correct strategic response.</p>
+            <div id="quiz-container" class="space-y-6"></div>
+        </div>
+    </section>
+
+    <section id="lab" class="py-32 px-[10%]">
+        <h2 class="text-5xl font-bold mb-4 tracking-tighter">Dev Lab</h2>
+        <p class="text-gray-500 mb-16">Fill the syntax gaps to execute the module.</p>
+        <div class="grid md:grid-cols-2 gap-8" id="code-container"></div>
+    </section>
+
+    <script>
+        // --- THREE.JS BACKGROUND ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('hero-canvas').appendChild(renderer.domElement);
+
+        // Plane Grid
+        const grid = new THREE.GridHelper(200, 60, 0x00ffcc, 0x111111);
+        grid.rotation.x = Math.PI / 2.1;
+        scene.add(grid);
+
+        camera.position.z = 60;
+        camera.position.y = 10;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            grid.position.z += 0.05; if(grid.position.z > 5) grid.position.z = 0;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // --- CONTENT DATA ---
+        const theoryPoints = [
+            "Designing Strategic Responses: Using Design Thinking for complex stakeholder alignment.",
+            "Digital Entrepreneurship: Innovation, scalability, and customer-centric value creation.",
+            "SAE Framework: Understand, Design, Develop, and Interact for global scale.",
+            "UX Experience: Personas, journey mapping, and reducing cognitive effort.",
+            "Web Service Lifecycle: Multi-phase process from planning to maintenance.",
+            "Architecture: Modern separation of Client-Side (React) and Server-Side (Node).",
+            "Back Office: Critical data manipulation with rich client interfaces.",
+            "Ergonomics: Reducing fatigue for both users and site administrators.",
+            "Security & Hosting: SQL injection protection and performance caching."
+        ];
+
+        const quizData = [
+            { q: "What is a characteristic of a complex problem?", a: ["Static requirements", "Interdependent factors", "Single-stakeholder input"], c: 1 },
+            { q: "Which framework is part of strategic response design?", a: ["Waterfall", "Design Thinking", "Legacy Modeling"], c: 1 },
+            { q: "Primary objective of digital entrepreneurship?", a: ["Stagnation", "Scalability", "Manual processing"], c: 1 },
+            { q: "What does 'Understanding' in SAE involve?", a: ["Writing CSS", "Analyzing cultural differences", "Deploying servers"], c: 1 },
+            { q: "Key principle of high-quality UX?", a: ["Complexity", "Cognitive effort", "Accessibility"], c: 2 },
+            { q: "Client-side development tool example?", a: ["PHP", "React", "PostgreSQL"], c: 1 },
+            { q: "Server-side tool for logic processing?", a: ["Vue.js", "Node.js", "HTML5"], c: 1 },
+            { q: "Primary purpose of a Back Office?", a: ["Public marketing", "Data manipulation", "Logo design"], c: 1 },
+            { q: "UX Ergonomics for admins aims to...", a: ["Increase fatigue", "Efficient workflows", "Hide data"], c: 1 },
+            { q: "Essential security measure?", a: ["Plain text storage", "Encryption", "Removing backups"], c: 1 },
+            { q: "Digital sector professional issue?", a: ["Cybersecurity risks", "Fixed technology", "Low innovation"], c: 0 },
+            { q: "What does 'Interacting' ensure?", a: ["Database lock", "Meaningful feedback", "Code minification"], c: 1 },
+            { q: "Performance optimization technique?", a: ["Caching", "Blocking scripts", "Large images"], c: 0 },
+            { q: "Role-based access control is used in...", a: ["UX Research", "Back Office", "SEO"], c: 1 },
+            { q: "Continuous user testing ensures...", a: ["Alignment with user needs", "Code complexity", "Higher costs"], c: 0 }
+        ];
+
+        const codeData = [
+            { t: "Set Flexbox display", c: "display: <input id='c0' class='code-gap' type='text'>;", a: "flex" },
+            { t: "Express GET route", c: "app.<input id='c1' class='code-gap' type='text'>('/', (req,res) => {});", a: "get" },
+            { t: "React State Hook", c: "const [data, setData] = <input id='c2' class='code-gap' type='text'>(null);", a: "useState" },
+            { t: "SQL Data Fetch", c: "SELECT * <input id='c3' class='code-gap' type='text'> users;", a: "from" },
+            { t: "Async function", c: "<input id='c4' class='code-gap' type='text'> function load() { await fetch(); }", a: "async" },
+            { t: "Array Mapping", c: "items.<input id='c5' class='code-gap' type='text'>(item => item.id);", a: "map" },
+            { t: "CSS Border Radius", c: "border-<input id='c6' class='code-gap' type='text'>: 10px;", a: "radius" },
+            { t: "HTML Viewport", c: "<meta name='<input id='c7' class='code-gap' type='text'>' content='width=...'>", a: "viewport" },
+            { t: "Bcrypt Hashing", c: "bcrypt.<input id='c8' class='code-gap' type='text'>(pwd, 10);", a: "hash" },
+            { t: "Event Listener", c: "el.addEventListener('<input id='c9' class='code-gap' type='text'>', fn);", a: "click" },
+            { t: "Git Commit", c: "git <input id='c10' class='code-gap' type='text'> -m 'Update';", a: "commit" },
+            { t: "JSON Parsing", c: "JSON.<input id='c11' class='code-gap' type='text'>(dataString);", a: "parse" },
+            { t: "Flex Alignment", c: "align-<input id='c12' class='code-gap' type='text'>: center;", a: "items" },
+            { t: "Node Module Export", c: "<input id='c13' class='code-gap' type='text'>.exports = router;", a: "module" },
+            { t: "Environment Variable", c: "process.<input id='c14' class='code-gap' type='text'>.PORT", a: "env" }
+        ];
+
+        // --- RENDER FUNCTIONS ---
+        const theoryGrid = document.getElementById('theory-grid');
+        theoryPoints.forEach((text, i) => {
+            theoryGrid.innerHTML += `<div class="glass-card p-8"><p class="text-[10px] text-[#00ffcc] mb-2">MODULE 0${i+1}</p><p class="text-sm leading-relaxed">${text}</p></div>`;
+        });
+
+        const quizContainer = document.getElementById('quiz-container');
+        quizData.forEach((item, i) => {
+            let options = item.a.map((opt, oi) => `<button onclick="checkQuiz(this, ${oi==item.c})" class="w-full text-left p-4 border border-white/5 text-sm hover:bg-white/5 transition">${opt}</button>`).join('');
+            quizContainer.innerHTML += `<div class="glass-card p-8"><p class="mb-4">${i+1}. ${item.q}</p><div class="grid gap-2">${options}</div></div>`;
+        });
+
+        const codeContainer = document.getElementById('code-container');
+        codeData.forEach((item, i) => {
+            codeContainer.innerHTML += `
+                <div class="glass-card p-6 font-mono text-xs">
+                    <p class="text-gray-500 mb-4">// ${item.t}</p>
+                    <div class="bg-black/50 p-4 rounded mb-4">${item.c}</div>
+                    <button onclick="checkCode(${i}, '${item.a}')" class="px-4 py-2 bg-white text-black font-bold uppercase tracking-tighter hover:bg-[#00ffcc] transition">Execute</button>
+                    <span id="stat${i}" class="ml-4"></span>
+                </div>`;
+        });
+
+        // --- INTERACTION LOGIC ---
+        function toggleMenu() { document.getElementById('side-menu').classList.toggle('open'); }
+        
+        function checkQuiz(btn, isCorrect) {
+            btn.classList.add(isCorrect ? 'correct' : 'wrong');
+        }
+
+        function checkCode(id, answer) {
+            const input = document.getElementById('c' + id).value.trim().toLowerCase();
+            const stat = document.getElementById('stat' + id);
+            if(input === answer) {
+                stat.innerHTML = "STATUS: OK"; stat.className = "ml-4 text-[#00ffcc]";
+            } else {
+                stat.innerHTML = "STATUS: ERROR"; stat.className = "ml-4 text-red-500";
+            }
+        }
+    </script>
+</body>
+</html>
