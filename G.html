@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Framework</title>
+    <style>
+        /* Reset and Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --primary-dark: #0a1929;
+            --primary-blue: #0066ff;
+            --accent-blue: #00a3ff;
+            --light-gray: #f8fafc;
+            --medium-gray: #e2e8f0;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            background: var(--light-gray);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: white;
+            padding: 1.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%);
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .visit-btn {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: 2px solid var(--primary-blue);
+        }
+
+        .visit-btn:hover {
+            background: white;
+            color: var(--primary-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            padding: 4rem 3rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            border: 1px solid var(--medium-gray);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            padding: 2rem 2rem 1rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.75rem;
+        }
+
+        .card-content {
+            padding: 0 2rem 1.5rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .card-visual {
+            height: 200px;
+            background: linear-gradient(135deg, #0066ff10 0%, #00a3ff10 100%);
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--medium-gray);
+        }
+
+        .card-footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-visit {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-visit:hover {
+            gap: 1rem;
+        }
+
+        /* Split Screen Pages */
+        .split-page {
+            display: none;
+            min-height: calc(100vh - 80px);
+        }
+
+        .split-page.active {
+            display: block;
+        }
+
+        .split-container {
+            display: grid;
+            grid-template-columns: 40% 60%;
+            height: calc(100vh - 80px);
+            overflow: hidden;
+        }
+
+        .left-panel {
+            background: white;
+            padding: 2.5rem;
+            overflow-y: auto;
+            border-right: 1px solid var(--medium-gray);
+        }
+
+        .right-panel {
+            background: #f8fafc;
+            padding: 2.5rem;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--primary-blue);
+        }
+
+        .concept-content {
+            margin-bottom: 3rem;
+        }
+
+        .concept-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .concept-title::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+        }
+
+        /* Code Execution Flow Visualization */
+        .code-flow {
+            background: var(--primary-dark);
+            border-radius: 12px;
+            padding: 2rem;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-line {
+            font-family: 'Consolas', monospace;
+            color: #e0e0e0;
+            margin: 1rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .code-line::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+        }
+
+        .code-highlight {
+            background: rgba(0, 102, 255, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: var(--accent-blue);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .flow-arrow {
+            position: absolute;
+            width: 2px;
+            background: var(--primary-blue);
+            transform-origin: top;
+            animation: flow 3s linear infinite;
+        }
+
+        @keyframes flow {
+            0% { height: 0; opacity: 0; }
+            50% { opacity: 1; }
+            100% { height: 100px; opacity: 0; }
+        }
+
+        /* Code Exercises Page */
+        .code-lab {
+            padding: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .exercise-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .exercise-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .exercise-title::before {
+            content: '💻';
+            font-size: 1.1rem;
+        }
+
+        /* Questions Page */
+        .questions-page {
+            padding: 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .option {
+            padding: 1rem;
+            border: 2px solid var(--medium-gray);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: var(--primary-blue);
+            background: #f0f7ff;
+        }
+
+        .option.correct {
+            border-color: #00d4aa;
+            background: #f0fff8;
+        }
+
+        .option.incorrect {
+            border-color: #ff4d6d;
+            background: #fff0f3;
+        }
+
+        /* Back to Home */
+        .back-home {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--medium-gray);
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .back-home:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .split-container {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            
+            .left-panel, .right-panel {
+                height: 50vh;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            .hero {
+                padding: 3rem 1.5rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+                padding: 2rem 1.5rem;
+                gap: 1.5rem;
+            }
+            
+            .split-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .left-panel, .right-panel {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">WebDev Framework</div>
+        <div class="nav-links">
+            <a href="#home" class="nav-link" data-page="home">Home</a>
+            <a href="#frontend" class="nav-link" data-page="frontend">Frontend</a>
+            <a href="#backend" class="nav-link" data-page="backend">Backend</a>
+            <a href="#webdev" class="nav-link" data-page="webdev">Web Development</a>
+            <a href="#exercises" class="nav-link" data-page="exercises">Code Exercises</a>
+            <a href="#questions" class="nav-link" data-page="questions">Questions</a>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <section id="home" class="split-page active">
+        <div class="hero">
+            <h1 class="hero-title">Web Development Master Framework</h1>
+            <p class="hero-subtitle">Designing or co-designing a strategic response to a complex problem requires a structured, user-centered, and collaborative approach. Complex problems are typically characterized by multiple stakeholders, uncertainty, evolving requirements, and interdependent factors such as technology, business constraints, and user needs.</p>
+            <a href="#frontend" class="visit-btn" data-page="frontend">Start Learning →</a>
+        </div>
+
+        <div class="cards-grid">
+            <!-- Card 1 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Strategic Problem Solving</h3>
+                </div>
+                <div class="card-content">
+                    <p>A relevant strategic response begins with problem understanding, which involves research, data analysis, and stakeholder interviews to clearly define the root causes rather than just symptoms.</p>
+                </div>
+                <div class="card-visual" id="visual1">
+                    <!-- Visual will be inserted by JavaScript -->
+                </div>
+                <div class="card-footer">
+                    <a href="#webdev" class="card-visit" data-page="webdev">Learn More →</a>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">SAE Framework</h3>
+                </div>
+                <div class="card-content">
+                    <p>The SAE framework (Understanding, Designing, Developing, Interacting) provides a holistic approach to web application development in an international context.</p>
+                </div>
+                <div class="card-visual" id="visual2">
+                    <!-- Visual will be inserted by JavaScript -->
+                </div>
+                <div class="card-footer">
+                    <a href="#webdev" class="card-visit" data-page="webdev">Explore Framework →</a>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Full Stack Development</h3>
+                </div>
+                <div class="card-content">
+                    <p>Modern web applications rely on a clear separation between client-side and server-side development. This architecture enables better scalability, maintainability, and performance.</p>
+                </div>
+                <div class="card-visual" id="visual3">
+                    <!-- Visual will be inserted by JavaScript -->
+                </div>
+                <div class="card-footer">
+                    <a href="#frontend" class="card-visit" data-page="frontend">Start Building →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Frontend Page -->
+    <section id="frontend" class="split-page">
+        <div class="split-container">
+            <div class="left-panel">
+                <h2 class="section-title">Frontend Development</h2>
+                
+                <div class="concept-content">
+                    <h3 class="concept-title">Asynchronous Requests</h3>
+                    <p>Asynchronous requests allow a web page to communicate with a server without reloading the entire page. This is commonly done using technologies such as AJAX or the Fetch API.</p>
+                </div>
+
+                <div class="concept-content">
+                    <h3 class="concept-title">Local Data Storage</h3>
+                    <p>Local data storage allows web applications to store data directly in the user's browser. Examples include local storage, session storage, and IndexedDB.</p>
+                </div>
+
+                <div class="concept-content">
+                    <h3 class="concept-title">Content Templates</h3>
+                    <p>Content templates define the structure of a web page or component while allowing data to be inserted dynamically. Instead of hard-coding content, templates use placeholders.</p>
+                </div>
+
+                <a href="#home" class="back-home" data-page="home">← Back to Home</a>
+            </div>
+
+            <div class="right-panel">
+                <div class="code-flow">
+                    <div class="code-line">function handleUserRequest() {</div>
+                    <div class="code-line">&nbsp;&nbsp;const request = <span class="code-highlight">fetch('/api/data')</span>;</div>
+                    <div class="code-line">&nbsp;&nbsp;request.<span class="code-highlight">then(response => response.json()</span>);</div>
+                    <div class="code-line">&nbsp;&nbsp;.<span class="code-highlight">then(data => updateUI(data)</span>);</div>
+                    <div class="code-line">&nbsp;&nbsp;.<span class="code-highlight">catch(error => handleError(error)</span>);</div>
+                    <div class="code-line">}</div>
+                    
+                    <!-- Flow arrows -->
+                    <div class="flow-arrow" style="left: 50px; animation-delay: 0s;"></div>
+                    <div class="flow-arrow" style="left: 100px; animation-delay: 0.5s;"></div>
+                    <div class="flow-arrow" style="left: 150px; animation-delay: 1s;"></div>
+                </div>
+
+                <div style="margin-top: 2rem; padding: 1.5rem; background: white; border-radius: 8px;">
+                    <h3 style="margin-bottom: 1rem; color: var(--primary-dark);">Code Execution Flow</h3>
+                    <p style="color: var(--text-light);">Watch the code execute in real-time. Each highlighted section shows a step in the asynchronous request process.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Backend Page -->
+    <section id="backend" class="split-page">
+        <div class="split-container">
+            <div class="left-panel">
+                <h2 class="section-title">Backend Development</h2>
+                
+                <div class="concept-content">
+                    <h3 class="concept-title">Server-Side Frameworks</h3>
+                    <p>Server-side development focuses on the logic that runs on a server rather than in a user's browser. Server-side frameworks provide structured tools to handle common tasks.</p>
+                </div>
+
+                <div class="concept-content">
+                    <h3 class="concept-title">Object-Oriented Programming</h3>
+                    <p>Object-Oriented Programming (OOP) is a programming paradigm based on the concept of objects, which bundle data and behavior together.</p>
+                </div>
+
+                <div class="concept-content">
+                    <h3 class="concept-title">Web Services</h3>
+                    <p>Web services rely on several core concepts to function effectively. Objects represent structured data entities that are exchanged between systems.</p>
+                </div>
+
+                <a href="#home" class="back-home" data-page="home">← Back to Home</a>
+            </div>
+
+            <div class="right-panel">
+                <div class="code-flow">
+                    <div class="code-line">class <span class="code-highlight">UserController</span> {</div>
+                    <div class="code-line">&nbsp;&nbsp;async <span class="code-highlight">getUserData</span>(userId) {</div>
+                    <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;const user = await <span class="code-highlight">database.query</span>('SELECT * FROM users');</div>
+                    <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;return <span class="code-highlight">Response.json(user)</span>;</div>
+                    <div class="code-line">&nbsp;&nbsp;}</div>
+                    <div class="code-line">}</div>
+                    
+                    <div class="code-line" style="margin-top: 2rem;">// API Endpoint</div>
+                    <div class="code-line">app.<span class="code-highlight">get('/api/users/:id'</span>, (req, res) => {</div>
+                    <div class="code-line">&nbsp;&nbsp;const controller = <span class="code-highlight">new UserController()</span>;</div>
+                    <div class="code-line">&nbsp;&nbsp;controller.<span class="code-highlight">getUserData(req.params.id)</span>;</div>
+                    <div class="code-line">});</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Web Development Page -->
+    <section id="webdev" class="split-page">
+        <div class="split-container">
+            <div class="left-panel">
+                <h2 class="section-title">Web Development</h2>
+                
+                <div class="concept-content">
+                    <h3 class="concept-title">Design or Co-design Strategic Response</h3>
+                    <p>Designing or co-designing a strategic response to a complex problem requires a structured, user-centered, and collaborative approach. Complex problems are typically characterized by multiple stakeholders, uncertainty, evolving requirements, and interdependent factors.</p>
+                </div>
+
+                <div class="concept-content">
+                    <h3 class="concept-title">Entrepreneurship in Digital Sector</h3>
+                    <p>Entrepreneurship in the digital sector focuses on creating value through technology-driven products and services such as web platforms, mobile applications, SaaS solutions, and digital marketplaces.</p>
+                </div>
+
+                <div class="concept-content">
+                    <h3 class="concept-title">SAE Framework Implementation</h3>
+                    <p>The SAE framework (Understanding, Designing, Developing, Interacting) provides a holistic approach to web application development.</p>
+                </div>
+
+                <a href="#home" class="back-home" data-page="home">← Back to Home</a>
+            </div>
+
+            <div class="right-panel">
+                <div class="code-flow">
+                    <div class="code-line">// Complete Web Application Flow</div>
+                    <div class="code-line">function <span class="code-highlight">developWebApplication()</span> {</div>
+                    <div class="code-line">&nbsp;&nbsp;<span class="code-highlight">understandingPhase()</span>;</div>
+                    <div class="code-line">&nbsp;&nbsp;<span class="code-highlight">designingPhase()</span>;</div>
+                    <div class="code-line">&nbsp;&nbsp;<span class="code-highlight">developingPhase()</span>;</div>
+                    <div class="code-line">&nbsp;&nbsp;<span class="code-highlight">interactingPhase()</span>;</div>
+                    <div class="code-line">}</div>
+                    
+                    <div class="code-line" style="margin-top: 2rem;">// Full Stack Integration</div>
+                    <div class="code-line">const <span class="code-highlight">frontend</span> = new Frontend();</div>
+                    <div class="code-line">const <span class="code-highlight">backend</span> = new Backend();</div>
+                    <div class="code-line">const <span class="code-highlight">api</span> = new API(frontend, backend);</div>
+                    <div class="code-line"><span class="code-highlight">api.connect()</span>;</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Exercises Page -->
+    <section id="exercises" class="split-page">
+        <div class="code-lab">
+            <h2 class="section-title">Code Exercises</h2>
+            
+            <div class="exercise-grid">
+                <!-- Frontend Exercises -->
+                <div class="exercise-card">
+                    <h3 class="exercise-title">Async Request Implementation</h3>
+                    <p>Implement an asynchronous request using Fetch API to retrieve and display data.</p>
+                    <div style="margin-top: 1rem; padding: 1rem; background: #f8fafc; border-radius: 6px; font-family: 'Consolas';">
+                        fetch('api/data').then(<input style="width: 120px; padding: 0.25rem;" placeholder="response"> => ...)
+                    </div>
+                </div>
+
+                <div class="exercise-card">
+                    <h3 class="exercise-title">Local Storage Manager</h3>
+                    <p>Create functions to save, retrieve, and delete data from browser local storage.</p>
+                </div>
+
+                <div class="exercise-card">
+                    <h3 class="exercise-title">Template Engine</h3>
+                    <p>Build a simple template engine that inserts dynamic data into HTML templates.</p>
+                </div>
+
+                <!-- Backend Exercises -->
+                <div class="exercise-card">
+                    <h3 class="exercise-title">API Development</h3>
+                    <p>Create REST API endpoints for user management with proper error handling.</p>
+                </div>
+
+                <div class="exercise-card">
+                    <h3 class="exercise-title">Database Design</h3>
+                    <p>Design and implement a database schema for an e-commerce application.</p>
+                </div>
+
+                <div class="exercise-card">
+                    <h3 class="exercise-title">Authentication System</h3>
+                    <p>Implement secure user authentication with JWT tokens and password hashing.</p>
+                </div>
+            </div>
+
+            <a href="#home" class="back-home" data-page="home">← Back to Home</a>
+        </div>
+    </section>
+
+    <!-- Questions Page -->
+    <section id="questions" class="split-page">
+        <div class="questions-page">
+            <h2 class="section-title">Knowledge Assessment</h2>
+            
+            <div class="question-card">
+                <div class="question-text">What are the key characteristics of complex problems in web development?</div>
+                <div class="options">
+                    <div class="option" data-correct="false">Single stakeholder involvement</div>
+                    <div class="option" data-correct="true">Multiple stakeholders</div>
+                    <div class="option" data-correct="true">Evolving requirements</div>
+                    <div class="option" data-correct="true">Interdependent factors</div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text">Which technologies are used for asynchronous requests?</div>
+                <div class="options">
+                    <div class="option" data-correct="true">AJAX</div>
+                    <div class="option" data-correct="true">Fetch API</div>
+                    <div class="option" data-correct="false">WebSockets only</div>
+                    <div class="option" data-correct="false">TCP sockets</div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text">What are the phases of the SAE framework?</div>
+                <div class="options">
+                    <div class="option" data-correct="true">Understanding</div>
+                    <div class="option" data-correct="true">Designing</div>
+                    <div class="option" data-correct="true">Developing</div>
+                    <div class="option" data-correct="true">Interacting</div>
+                </div>
+            </div>
+
+            <a href="#home" class="back-home" data-page="home">← Back to Home</a>
+        </div>
+    </section>
+
+    <script>
+        // Page Navigation
+        document.querySelectorAll('.nav-link, .visit-btn, .card-visit, .back-home').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const pageId = this.getAttribute('data-page') || this.getAttribute('href').replace('#', '');
+                
+                // Hide all pages
+                document.querySelectorAll('.split-page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Show selected page
+                document.getElementById(pageId).classList.add('active');
+                
+                // Update URL
+                window.location.hash = pageId;
+            });
+        });
+
+        // Create card visuals
+        function createCardVisuals() {
+            // Visual 1: Problem Solving Flow
+            const visual1 = document.getElementById('visual1');
+            const canvas1 = document.createElement('canvas');
+            canvas1.width = 400;
+            canvas1.height = 200;
+            visual1.appendChild(canvas1);
+            
+            const ctx1 = canvas1.getContext('2d');
+            // Draw simple flowchart
+            ctx1.fillStyle = '#0066ff';
+            ctx1.fillRect(50, 80, 60, 40); // Problem
+            ctx1.fillRect(150, 80, 60, 40); // Analysis
+            ctx1.fillRect(250, 80, 60, 40); // Solution
+            
+            // Visual 2: SAE Framework
+            const visual2 = document.getElementById('visual2');
+            visual2.innerHTML = `
+                <div style="display: flex; height: 100%; align-items: center; justify-content: center;">
+                    <div style="display: flex; gap: 10px;">
+                        <div style="background: #0066ff; color: white; padding: 10px; border-radius: 6px;">U</div>
+                        <div style="background: #00a3ff; color: white; padding: 10px; border-radius: 6px;">D</div>
+                        <div style="background: #0066ff; color: white; padding: 10px; border-radius: 6px;">D</div>
+                        <div style="background: #00a3ff; color: white; padding: 10px; border-radius: 6px;">I</div>
+                    </div>
+                </div>
+            `;
+            
+            // Visual 3: Full Stack
+            const visual3 = document.getElementById('visual3');
+            visual3.innerHTML = `
+                <div style="display: flex; height: 100%; padding: 20px; gap: 15px;">
+                    <div style="flex: 1; background: #0066ff20; border-radius: 8px; padding: 15px;">
+                        <div style="font-weight: 600; color: #0066ff; margin-bottom: 5px;">Frontend</div>
+                        <div style="font-size: 0.8rem; color: #666;">HTML/CSS/JS</div>
+                    </div>
+                    <div style="flex: 1; background: #00a3ff20; border-radius: 8px; padding: 15px;">
+                        <div style="font-weight: 600; color: #00a3ff; margin-bottom: 5px;">Backend</div>
+                        <div style="font-size: 0.8rem; color: #666;">API/DB</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Question answering
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const isCorrect = this.getAttribute('data-correct') === 'true';
+                
+                // Remove previous selections
+                this.parentElement.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect');
+                });
+                
+                // Mark this option
+                this.classList.add(isCorrect ? 'correct' : 'incorrect');
+                
+                // Show feedback
+                if (isCorrect) {
+                    this.innerHTML += ' ✅';
+                } else {
+                    this.innerHTML += ' ❌';
+                }
+            });
+        });
+
+        // Initialize on load
+        window.addEventListener('load', () => {
+            createCardVisuals();
+            
+            // Show correct page based on URL hash
+            const hash = window.location.hash.replace('#', '') || 'home';
+            document.querySelectorAll('.split-page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(hash).classList.add('active');
+        });
+
+        // Animate code flow
+        function animateCodeFlow() {
+            const highlights = document.querySelectorAll('.code-highlight');
+            highlights.forEach((hl, index) => {
+                setTimeout(() => {
+                    hl.style.animation = 'pulse 1s ease-in-out';
+                    setTimeout(() => {
+                        hl.style.animation = '';
+                    }, 1000);
+                }, index * 1500);
+            });
+        }
+
+        // Start animation
+        setInterval(animateCodeFlow, 8000);
+        animateCodeFlow(); // Initial animation
+    </script>
+</body>
+</html>
