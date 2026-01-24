@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Education</title>
+    <style>
+        /* RESET AND BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* NAVIGATION - EXACTLY LIKE SCREENSHOT */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            gap: 3rem;
+            border-bottom: 1px solid #e5e5e5;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1000;
+        }
+
+        .nav-link {
+            color: #666666;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #0066cc;
+        }
+
+        /* HERO SECTION - EXACTLY LIKE SCREENSHOT */
+        .hero {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #666666;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .visit-button {
+            display: inline-block;
+            background: #0066cc;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .visit-button:hover {
+            background: #0052a3;
+        }
+
+        /* CARDS GRID - EXACTLY LIKE SCREENSHOT */
+        .cards-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e5e5;
+            background: #f8f9fa;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            color: #666666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .card-visual {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .card-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #e5e5e5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-link {
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-link:hover {
+            gap: 0.75rem;
+        }
+
+        /* SECTIONS PAGES */
+        .section-page {
+            display: none;
+            min-height: calc(100vh - 80px);
+        }
+
+        .section-page.active {
+            display: block;
+        }
+
+        .section-header {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 2rem;
+        }
+
+        /* CONTENT PAGES */
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .concept {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #0066cc;
+        }
+
+        .concept-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+        }
+
+        .concept-content {
+            color: #666666;
+            line-height: 1.7;
+        }
+
+        /* CODE EXERCISES */
+        .code-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .code-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .exercise-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid #e5e5e5;
+        }
+
+        .exercise-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .exercise-title::before {
+            content: '💻';
+        }
+
+        .code-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .check-button {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .check-button:hover {
+            background: #0052a3;
+        }
+
+        .result {
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .result.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .result.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        /* QUESTIONS */
+        .questions-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid #e5e5e5;
+        }
+
+        .question-text {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+        }
+
+        .option {
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            background: #f0f7ff;
+            border-color: #0066cc;
+        }
+
+        .option.selected {
+            background: #e3f2fd;
+            border-color: #0066cc;
+        }
+
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .option.wrong {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+
+        .submit-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 1rem;
+        }
+
+        .submit-button:hover {
+            background: #218838;
+        }
+
+        /* BACK BUTTON */
+        .back-button {
+            display: inline-block;
+            margin: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .back-button:hover {
+            background: #545b62;
+        }
+
+        /* TABS */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e5e5e5;
+            padding-bottom: 0.5rem;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e5e5e5;
+            border-radius: 4px 4px 0 0;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: #0066cc;
+            color: white;
+            border-color: #0066cc;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .navbar {
+                gap: 1.5rem;
+                padding: 1rem;
+                flex-wrap: wrap;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .cards-container {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+            
+            .content-container {
+                padding: 1rem;
+            }
+            
+            .code-grid, .question-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <a href="#home" class="nav-link" data-page="home">Home</a>
+        <a href="#frontend" class="nav-link" data-page="frontend">Frontend</a>
+        <a href="#backend" class="nav-link" data-page="backend">Backend</a>
+        <a href="#webdev" class="nav-link" data-page="webdev">Web Development</a>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <section id="home" class="section-page active">
+        <div class="hero">
+            <h1 class="hero-title">Web Development Education</h1>
+            <p class="hero-subtitle">Designing or co-designing a strategic response to a complex problem requires a structured, user-centered, and collaborative approach. Complex problems are typically characterized by multiple stakeholders, uncertainty, evolving requirements, and interdependent factors such as technology, business constraints, and user needs.</p>
+            <a href="#frontend" class="visit-button" data-page="frontend">Start Learning →</a>
+        </div>
+
+        <div class="cards-container">
+            <!-- CARD 1 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Frontend Development</h3>
+                </div>
+                <div class="card-content">
+                    8 core concepts including asynchronous requests, local data storage, content templates, event-driven programming, HTTP requests, and client-side frameworks.
+                </div>
+                <div class="card-visual">
+                    Frontend Concepts
+                </div>
+                <div class="card-footer">
+                    <a href="#frontend" class="card-link" data-page="frontend">Learn Frontend →</a>
+                </div>
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Backend Development</h3>
+                </div>
+                <div class="card-content">
+                    5 core concepts including server-side frameworks, object-oriented programming, web services, and design patterns like Factory Method, Adapter, and Observer.
+                </div>
+                <div class="card-visual">
+                    Backend Concepts
+                </div>
+                <div class="card-footer">
+                    <a href="#backend" class="card-link" data-page="backend">Learn Backend →</a>
+                </div>
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Web Development</h3>
+                </div>
+                <div class="card-content">
+                    9 comprehensive concepts covering strategic design, entrepreneurship, SAE framework, UX development, full-stack implementation, security, and performance.
+                </div>
+                <div class="card-visual">
+                    Full Stack
+                </div>
+                <div class="card-footer">
+                    <a href="#webdev" class="card-link" data-page="webdev">Learn Full Stack →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FRONTEND PAGE -->
+    <section id="frontend" class="section-page">
+        <div class="section-header">
+            <h2 class="section-title">Frontend Development</h2>
+        </div>
+
+        <div class="content-container">
+            <div class="tabs">
+                <div class="tab active" data-tab="concepts">Concepts</div>
+                <div class="tab" data-tab="code">Code Exercises (15)</div>
+                <div class="tab" data-tab="questions">Questions (15)</div>
+            </div>
+
+            <!-- CONCEPTS TAB -->
+            <div class="tab-content active" id="concepts-tab">
+                <!-- CONCEPT 1 -->
+                <div class="concept">
+                    <h3 class="concept-title">1. How to Exploit Asynchronous Requests and Web Services to Modify Page Content</h3>
+                    <div class="concept-content">
+                        Asynchronous requests allow a web page to communicate with a server without reloading the entire page. This is commonly done using technologies such as AJAX or the Fetch API. When a user performs an action (for example, clicking a button), the browser sends a request to a web service in the background, receives data, and updates only the relevant part of the page.
+                        Web services provide the data needed for these updates, often in formats like JSON. By exploiting asynchronous requests, developers can create responsive and interactive user experiences, such as live search results, dynamic content updates, or real-time notifications. This approach improves performance and usability because users do not experience full page refreshes.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 2 -->
+                <div class="concept">
+                    <h3 class="concept-title">2. How to Use Local Data Storage to Optimize Loading Times</h3>
+                    <div class="concept-content">
+                        Local data storage allows web applications to store data directly in the user's browser. Examples include local storage, session storage, and IndexedDB. By saving frequently used data locally, applications can reduce the number of requests sent to the server.
+                        This optimization improves loading times because the application can retrieve data instantly from the browser instead of waiting for a network response. Local storage is especially useful for caching user preferences, temporary data, or previously loaded content, leading to faster and smoother user experiences.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 3 -->
+                <div class="concept">
+                    <h3 class="concept-title">3. Content Templates: Creating Templates and Integrating Data Dynamically</h3>
+                    <div class="concept-content">
+                        Content templates define the structure of a web page or component while allowing data to be inserted dynamically. Instead of hard-coding content, templates use placeholders that are filled with data at runtime.
+                        Dynamic integration of data into templates allows applications to display changing content, such as user profiles, product lists, or messages, using the same layout. This approach improves code reusability, consistency, and maintainability, as developers can update the design in one place without rewriting logic for each piece of content.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 4 -->
+                <div class="concept">
+                    <h3 class="concept-title">4. Event-Driven Programming: Promises and Asynchronous Processing</h3>
+                    <div class="concept-content">
+                        Event-driven programming is based on responding to events such as user actions, system messages, or data arrival. In web development, events might include clicks, form submissions, or completed network requests.
+                        Promises are a key tool for managing asynchronous processing. They represent a value that will be available in the future and allow developers to define what should happen when an operation succeeds or fails. Using promises improves code readability and helps manage complex asynchronous workflows without deeply nested callbacks.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 5 -->
+                <div class="concept">
+                    <h3 class="concept-title">5. HTTP Requests: Asynchronous/Synchronous Execution, Data Retrieval and Processing, Error Handling</h3>
+                    <div class="concept-content">
+                        HTTP requests are used to retrieve or send data between a client and a server. Synchronous execution blocks the application until the request completes, which can cause delays and poor user experience. Asynchronous execution allows the application to continue running while waiting for the server response.
+                        After data is retrieved, it must be processed, often by parsing formats like JSON and updating the user interface. Error handling is a critical part of this process, as network failures, server errors, or invalid data can occur. Proper error handling ensures that applications remain stable and provide meaningful feedback to users.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 6 -->
+                <div class="concept">
+                    <h3 class="concept-title">6. Local Data Storage: Accessing and Saving Data</h3>
+                    <div class="concept-content">
+                        Accessing and saving data locally involves reading from and writing to browser storage mechanisms. Developers can store key-value pairs or structured data for later use. Data can be retrieved when the application starts or when needed, reducing dependency on constant server communication.
+                        Managing local storage requires careful handling to ensure data consistency, security, and appropriate storage limits. When used correctly, local storage improves performance and enhances offline or low-connectivity experiences.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 7 -->
+                <div class="concept">
+                    <h3 class="concept-title">7. Optimizing Loading Items: Caching and Asynchronous Loading</h3>
+                    <div class="concept-content">
+                        Optimizing loading items focuses on improving application speed and efficiency. Caching stores resources such as images, scripts, or data so they can be reused without re-downloading them from the server.
+                        Asynchronous loading allows resources to load in the background while the rest of the application remains usable. Together, caching and asynchronous loading reduce wait times, minimize bandwidth usage, and improve overall performance, especially for complex or data-heavy applications.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 8 -->
+                <div class="concept">
+                    <h3 class="concept-title">8. Discovering a Client-Side Development Framework – Targeted Critical Learning</h3>
+                    <div class="concept-content">
+                        Client-side development frameworks (such as React, Angular, or Vue) provide structured tools for building interactive user interfaces. Discovering these frameworks involves understanding how they manage components, data binding, state, and user interactions.
+                        This is a critical learning objective because client-side frameworks help developers write scalable, maintainable, and efficient front-end applications. Learning how to choose and use a framework develops skills in modern web architecture and prepares developers to build real-world applications that meet performance and usability expectations.
+                    </div>
+                </div>
+            </div>
+
+            <!-- CODE EXERCISES TAB -->
+            <div class="tab-content" id="code-tab">
+                <div class="code-section">
+                    <h3>15 Frontend Code Exercises</h3>
+                    <div class="code-grid">
+                        <!-- EXERCISE 1 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 1: Async Request</div>
+                            <input type="text" class="code-input" placeholder="Complete: fetch().then(___ => ___)">
+                            <button class="check-button" onclick="checkCode(this, 'response => response.json()')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 2 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 2: Local Storage</div>
+                            <input type="text" class="code-input" placeholder="Complete: localStorage.___('key', 'value')">
+                            <button class="check-button" onclick="checkCode(this, 'setItem')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 3 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 3: Template Syntax</div>
+                            <input type="text" class="code-input" placeholder="Template placeholder format: {{___}}">
+                            <button class="check-button" onclick="checkCode(this, 'data')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 4 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 4: Promise</div>
+                            <input type="text" class="code-input" placeholder="new Promise((resolve, ___) => {})">
+                            <button class="check-button" onclick="checkCode(this, 'reject')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 5 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 5: Fetch Error</div>
+                            <input type="text" class="code-input" placeholder="fetch().catch(___ => handleError())">
+                            <button class="check-button" onclick="checkCode(this, 'error')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 6 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 6: Cache Storage</div>
+                            <input type="text" class="code-input" placeholder="cache.___('key', data)">
+                            <button class="check-button" onclick="checkCode(this, 'set')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 7 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 7: Event Listener</div>
+                            <input type="text" class="code-input" placeholder="element.addEventListener('___', handler)">
+                            <button class="check-button" onclick="checkCode(this, 'click')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 8 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 8: JSON Parse</div>
+                            <input type="text" class="code-input" placeholder="JSON.___('{"data": "value"}')">
+                            <button class="check-button" onclick="checkCode(this, 'parse')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 9 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 9: Async Function</div>
+                            <input type="text" class="code-input" placeholder="async function fetchData() { await ___ }">
+                            <button class="check-button" onclick="checkCode(this, 'fetch')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 10 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 10: Session Storage</div>
+                            <input type="text" class="code-input" placeholder="sessionStorage.___('key')">
+                            <button class="check-button" onclick="checkCode(this, 'getItem')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 11 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 11: Framework Component</div>
+                            <input type="text" class="code-input" placeholder="class Component { constructor(___) {} }">
+                            <button class="check-button" onclick="checkCode(this, 'props')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 12 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 12: API Call</div>
+                            <input type="text" class="code-input" placeholder="fetch('___/api/data')">
+                            <button class="check-button" onclick="checkCode(this, 'https://')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 13 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 13: Error Handling</div>
+                            <input type="text" class="code-input" placeholder="try { code } catch (___) {}">
+                            <button class="check-button" onclick="checkCode(this, 'error')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 14 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 14: Data Binding</div>
+                            <input type="text" class="code-input" placeholder="{{ data.____ }} in template">
+                            <button class="check-button" onclick="checkCode(this, 'property')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 15 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 15: Performance</div>
+                            <input type="text" class="code-input" placeholder="Use ____ for faster loading">
+                            <button class="check-button" onclick="checkCode(this, 'caching')">Check</button>
+                            <div class="result"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTIONS TAB -->
+            <div class="tab-content" id="questions-tab">
+                <div class="questions-section">
+                    <h3>15 Frontend Questions</h3>
+                    <div class="question-grid">
+                        <!-- QUESTION 1 -->
+                        <div class="question-card">
+                            <div class="question-text">1. What technology allows async requests?</div>
+                            <div class="option" onclick="selectAnswer(this)">AJAX or Fetch API</div>
+                            <div class="option" onclick="selectAnswer(this)">CSS only</div>
+                            <div class="option" onclick="selectAnswer(this)">HTML forms</div>
+                            <div class="option" onclick="selectAnswer(this)">SQL</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'AJAX or Fetch API')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 2 -->
+                        <div class="question-card">
+                            <div class="question-text">2. What improves loading times?</div>
+                            <div class="option" onclick="selectAnswer(this)">Local storage</div>
+                            <div class="option" onclick="selectAnswer(this)">More images</div>
+                            <div class="option" onclick="selectAnswer(this)">Synchronous calls</div>
+                            <div class="option" onclick="selectAnswer(this)">No caching</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Local storage')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 3 -->
+                        <div class="question-card">
+                            <div class="question-text">3. What are templates used for?</div>
+                            <div class="option" onclick="selectAnswer(this)">Dynamic content</div>
+                            <div class="option" onclick="selectAnswer(this)">Static pages only</div>
+                            <div class="option" onclick="selectAnswer(this)">Database design</div>
+                            <div class="option" onclick="selectAnswer(this)">Server configuration</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Dynamic content')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 4 -->
+                        <div class="question-card">
+                            <div class="question-text">4. What manages async operations?</div>
+                            <div class="option" onclick="selectAnswer(this)">Promises</div>
+                            <div class="option" onclick="selectAnswer(this)">Loops</div>
+                            <div class="option" onclick="selectAnswer(this)">Variables</div>
+                            <div class="option" onclick="selectAnswer(this)">CSS rules</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Promises')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 5 -->
+                        <div class="question-card">
+                            <div class="question-text">5. What is essential for HTTP requests?</div>
+                            <div class="option" onclick="selectAnswer(this)">Error handling</div>
+                            <div class="option" onclick="selectAnswer(this)">Color schemes</div>
+                            <div class="option" onclick="selectAnswer(this)">Font sizes</div>
+                            <div class="option" onclick="selectAnswer(this)">Animations</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Error handling')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 6 -->
+                        <div class="question-card">
+                            <div class="question-text">6. How to access local data?</div>
+                            <div class="option" onclick="selectAnswer(this)">localStorage methods</div>
+                            <div class="option" onclick="selectAnswer(this)">Server calls</div>
+                            <div class="option" onclick="selectAnswer(this)">CSS variables</div>
+                            <div class="option" onclick="selectAnswer(this)">HTML attributes</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'localStorage methods')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 7 -->
+                        <div class="question-card">
+                            <div class="question-text">7. What optimizes performance?</div>
+                            <div class="option" onclick="selectAnswer(this)">Caching</div>
+                            <div class="option" onclick="selectAnswer(this)">More requests</div>
+                            <div class="option" onclick="selectAnswer(this)">Large files</div>
+                            <div class="option" onclick="selectAnswer(this)">No optimization</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Caching')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 8 -->
+                        <div class="question-card">
+                            <div class="question-text">8. What are client-side frameworks?</div>
+                            <div class="option" onclick="selectAnswer(this)">React, Angular, Vue</div>
+                            <div class="option" onclick="selectAnswer(this)">MySQL, MongoDB</div>
+                            <div class="option" onclick="selectAnswer(this)">Node.js, Django</div>
+                            <div class="option" onclick="selectAnswer(this)">AWS, Azure</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'React, Angular, Vue')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 9 -->
+                        <div class="question-card">
+                            <div class="question-text">9. What format for web services?</div>
+                            <div class="option" onclick="selectAnswer(this)">JSON</div>
+                            <div class="option" onclick="selectAnswer(this)">MP4</div>
+                            <div class="option" onclick="selectAnswer(this)">PDF</div>
+                            <div class="option" onclick="selectAnswer(this)">DOCX</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'JSON')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 10 -->
+                        <div class="question-card">
+                            <div class="question-text">10. What is event-driven programming?</div>
+                            <div class="option" onclick="selectAnswer(this)">Responding to events</div>
+                            <div class="option" onclick="selectAnswer(this)">Linear execution</div>
+                            <div class="option" onclick="selectAnswer(this)">Batch processing</div>
+                            <div class="option" onclick="selectAnswer(this)">Static rendering</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Responding to events')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 11 -->
+                        <div class="question-card">
+                            <div class="question-text">11. What does async loading do?</div>
+                            <div class="option" onclick="selectAnswer(this)">Loads in background</div>
+                            <div class="option" onclick="selectAnswer(this)">Blocks UI</div>
+                            <div class="option" onclick="selectAnswer(this)">Requires refresh</div>
+                            <div class="option" onclick="selectAnswer(this)">Slows down app</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Loads in background')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 12 -->
+                        <div class="question-card">
+                            <div class="question-text">12. What is IndexedDB?</div>
+                            <div class="option" onclick="selectAnswer(this)">Browser database</div>
+                            <div class="option" onclick="selectAnswer(this)">Server database</div>
+                            <div class="option" onclick="selectAnswer(this)">CSS framework</div>
+                            <div class="option" onclick="selectAnswer(this)">Image format</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Browser database')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 13 -->
+                        <div class="question-card">
+                            <div class="question-text">13. What improves user experience?</div>
+                            <div class="option" onclick="selectAnswer(this)">No page reloads</div>
+                            <div class="option" onclick="selectAnswer(this)">More popups</div>
+                            <div class="option" onclick="selectAnswer(this)">Complex navigation</div>
+                            <div class="option" onclick="selectAnswer(this)">Auto-play videos</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'No page reloads')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 14 -->
+                        <div class="question-card">
+                            <div class="question-text">14. What is critical learning?</div>
+                            <div class="option" onclick="selectAnswer(this)">Framework understanding</div>
+                            <div class="option" onclick="selectAnswer(this)">Memorizing code</div>
+                            <div class="option" onclick="selectAnswer(this)">Copying examples</div>
+                            <div class="option" onclick="selectAnswer(this)">Avoiding practice</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Framework understanding')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 15 -->
+                        <div class="question-card">
+                            <div class="question-text">15. What replaces callbacks?</div>
+                            <div class="option" onclick="selectAnswer(this)">Promises</div>
+                            <div class="option" onclick="selectAnswer(this)">More callbacks</div>
+                            <div class="option" onclick="selectAnswer(this)">Global variables</div>
+                            <div class="option" onclick="selectAnswer(this)">Inline styles</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Promises')">Check Answer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#home" class="back-button" data-page="home">← Back to Home</a>
+    </section>
+
+    <!-- BACKEND PAGE -->
+    <section id="backend" class="section-page">
+        <div class="section-header">
+            <h2 class="section-title">Backend Development</h2>
+        </div>
+
+        <div class="content-container">
+            <div class="tabs">
+                <div class="tab active" data-tab="concepts">Concepts</div>
+                <div class="tab" data-tab="code">Code Exercises (15)</div>
+                <div class="tab" data-tab="questions">Questions (15)</div>
+            </div>
+
+            <!-- CONCEPTS TAB -->
+            <div class="tab-content active" id="concepts-tab">
+                <!-- CONCEPT 1 -->
+                <div class="concept">
+                    <h3 class="concept-title">1. The Use of Server-Side Development Frameworks, API Development, and Web Services</h3>
+                    <div class="concept-content">
+                        Server-side development focuses on the logic that runs on a server rather than in a user's browser. Server-side frameworks (such as Django, Spring, Laravel, or Express) provide structured tools to handle common tasks like routing requests, managing databases, handling security, and processing user input. These frameworks save time, reduce errors, and encourage best practices by offering reusable components instead of writing everything from scratch.
+                        API (Application Programming Interface) development allows different software systems to communicate with each other. An API defines rules for how one application can request data or services from another. For example, a mobile app might use an API to request user data from a server. APIs are essential for building scalable systems, supporting multiple clients (web, mobile, desktop), and separating frontend and backend responsibilities.
+                        Web services are systems that expose APIs over the internet using standard protocols like HTTP. They allow applications written in different programming languages and running on different platforms to interact. Together, server-side frameworks, APIs, and web services form the backbone of modern web applications by enabling data processing, communication, and integration.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 2 -->
+                <div class="concept">
+                    <h3 class="concept-title">2. Object-Oriented Programming: Reusing Software Components and Maintaining Clean Code</h3>
+                    <div class="concept-content">
+                        Object-Oriented Programming (OOP) is a programming paradigm based on the concept of objects, which bundle data (attributes) and behavior (methods) together. Core OOP principles include encapsulation, inheritance, polymorphism, and abstraction. These principles help developers create systems that are modular, reusable, and easier to understand.
+                        Reusing software components is a key advantage of OOP. By designing classes that represent real-world concepts or system responsibilities, developers can reuse them across multiple projects or parts of the same application. This reduces duplication and improves reliability since reused components are already tested.
+                        Maintaining clean code means writing code that is readable, well-structured, and easy to modify. Clean code follows naming conventions, avoids unnecessary complexity, and separates responsibilities clearly. OOP supports clean code by encouraging small, focused classes and methods, making software easier to debug, maintain, and extend over time.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 3 -->
+                <div class="concept">
+                    <h3 class="concept-title">3. Web Services: Objects, Standards, APIs, and Exchange Formats</h3>
+                    <div class="concept-content">
+                        Web services rely on several core concepts to function effectively. Objects represent structured data entities (such as users, products, or orders) that are exchanged between systems. These objects are typically serialized into a format that can be transmitted over a network.
+                        Standards ensure that different systems can communicate reliably. Common standards include HTTP for communication, REST or SOAP for service design, and authentication standards for security. Following standards improves compatibility and long-term maintainability.
+                        APIs define how clients interact with web services. They specify available operations, required inputs, and expected outputs. APIs act as contracts between systems, ensuring predictable behavior.
+                        Exchange formats such as JSON and XML are used to transfer data between systems. JSON is lightweight and widely used in modern web applications, while XML is more structured and often used in enterprise systems. Together, objects, standards, APIs, and exchange formats make web services interoperable and scalable.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 4 -->
+                <div class="concept">
+                    <h3 class="concept-title">4. Discovering Server-Side Frameworks</h3>
+                    <div class="concept-content">
+                        Discovering server-side frameworks involves understanding their purpose, features, and use cases. A server-side framework provides a foundation for building backend applications efficiently by handling repetitive tasks like request handling, session management, and database interaction.
+                        Different frameworks are designed for different needs. Some focus on rapid development, others on performance, scalability, or enterprise-level security. Learning server-side frameworks helps developers understand architectural patterns such as Model-View-Controller (MVC) and how applications are structured in real-world environments.
+                        By exploring multiple frameworks, developers gain insight into best practices, trade-offs, and how to choose the right tool for a given project. This knowledge is critical for building robust and maintainable server-side applications.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 5 -->
+                <div class="concept">
+                    <h3 class="concept-title">5. Recognizing and Using Design Patterns (Factory Method, Adapter, Observer) – Critical Learning Objective</h3>
+                    <div class="concept-content">
+                        Design patterns are proven solutions to common software design problems. They are not code templates but reusable ideas that guide how code should be structured. Recognizing and using design patterns improves code flexibility, readability, and scalability.
+                        • The Factory Method pattern is used to create objects without specifying the exact class to instantiate. It promotes loose coupling and makes systems easier to extend.
+                        • The Adapter pattern allows incompatible interfaces to work together. It acts as a bridge between two systems without changing their existing code.
+                        • The Observer pattern defines a one-to-many relationship where multiple objects are notified automatically when another object's state changes. This is commonly used in event-driven systems.
+                        Understanding and applying design patterns is a critical learning objective because it helps developers think at a higher architectural level, communicate ideas effectively with other developers, and build systems that are easier to maintain and evolve.
+                    </div>
+                </div>
+            </div>
+
+            <!-- CODE EXERCISES TAB -->
+            <div class="tab-content" id="code-tab">
+                <div class="code-section">
+                    <h3>15 Backend Code Exercises</h3>
+                    <div class="code-grid">
+                        <!-- EXERCISE 1 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 1: API Endpoint</div>
+                            <input type="text" class="code-input" placeholder="app.get('/api/users', (req, ___) => {})">
+                            <button class="check-button" onclick="checkCode(this, 'res')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 2 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 2: OOP Class</div>
+                            <input type="text" class="code-input" placeholder="class User { constructor(___) {} }">
+                            <button class="check-button" onclick="checkCode(this, 'name')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 3 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 3: JSON Response</div>
+                            <input type="text" class="code-input" placeholder="res.___({data: 'value'})">
+                            <button class="check-button" onclick="checkCode(this, 'json')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 4 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 4: Database Query</div>
+                            <input type="text" class="code-input" placeholder="SELECT * FROM ___ WHERE id = ?">
+                            <button class="check-button" onclick="checkCode(this, 'users')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 5 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 5: Factory Pattern</div>
+                            <input type="text" class="code-input" placeholder="static create___() { return new Object(); }">
+                            <button class="check-button" onclick="checkCode(this, 'Product')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 6 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 6: Adapter Pattern</div>
+                            <input type="text" class="code-input" placeholder="class ___ { adapt(oldSystem) {} }">
+                            <button class="check-button" onclick="checkCode(this, 'Adapter')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 7 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 7: Observer Pattern</div>
+                            <input type="text" class="code-input" placeholder="subject.___(observer)">
+                            <button class="check-button" onclick="checkCode(this, 'attach')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 8 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 8: Middleware</div>
+                            <input type="text" class="code-input" placeholder="app.use(___())">
+                            <button class="check-button" onclick="checkCode(this, 'express')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 9 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 9: Error Handling</div>
+                            <input type="text" class="code-input" placeholder="try { } catch (___) { }">
+                            <button class="check-button" onclick="checkCode(this, 'error')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 10 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 10: Authentication</div>
+                            <input type="text" class="code-input" placeholder="verify___('token')">
+                            <button class="check-button" onclick="checkCode(this, 'JWT')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 11 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 11: API Route</div>
+                            <input type="text" class="code-input" placeholder="/api/___/:id">
+                            <button class="check-button" onclick="checkCode(this, 'users')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 12 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 12: Database Model</div>
+                            <input type="text" class="code-input" placeholder="class User extends ___ { }">
+                            <button class="check-button" onclick="checkCode(this, 'Model')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 13 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 13: Web Service</div>
+                            <input type="text" class="code-input" placeholder="___ over HTTP">
+                            <button class="check-button" onclick="checkCode(this, 'API')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 14 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 14: Framework</div>
+                            <input type="text" class="code-input" placeholder="Express, Django, ___">
+                            <button class="check-button" onclick="checkCode(this, 'Spring')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 15 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 15: Design Pattern</div>
+                            <input type="text" class="code-input" placeholder="Factory, Adapter, ___">
+                            <button class="check-button" onclick="checkCode(this, 'Observer')">Check</button>
+                            <div class="result"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTIONS TAB -->
+            <div class="tab-content" id="questions-tab">
+                <div class="questions-section">
+                    <h3>15 Backend Questions</h3>
+                    <div class="question-grid">
+                        <!-- QUESTION 1 -->
+                        <div class="question-card">
+                            <div class="question-text">1. What are server-side frameworks?</div>
+                            <div class="option" onclick="selectAnswer(this)">Django, Express, Spring</div>
+                            <div class="option" onclick="selectAnswer(this)">React, Vue, Angular</div>
+                            <div class="option" onclick="selectAnswer(this)">HTML, CSS, JS</div>
+                            <div class="option" onclick="selectAnswer(this)">MySQL, MongoDB</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Django, Express, Spring')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 2 -->
+                        <div class="question-card">
+                            <div class="question-text">2. What is OOP?</div>
+                            <div class="option" onclick="selectAnswer(this)">Object-oriented programming</div>
+                            <div class="option" onclick="selectAnswer(this)">Online ordering process</div>
+                            <div class="option" onclick="selectAnswer(this)">Output optimization protocol</div>
+                            <div class="option" onclick="selectAnswer(this)">Open Office program</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Object-oriented programming')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 3 -->
+                        <div class="question-card">
+                            <div class="question-text">3. What do APIs enable?</div>
+                            <div class="option" onclick="selectAnswer(this)">System communication</div>
+                            <div class="option" onclick="selectAnswer(this)">Image editing</div>
+                            <div class="option" onclick="selectAnswer(this)">Video playback</div>
+                            <div class="option" onclick="selectAnswer(this)">Font loading</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'System communication')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 4 -->
+                        <div class="question-card">
+                            <div class="question-text">4. What are web services?</div>
+                            <div class="option" onclick="selectAnswer(this)">APIs over internet</div>
+                            <div class="option" onclick="selectAnswer(this)">Browser extensions</div>
+                            <div class="option" onclick="selectAnswer(this)">CSS frameworks</div>
+                            <div class="option" onclick="selectAnswer(this)">Email services</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'APIs over internet')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 5 -->
+                        <div class="question-card">
+                            <div class="question-text">5. What is encapsulation?</div>
+                            <div class="option" onclick="selectAnswer(this)">Data hiding</div>
+                            <div class="option" onclick="selectAnswer(this)">Code duplication</div>
+                            <div class="option" onclick="selectAnswer(this)">File compression</div>
+                            <div class="option" onclick="selectAnswer(this)">Network security</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Data hiding')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 6 -->
+                        <div class="question-card">
+                            <div class="question-text">6. What is inheritance?</div>
+                            <div class="option" onclick="selectAnswer(this)">Reusing parent class</div>
+                            <div class="option" onclick="selectAnswer(this)">Money transfer</div>
+                            <div class="option" onclick="selectAnswer(this)">File upload</div>
+                            <div class="option" onclick="selectAnswer(this)">User login</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Reusing parent class')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 7 -->
+                        <div class="question-card">
+                            <div class="question-text">7. What is polymorphism?</div>
+                            <div class="option" onclick="selectAnswer(this)">Many forms</div>
+                            <div class="option" onclick="selectAnswer(this)">Single form</div>
+                            <div class="option" onclick="selectAnswer(this)">Data storage</div>
+                            <div class="option" onclick="selectAnswer(this)">Network protocol</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Many forms')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 8 -->
+                        <div class="question-card">
+                            <div class="question-text">8. What are exchange formats?</div>
+                            <div class="option" onclick="selectAnswer(this)">JSON, XML</div>
+                            <div class="option" onclick="selectAnswer(this)">MP3, WAV</div>
+                            <div class="option" onclick="selectAnswer(this)">JPG, PNG</div>
+                            <div class="option" onclick="selectAnswer(this)">DOC, PDF</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'JSON, XML')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 9 -->
+                        <div class="question-card">
+                            <div class="question-text">9. What is MVC?</div>
+                            <div class="option" onclick="selectAnswer(this)">Model-View-Controller</div>
+                            <div class="option" onclick="selectAnswer(this)">Most Valuable Code</div>
+                            <div class="option" onclick="selectAnswer(this)">Minimum Viable Concept</div>
+                            <div class="option" onclick="selectAnswer(this)">Main Video Controller</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Model-View-Controller')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 10 -->
+                        <div class="question-card">
+                            <div class="question-text">10. What is Factory pattern?</div>
+                            <div class="option" onclick="selectAnswer(this)">Creates objects</div>
+                            <div class="option" onclick="selectAnswer(this)">Stores data</div>
+                            <div class="option" onclick="selectAnswer(this)">Sends emails</div>
+                            <div class="option" onclick="selectAnswer(this)">Validates forms</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Creates objects')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 11 -->
+                        <div class="question-card">
+                            <div class="question-text">11. What is Adapter pattern?</div>
+                            <div class="option" onclick="selectAnswer(this)">Connects systems</div>
+                            <div class="option" onclick="selectAnswer(this)">Compresses files</div>
+                            <div class="option" onclick="selectAnswer(this)">Encrypts data</div>
+                            <div class="option" onclick="selectAnswer(this)">Renders UI</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Connects systems')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 12 -->
+                        <div class="question-card">
+                            <div class="question-text">12. What is Observer pattern?</div>
+                            <div class="option" onclick="selectAnswer(this)">Event notification</div>
+                            <div class="option" onclick="selectAnswer(this)">Data storage</div>
+                            <div class="option" onclick="selectAnswer(this)">File transfer</div>
+                            <div class="option" onclick="selectAnswer(this)">User authentication</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Event notification')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 13 -->
+                        <div class="question-card">
+                            <div class="question-text">13. What is REST?</div>
+                            <div class="option" onclick="selectAnswer(this)">API design style</div>
+                            <div class="option" onclick="selectAnswer(this)">Database type</div>
+                            <div class="option" onclick="selectAnswer(this)">Programming language</div>
+                            <div class="option" onclick="selectAnswer(this)">CSS framework</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'API design style')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 14 -->
+                        <div class="question-card">
+                            <div class="question-text">14. What is SOAP?</div>
+                            <div class="option" onclick="selectAnswer(this)">Web service protocol</div>
+                            <div class="option" onclick="selectAnswer(this)">Cleaning agent</div>
+                            <div class="option" onclick="selectAnswer(this)">Database query</div>
+                            <div class="option" onclick="selectAnswer(this)">File format</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Web service protocol')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 15 -->
+                        <div class="question-card">
+                            <div class="question-text">15. What is clean code?</div>
+                            <div class="option" onclick="selectAnswer(this)">Readable, maintainable</div>
+                            <div class="option" onclick="selectAnswer(this)">Complex, clever</div>
+                            <div class="option" onclick="selectAnswer(this)">Short, cryptic</div>
+                            <div class="option" onclick="selectAnswer(this)">Fast, unreadable</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Readable, maintainable')">Check Answer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#home" class="back-button" data-page="home">← Back to Home</a>
+    </section>
+
+    <!-- WEB DEVELOPMENT PAGE -->
+    <section id="webdev" class="section-page">
+        <div class="section-header">
+            <h2 class="section-title">Web Development</h2>
+        </div>
+
+        <div class="content-container">
+            <div class="tabs">
+                <div class="tab active" data-tab="concepts">Concepts (9)</div>
+                <div class="tab" data-tab="code">Code Exercises (15)</div>
+                <div class="tab" data-tab="questions">Questions (15)</div>
+            </div>
+
+            <!-- CONCEPTS TAB -->
+            <div class="tab-content active" id="concepts-tab">
+                <!-- CONCEPT 1 -->
+                <div class="concept">
+                    <h3 class="concept-title">1. Design or Co-design a Relevant Strategic Response to a Complex Problem</h3>
+                    <div class="concept-content">
+                        Designing or co-designing a strategic response to a complex problem requires a structured, user-centered, and collaborative approach. Complex problems are typically characterized by multiple stakeholders, uncertainty, evolving requirements, and interdependent factors such as technology, business constraints, and user needs. A relevant strategic response begins with problem understanding, which involves research, data analysis, and stakeholder interviews to clearly define the root causes rather than just symptoms.
+                        Co-design emphasizes collaboration between designers, developers, users, and decision-makers. This approach ensures that solutions are realistic, inclusive, and aligned with real user expectations. Strategic responses often use frameworks such as design thinking, systems thinking, and agile methodologies to prototype, test, and refine ideas iteratively. The final strategy should balance innovation, feasibility, scalability, and long-term sustainability while remaining adaptable to change.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 2 -->
+                <div class="concept">
+                    <h3 class="concept-title">2. Entrepreneurship in the Digital Sector: Objectives and Professional Issues</h3>
+                    <div class="concept-content">
+                        Entrepreneurship in the digital sector focuses on creating value through technology-driven products and services such as web platforms, mobile applications, SaaS solutions, and digital marketplaces. The primary objectives include innovation, market competitiveness, scalability, and customer-centric value creation. Digital entrepreneurs aim to leverage emerging technologies to solve real-world problems more efficiently than traditional models.
+                        However, this sector also presents professional issues, including rapid technological change, cybersecurity risks, intellectual property protection, and ethical responsibilities such as data privacy and algorithmic transparency. Entrepreneurs must also manage challenges related to funding, regulatory compliance across countries, talent acquisition, and maintaining sustainable business models. Success in the digital sector requires both technical competence and strong strategic, managerial, and ethical awareness.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 3 -->
+                <div class="concept">
+                    <h3 class="concept-title">3. Implement and Combine Associate Skills with SAE (Understanding, Designing, Developing, Interacting) to Develop a Web Application in an International Context</h3>
+                    <div class="concept-content">
+                        The SAE framework (Understanding, Designing, Developing, Interacting) provides a holistic approach to web application development.
+                        • Understanding involves analyzing user needs, business objectives, cultural differences, and legal constraints in an international context.
+                        • Designing translates insights into system architecture, user journeys, wireframes, and interface designs that are culturally adaptable and accessible.
+                        • Developing focuses on implementing the technical solution using appropriate programming languages, frameworks, APIs, and databases.
+                        • Interacting ensures effective communication between users and the system through intuitive interfaces and meaningful feedback.
+                        Combining these stages with associate skills such as teamwork, problem-solving, communication, and project management enables the creation of robust web applications that work effectively across different markets, languages, and user expectations.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 4 -->
+                <div class="concept">
+                    <h3 class="concept-title">4. Developing a Web Application or Service with a High-Quality User Experience</h3>
+                    <div class="concept-content">
+                        A high-quality user experience (UX) is essential for user satisfaction, engagement, and retention. UX development starts with user research, including personas, user journeys, and usability testing. Key UX principles include simplicity, consistency, accessibility, responsiveness, and clarity.
+                        A strong UX design ensures that users can complete tasks efficiently with minimal cognitive effort. This involves optimizing navigation, reducing loading times, providing clear feedback, and designing for multiple devices and screen sizes. Continuous user testing and data-driven improvements play a critical role in refining the experience over time, ensuring the application remains aligned with evolving user needs.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 5 -->
+                <div class="concept">
+                    <h3 class="concept-title">5. Develop a Web Application or Service</h3>
+                    <div class="concept-content">
+                        Developing a web application or service is a multi-phase process that includes planning, design, development, testing, deployment, and maintenance. It begins with defining functional and non-functional requirements, followed by selecting appropriate technologies and architectural patterns.
+                        The development phase involves writing clean, modular, and scalable code while integrating third-party services when needed. Testing ensures reliability, performance, and security before deployment. After launch, continuous monitoring, updates, and user feedback integration are necessary to maintain relevance and quality.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 6 -->
+                <div class="concept">
+                    <h3 class="concept-title">6. Design and Develop a Web Application or Service Using Server-Side and Client-Side Development Tools</h3>
+                    <div class="concept-content">
+                        Modern web applications rely on a clear separation between client-side and server-side development. Client-side tools (such as HTML, CSS, JavaScript, and frameworks like React or Vue) focus on user interface, interactivity, and responsiveness. Server-side tools (such as Node.js, PHP, Python, or Java) manage business logic, databases, authentication, and data processing.
+                        This architecture enables better scalability, maintainability, and performance. APIs are often used to allow seamless communication between the front-end and back-end, supporting modular development and easier integration with external systems.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 7 -->
+                <div class="concept">
+                    <h3 class="concept-title">7. Set Up a Back Office for Data Manipulation and Processing with a Rich Client Interface</h3>
+                    <div class="concept-content">
+                        A back office is a critical component for managing application data, users, and system operations. It allows administrators to create, read, update, and delete data efficiently while ensuring data integrity and consistency. The back office should support reporting, analytics, and automation of routine processes.
+                        A rich client interface enhances productivity by providing dashboards, filters, real-time updates, and visual data representations. Role-based access control ensures that different users have appropriate permissions, reducing risks and improving operational efficiency.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 8 -->
+                <div class="concept">
+                    <h3 class="concept-title">8. Design and Implement an Ergonomic User Experience for End-Users and Site Administrators</h3>
+                    <div class="concept-content">
+                        Ergonomic UX design focuses on reducing effort, errors, and fatigue for both end-users and administrators. For end-users, this means intuitive navigation, clear content hierarchy, and minimal steps to complete tasks. For administrators, it involves efficient workflows, logical information organization, and powerful management tools.
+                        Consistency, accessibility standards (such as WCAG), and responsive design principles are essential. An ergonomic experience improves satisfaction, productivity, and long-term adoption of the system.
+                    </div>
+                </div>
+
+                <!-- CONCEPT 9 -->
+                <div class="concept">
+                    <h3 class="concept-title">9. Ensure the Security and Performance of the Application and Its Hosting</h3>
+                    <div class="concept-content">
+                        Security and performance are fundamental to the success of any web application. Security measures include secure authentication, encryption, protection against common attacks (such as SQL injection and XSS), regular updates, and compliance with data protection regulations. Performance optimization involves efficient code, caching strategies, optimized databases, and scalable hosting solutions.
+                        Reliable hosting infrastructure, monitoring tools, and backup systems ensure high availability and resilience. Together, strong security and performance practices protect user trust, maintain system stability, and support future growth.
+                    </div>
+                </div>
+            </div>
+
+            <!-- CODE EXERCISES TAB -->
+            <div class="tab-content" id="code-tab">
+                <div class="code-section">
+                    <h3>15 Web Development Code Exercises</h3>
+                    <div class="code-grid">
+                        <!-- EXERCISE 1 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 1: SAE Framework</div>
+                            <input type="text" class="code-input" placeholder="Understanding, Designing, Developing, ___">
+                            <button class="check-button" onclick="checkCode(this, 'Interacting')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 2 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 2: UX Principle</div>
+                            <input type="text" class="code-input" placeholder="Simplicity, consistency, ___">
+                            <button class="check-button" onclick="checkCode(this, 'accessibility')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 3 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 3: Development Phase</div>
+                            <input type="text" class="code-input" placeholder="Planning, design, ___, testing">
+                            <button class="check-button" onclick="checkCode(this, 'development')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 4 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 4: Client-side Tool</div>
+                            <input type="text" class="code-input" placeholder="HTML, CSS, ___">
+                            <button class="check-button" onclick="checkCode(this, 'JavaScript')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 5 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 5: Server-side Tool</div>
+                            <input type="text" class="code-input" placeholder="Node.js, ___, Python">
+                            <button class="check-button" onclick="checkCode(this, 'PHP')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 6 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 6: Back Office</div>
+                            <input type="text" class="code-input" placeholder="Create, read, update, ___">
+                            <button class="check-button" onclick="checkCode(this, 'delete')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 7 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 7: Ergonomic UX</div>
+                            <input type="text" class="code-input" placeholder="Reduces effort, errors, ___">
+                            <button class="check-button" onclick="checkCode(this, 'fatigue')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 8 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 8: Security Attack</div>
+                            <input type="text" class="code-input" placeholder="SQL ___, XSS">
+                            <button class="check-button" onclick="checkCode(this, 'injection')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 9 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 9: Performance</div>
+                            <input type="text" class="code-input" placeholder="Caching, efficient ___, databases">
+                            <button class="check-button" onclick="checkCode(this, 'code')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 10 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 10: Complex Problem</div>
+                            <input type="text" class="code-input" placeholder="Multiple ___, uncertainty">
+                            <button class="check-button" onclick="checkCode(this, 'stakeholders')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 11 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 11: Digital Entrepreneurship</div>
+                            <input type="text" class="code-input" placeholder="Innovation, market ___, scalability">
+                            <button class="check-button" onclick="checkCode(this, 'competitiveness')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 12 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 12: International Context</div>
+                            <input type="text" class="code-input" placeholder="Cultural differences, ___ constraints">
+                            <button class="check-button" onclick="checkCode(this, 'legal')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 13 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 13: Framework</div>
+                            <input type="text" class="code-input" placeholder="Design thinking, systems thinking, ___">
+                            <button class="check-button" onclick="checkCode(this, 'agile')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 14 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 14: Architecture</div>
+                            <input type="text" class="code-input" placeholder="Scalability, maintainability, ___">
+                            <button class="check-button" onclick="checkCode(this, 'performance')">Check</button>
+                            <div class="result"></div>
+                        </div>
+
+                        <!-- EXERCISE 15 -->
+                        <div class="exercise-card">
+                            <div class="exercise-title">Exercise 15: Full Stack</div>
+                            <input type="text" class="code-input" placeholder="Frontend + ___ integration">
+                            <button class="check-button" onclick="checkCode(this, 'backend')">Check</button>
+                            <div class="result"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTIONS TAB -->
+            <div class="tab-content" id="questions-tab">
+                <div class="questions-section">
+                    <h3>15 Web Development Questions</h3>
+                    <div class="question-grid">
+                        <!-- QUESTION 1 -->
+                        <div class="question-card">
+                            <div class="question-text">1. What characterizes complex problems?</div>
+                            <div class="option" onclick="selectAnswer(this)">Multiple stakeholders</div>
+                            <div class="option" onclick="selectAnswer(this)">Simple solutions</div>
+                            <div class="option" onclick="selectAnswer(this)">Single cause</div>
+                            <div class="option" onclick="selectAnswer(this)">Static requirements</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Multiple stakeholders')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 2 -->
+                        <div class="question-card">
+                            <div class="question-text">2. What is co-design?</div>
+                            <div class="option" onclick="selectAnswer(this)">Collaborative approach</div>
+                            <div class="option" onclick="selectAnswer(this)">Solo design</div>
+                            <div class="option" onclick="selectAnswer(this)">Template copying</div>
+                            <div class="option" onclick="selectAnswer(this)">Code generation</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Collaborative approach')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 3 -->
+                        <div class="question-card">
+                            <div class="question-text">3. What are digital entrepreneurship objectives?</div>
+                            <div class="option" onclick="selectAnswer(this)">Innovation, scalability</div>
+                            <div class="option" onclick="selectAnswer(this)">Cost reduction only</div>
+                            <div class="option" onclick="selectAnswer(this)">Manual processes</div>
+                            <div class="option" onclick="selectAnswer(this)">Paper documentation</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Innovation, scalability')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 4 -->
+                        <div class="question-card">
+                            <div class="question-text">4. What is SAE framework?</div>
+                            <div class="option" onclick="selectAnswer(this)">Understanding to Interacting</div>
+                            <div class="option" onclick="selectAnswer(this)">Analysis to Deployment</div>
+                            <div class="option" onclick="selectAnswer(this)">Planning to Maintenance</div>
+                            <div class="option" onclick="selectAnswer(this)">Design to Testing</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Understanding to Interacting')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 5 -->
+                        <div class="question-card">
+                            <div class="question-text">5. What is high-quality UX?</div>
+                            <div class="option" onclick="selectAnswer(this)">User satisfaction</div>
+                            <div class="option" onclick="selectAnswer(this)">Complex features</div>
+                            <div class="option" onclick="selectAnswer(this)">Many options</div>
+                            <div class="option" onclick="selectAnswer(this)">Bright colors</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'User satisfaction')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 6 -->
+                        <div class="question-card">
+                            <div class="question-text">6. What are development phases?</div>
+                            <div class="option" onclick="selectAnswer(this)">Planning to maintenance</div>
+                            <div class="option" onclick="selectAnswer(this)">Only coding</div>
+                            <div class="option" onclick="selectAnswer(this)">Design only</div>
+                            <div class="option" onclick="selectAnswer(this)">Testing only</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Planning to maintenance')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 7 -->
+                        <div class="question-card">
+                            <div class="question-text">7. What separates client/server?</div>
+                            <div class="option" onclick="selectAnswer(this)">Architecture</div>
+                            <div class="option" onclick="selectAnswer(this)">Colors</div>
+                            <div class="option" onclick="selectAnswer(this)">Fonts</div>
+                            <div class="option" onclick="selectAnswer(this)">Images</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Architecture')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 8 -->
+                        <div class="question-card">
+                            <div class="question-text">8. What is back office?</div>
+                            <div class="option" onclick="selectAnswer(this)">Data management</div>
+                            <div class="option" onclick="selectAnswer(this)">Frontend design</div>
+                            <div class="option" onclick="selectAnswer(this)">User interface</div>
+                            <div class="option" onclick="selectAnswer(this)">Marketing</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Data management')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 9 -->
+                        <div class="question-card">
+                            <div class="question-text">9. What is ergonomic UX?</div>
+                            <div class="option" onclick="selectAnswer(this)">Reduces effort</div>
+                            <div class="option" onclick="selectAnswer(this)">Increases complexity</div>
+                            <div class="option" onclick="selectAnswer(this)">Adds features</div>
+                            <div class="option" onclick="selectAnswer(this)">Uses animations</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Reduces effort')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 10 -->
+                        <div class="question-card">
+                            <div class="question-text">10. What ensures security?</div>
+                            <div class="option" onclick="selectAnswer(this)">Authentication, encryption</div>
+                            <div class="option" onclick="selectAnswer(this)">More colors</div>
+                            <div class="option" onclick="selectAnswer(this)">Complex menus</div>
+                            <div class="option" onclick="selectAnswer(this)">Large fonts</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Authentication, encryption')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 11 -->
+                        <div class="question-card">
+                            <div class="question-text">11. What optimizes performance?</div>
+                            <div class="option" onclick="selectAnswer(this)">Caching, efficient code</div>
+                            <div class="option" onclick="selectAnswer(this)">More images</div>
+                            <div class="option" onclick="selectAnswer(this)">Complex animations</div>
+                            <div class="option" onclick="selectAnswer(this)">Large files</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Caching, efficient code')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 12 -->
+                        <div class="question-card">
+                            <div class="question-text">12. What are frameworks used for?</div>
+                            <div class="option" onclick="selectAnswer(this)">Structured approach</div>
+                            <div class="option" onclick="selectAnswer(this)">Color selection</div>
+                            <div class="option" onclick="selectAnswer(this)">Font pairing</div>
+                            <div class="option" onclick="selectAnswer(this)">Image editing</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Structured approach')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 13 -->
+                        <div class="question-card">
+                            <div class="question-text">13. What is responsive design?</div>
+                            <div class="option" onclick="selectAnswer(this)">Multiple devices</div>
+                            <div class="option" onclick="selectAnswer(this)">Single screen</div>
+                            <div class="option" onclick="selectAnswer(this)">Fixed layout</div>
+                            <div class="option" onclick="selectAnswer(this)">Print only</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Multiple devices')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 14 -->
+                        <div class="question-card">
+                            <div class="question-text">14. What is API communication?</div>
+                            <div class="option" onclick="selectAnswer(this)">System interaction</div>
+                            <div class="option" onclick="selectAnswer(this)">User interface</div>
+                            <div class="option" onclick="selectAnswer(this)">Color scheme</div>
+                            <div class="option" onclick="selectAnswer(this)">Font family</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'System interaction')">Check Answer</button>
+                        </div>
+
+                        <!-- QUESTION 15 -->
+                        <div class="question-card">
+                            <div class="question-text">15. What is full stack?</div>
+                            <div class="option" onclick="selectAnswer(this)">Frontend + backend</div>
+                            <div class="option" onclick="selectAnswer(this)">Only frontend</div>
+                            <div class="option" onclick="selectAnswer(this)">Only backend</div>
+                            <div class="option" onclick="selectAnswer(this)">Only database</div>
+                            <button class="submit-button" onclick="submitAnswer(this, 'Frontend + backend')">Check Answer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#home" class="back-button" data-page="home">← Back to Home</a>
+    </section>
+
+    <script>
+        // PAGE NAVIGATION
+        document.querySelectorAll('.nav-link, .visit-button, .card-link, .back-button').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const pageId = this.getAttribute('data-page') || this.getAttribute('href').replace('#', '');
+                
+                // Hide all pages
+                document.querySelectorAll('.section-page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Show selected page
+                document.getElementById(pageId).classList.add('active');
+                
+                // Update URL
+                window.location.hash = pageId;
+            });
+        });
+
+        // TAB SYSTEM
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                const parent = this.closest('.content-container');
+                
+                // Update active tab
+                parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show corresponding content
+                parent.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                parent.querySelector(`#${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // CODE CHECKING FUNCTION
+        function checkCode(button, correctAnswer) {
+            const exerciseCard = button.closest('.exercise-card');
+            const input = exerciseCard.querySelector('.code-input');
+            const resultDiv = exerciseCard.querySelector('.result');
+            
+            const userAnswer = input.value.trim();
+            
+            if (userAnswer === correctAnswer) {
+                resultDiv.textContent = '✅ Correct!';
+                resultDiv.className = 'result correct';
+                input.style.borderColor = '#28a745';
+                input.style.backgroundColor = '#f0fff4';
+            } else {
+                resultDiv.textContent = `❌ Incorrect. Try: "${correctAnswer}"`;
+                resultDiv.className = 'result incorrect';
+                input.style.borderColor = '#dc3545';
+                input.style.backgroundColor = '#fff5f5';
+            }
+        }
+
+        // QUESTION ANSWER SELECTION
+        function selectAnswer(element) {
+            const questionCard = element.closest('.question-card');
+            questionCard.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+
+        // QUESTION SUBMISSION
+        function submitAnswer(button, correctAnswer) {
+            const questionCard = button.closest('.question-card');
+            const selectedOption = questionCard.querySelector('.option.selected');
+            
+            if (!selectedOption) {
+                alert('Please select an answer first');
+                return;
+            }
+            
+            const userAnswer = selectedOption.textContent;
+            const isCorrect = userAnswer === correctAnswer;
+            
+            // Mark all options
+            questionCard.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('correct', 'wrong');
+                if (opt.textContent === correctAnswer) {
+                    opt.classList.add('correct');
+                } else if (opt === selectedOption && !isCorrect) {
+                    opt.classList.add('wrong');
+                }
+            });
+            
+            // Disable further selection
+            questionCard.querySelectorAll('.option').forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+            
+            // Show result
+            if (isCorrect) {
+                button.textContent = '✅ Correct!';
+                button.style.background = '#28a745';
+            } else {
+                button.textContent = '❌ Try Again';
+                button.style.background = '#dc3545';
+            }
+        }
+
+        // INITIALIZE PAGE FROM URL HASH
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.replace('#', '') || 'home';
+            document.querySelectorAll('.section-page').forEach(page => {
+                page.classList.remove('active');
+            });
+            const targetPage = document.getElementById(hash);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+        });
+
+        // AUTO-FILL SOME ANSWERS FOR DEMONSTRATION (REMOVE IN PRODUCTION)
+        window.addEventListener('load', () => {
+            // Pre-fill some code exercises for demonstration
+            setTimeout(() => {
+                document.querySelectorAll('.code-input').forEach((input, index) => {
+                    const answers = [
+                        'response => response.json()',
+                        'setItem',
+                        'data',
+                        'reject',
+                        'error',
+                        'set',
+                        'click',
+                        'parse',
+                        'fetch',
+                        'getItem',
+                        'props',
+                        'https://',
+                        'error',
+                        'property',
+                        'caching'
+                    ];
+                    if (index < answers.length) {
+                        input.value = answers[index];
+                    }
+                });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
