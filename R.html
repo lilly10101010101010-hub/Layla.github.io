@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Backend Development Bootcamp</title>
+
+<style>
+/* ————— THEME VARIABLES ————— */
+:root {
+    --bg: #fafafa;
+    --text: #222;
+    --primary: #5b2fc8;
+    --secondary: #2874f0;
+    --example-bg: #eef6fc;
+    --card-bg: #fff;
+}
+body[data-theme="dark"] {
+    --bg: #1f1f29;
+    --text: #e1e1e1;
+    --primary: #8a6dec;
+    --secondary: #5a78f5;
+    --example-bg: #2a2f3a;
+    --card-bg: #232635;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background .3s,color .3s;
+}
+
+/* ————— NAVBAR ————— */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 20px;
+    background: linear-gradient(90deg,var(--primary),var(--secondary));
+    color: white;
+    align-items: center;
+}
+.navbar .logo { font-size: 24px; font-weight: bold;}
+#theme-toggle {
+    font-size: 20px;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* ————— MAIN CONTENT ————— */
+.container { width: 90%; max-width: 900px; margin: 25px auto;}
+.hero { text-align: center; margin-bottom: 30px;}
+.hero h1 { margin: 0; }
+.hero p { font-size: 1.1rem; }
+
+section { margin-bottom: 35px;}
+
+/* ————— CONCEPTS ————— */
+.concept { margin-bottom: 18px; padding: 15px; background: var(--card-bg); border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.05);}
+.example-box {
+    background: var(--example-bg);
+    border-left: 4px solid var(--secondary);
+    padding: 10px 12px;
+    border-radius: 4px;
+    margin-top: 8px;
+}
+
+/* ————— QUIZ ————— */
+.question { margin: 18px 0; padding: 12px; background: var(--card-bg); border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.08);}
+.question p { margin: 8px 0; }
+select,input { padding: 7px; width: 100%; max-width: 350px; margin-top: 6px; border-radius: 4px; border: 1px solid #aaa;}
+button {
+    padding: 8px 14px;
+    margin-top: 8px;
+    background: var(--secondary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity .2s;
+}
+button:hover { opacity: .88;}
+.correct { color: #27ae60; font-weight: bold;}
+.wrong { color: #c0392b; font-weight: bold;}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">Backend Bootcamp</div>
+    <button id="theme-toggle">🌙</button>
+</nav>
+
+<!-- MAIN -->
+<div class="container">
+
+    <!-- HERO -->
+    <header class="hero">
+        <h1>Backend Development Bootcamp</h1>
+        <p>Interactive learning with real examples & quizzes — professional, simple, and ready.</p>
+    </header>
+
+    <!-- CONCEPTS -->
+    <section id="concepts">
+        <h2>Concepts & Real‑Life Examples</h2>
+
+        <div class="concept">
+            <h3>Server‑Side Frameworks</h3>
+            <p>Frameworks help create backend logic, handle routes, sessions, security, and databases.</p>
+            <div class="example-box">
+                <strong>Real‑Life Example:</strong> Online shopping sites like Amazon use backend frameworks to handle user sessions, payments, and data storage securely.
+            </div>
+        </div>
+
+        <div class="concept">
+            <h3>API Development</h3>
+            <p>APIs define how apps request and receive data from servers.</p>
+            <div class="example-box">
+                <strong>Real‑Life Example:</strong> A weather app calls a weather API to get current forecasts and display them in the app.
+            </div>
+        </div>
+
+        <div class="concept">
+            <h3>Web Services</h3>
+            <p>Web services expose APIs over HTTP using JSON or XML so systems can communicate.</p>
+            <div class="example-box">
+                <strong>Real‑Life Example:</strong> Ride‑sharing apps fetch driver location data via web services in real time.
+            </div>
+        </div>
+
+        <div class="concept">
+            <h3>Object‑Oriented Programming</h3>
+            <p>OOP groups data and behavior into objects for modular, reusable code.</p>
+            <div class="example-box">
+                <strong>Real‑Life Example:</strong> Social media platforms use `User` objects to manage login behavior and profile info throughout the app.
+            </div>
+        </div>
+
+        <div class="concept">
+            <h3>Design Patterns</h3>
+            <p>Patterns are proven structural solutions like Factory or Observer.</p>
+            <div class="example-box">
+                <strong>Real‑Life Example:</strong> The Factory pattern can create different payment methods (PayPal, Visa) in a checkout system without changing core logic.
+            </div>
+        </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="quiz">
+        <h2>Interactive Quiz</h2>
+
+        <h3>Part 1 — Multiple Choice</h3>
+
+        <!-- 1 -->
+        <div class="question">
+            <p>1. MVC stands for:</p>
+            <select id="mcq1">
+                <option value=""></option>
+                <option value="A">Model View Controller</option>
+                <option value="B">Manage Variable Code</option>
+                <option value="C">Method Value Call</option>
+                <option value="D">Multiple View Context</option>
+            </select>
+            <button onclick="checkMC('mcq1','A','r1')">Submit</button>
+            <div id="r1"></div>
+        </div>
+
+        <!-- 2 -->
+        <div class="question">
+            <p>2. JSON is used for:</p>
+            <select id="mcq2">
+                <option></option>
+                <option value="A">Styling pages</option>
+                <option value="B">Data exchange in APIs</option>
+                <option value="C">Writing CSS</option>
+                <option value="D">Browser plugins</option>
+            </select>
+            <button onclick="checkMC('mcq2','B','r2')">Submit</button>
+            <div id="r2"></div>
+        </div>
+
+        <!-- 3 -->
+        <div class="question">
+            <p>3. Laravel backend framework is built with:</p>
+            <select id="mcq3">
+                <option></option>
+                <option value="A">Python</option>
+                <option value="B">JavaScript</option>
+                <option value="C">PHP</option>
+                <option value="D">Ruby</option>
+            </select>
+            <button onclick="checkMC('mcq3','C','r3')">Submit</button>
+            <div id="r3"></div>
+        </div>
+
+        <!-- 4 -->
+        <div class="question">
+            <p>4. Observer pattern is used when:</p>
+            <select id="mcq4">
+                <option></option>
+                <option value="A">One object updates many</option>
+                <option value="B">Only one object exists</option>
+                <option value="C">Interfaces are adapted</option>
+                <option value="D">Objects are created directly</option>
+            </select>
+            <button onclick="checkMC('mcq4','A','r4')">Submit</button>
+            <div id="r4"></div>
+        </div>
+
+        <!-- 5 -->
+        <div class="question">
+            <p>5. REST stands for:</p>
+            <select id="mcq5">
+                <option></option>
+                <option value="A">Representational State Transfer</option>
+                <option value="B">Remote Service Table</option>
+                <option value="C">Rapid Server Transport</option>
+                <option value="D">Response Standard Transfer</option>
+            </select>
+            <button onclick="checkMC('mcq5','A','r5')">Submit</button>
+            <div id="r5"></div>
+        </div>
+
+        <!-- 6 -->
+        <div class="question">
+            <p>6. Web services often communicate over:</p>
+            <select id="mcq6">
+                <option></option>
+                <option value="A">FTP</option>
+                <option value="B">SMTP</option>
+                <option value="C">HTTP</option>
+                <option value="D">SSH</option>
+            </select>
+            <button onclick="checkMC('mcq6','C','r6')">Submit</button>
+            <div id="r6"></div>
+        </div>
+
+        <!-- 7 -->
+        <div class="question">
+            <p>7. OOP stands for:</p>
+            <select id="mcq7">
+                <option></option>
+                <option value="A">Object Oriented Programming</option>
+                <option value="B">Online Operation Procedure</option>
+                <option value="C">Ordered Output Pattern</option>
+                <option value="D">Output Only Protocol</option>
+            </select>
+            <button onclick="checkMC('mcq7','A','r7')">Submit</button>
+            <div id="r7"></div>
+        </div>
+
+        <!-- 8 -->
+        <div class="question">
+            <p>8. API stands for:</p>
+            <select id="mcq8">
+                <option></option>
+                <option value="A">Application Programming Interface</option>
+                <option value="B">App Plugin Integration</option>
+                <option value="C">Advanced Program Interpreter</option>
+                <option value="D">Array Performance Index</option>
+            </select>
+            <button onclick="checkMC('mcq8','A','r8')">Submit</button>
+            <div id="r8"></div>
+        </div>
+
+        <!-- 9 -->
+        <div class="question">
+            <p>9. The primary exchange format used by APIs is:</p>
+            <select id="mcq9">
+                <option></option>
+                <option value="A">XML</option>
+                <option value="B">JSON</option>
+                <option value="C">TXT</option>
+                <option value="D">SQL</option>
+            </select>
+            <button onclick="checkMC('mcq9','B','r9')">Submit</button>
+            <div id="r9"></div>
+        </div>
+
+<!-- Continue with MCQs up to 15 the same way -->
+
+        <h3>Part 2 — Code Fill‑Ins</h3>
+
+        <div class="question">
+            <p>1. Complete Express route:</p>
+            <pre>app.get('/hi',(req,res)=>{res.__BLANK__('Hello');});</pre>
+            <input id="c1" placeholder="send">
+            <button onclick="checkCode('c1','send','cr1')">Submit</button>
+            <div id="cr1"></div>
+        </div>
+
+        <div class="question">
+            <p>2. JSON stands for <strong>JavaScript __________ Format</strong>:</p>
+            <input id="c2" placeholder="Object Notation">
+            <button onclick="checkCode('c2','Object Notation','cr2')">Submit</button>
+            <div id="cr2"></div>
+        </div>
+
+        <!-- Continue with code fill questions up to #15 -->
+    </section>
+</div>
+
+<script>
+// THEME TOGGLE
+const themeBtn = document.getElementById("theme-toggle");
+const saved = localStorage.getItem("theme");
+if(saved) document.body.setAttribute("data-theme", saved);
+
+themeBtn.addEventListener("click",()=>{
+    const current = document.body.getAttribute("data-theme");
+    const next = current==="dark"?"light":"dark";
+    document.body.setAttribute("data-theme",next);
+    localStorage.setItem("theme",next);
+});
+
+// MULTIPLE CHOICE CHECK
+function checkMC(id,correct,resId) {
+    const val=document.getElementById(id).value;
+    const el=document.getElementById(resId);
+    if(val===correct){ el.textContent="✔ Correct!"; el.className="correct";}
+    else{ el.textContent="✖ Incorrect, try again."; el.className="wrong";}
+}
+
+// CODE FILL CHECK
+function checkCode(id,answer,resId) {
+    const val=document.getElementById(id).value.trim().toLowerCase();
+    const el=document.getElementById(resId);
+    if(val===answer.toLowerCase()){ el.textContent="✔ Correct!"; el.className="correct";}
+    else{ el.textContent="✖ Try again."; el.className="wrong";}
+}
+</script>
+
+</body>
+</html>
